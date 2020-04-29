@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
-import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
-
 import java.util.Date;
+
+import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
 
 @Data
 @NoArgsConstructor
@@ -22,11 +22,16 @@ public class ParkingSlot extends BaseModel {
     @Field(value = "state", targetType = FieldType.STRING)
     private ParkingSlotStateEnum state;
 
+    private PricingPolicy pricingPolicy;
+
     @Builder
-    public ParkingSlot(String id, Date createdAt, Date updatedAt, String label, ParkingSlotStateEnum state) {
+    public ParkingSlot(
+        String id, Date createdAt, Date updatedAt, String label, ParkingSlotStateEnum state, PricingPolicy pricingPolicy
+    ) {
         super(id, createdAt, updatedAt);
 
         this.label = label;
         this.state = state;
+        this.pricingPolicy = pricingPolicy;
     }
 }
