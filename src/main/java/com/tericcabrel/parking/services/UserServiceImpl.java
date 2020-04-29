@@ -1,7 +1,7 @@
 package com.tericcabrel.parking.services;
 
 import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
-import com.tericcabrel.parking.exceptions.UserAlreadyExistsException;
+import com.tericcabrel.parking.exceptions.ResourceAlreadyExistsException;
 import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.dtos.UpdateUserDto;
 import com.tericcabrel.parking.models.dtos.UserDto;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserInterface {
         User user = userRepository.findByEmail(userDto.getEmail());
 
         if (user != null) {
-            throw new UserAlreadyExistsException("A user with this email already exists!");
+            throw new ResourceAlreadyExistsException("A user with this email already exists!");
         }
 
         user = User.builder()

@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.services;
 
+import com.tericcabrel.parking.exceptions.ResourceAlreadyExistsException;
 import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.models.dbs.Role;
 import com.tericcabrel.parking.models.dtos.RoleDto;
@@ -21,10 +22,16 @@ public class RoleServiceImpl implements RoleInterface {
 
     @Override
     public Role save(RoleDto roleDto) {
-        Role role = Role.builder()
-                            .name(roleDto.getName())
-                            .description(roleDto.getDescription())
-                            .build();
+        Role role = roleRepository.findByName(roleDto.getName());
+
+        if (role != null) {
+            throw new ResourceAlreadyExistsException("A role with this name already exists!");
+        }
+
+        role = Role.builder()
+                        .name(roleDto.getName())
+                        .description(roleDto.getDescription())
+                        .build();
 
         return roleRepository.save(role);
     }
