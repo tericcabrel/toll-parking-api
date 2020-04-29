@@ -1,4 +1,4 @@
-package com.tericcabrel.parking.models.db;
+package com.tericcabrel.parking.models.dbs;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
