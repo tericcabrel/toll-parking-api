@@ -3,6 +3,7 @@ package com.tericcabrel.parking.models.dbs;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -25,10 +26,12 @@ public class Customer extends BaseModel {
 
     private String phone;
 
-    private Car car;
+    @DBRef
+    private CarType carType;
 
     public Customer(
-        String id, Date createdAt, Date updatedAt, String name, String email, GenderEnum gender, String phone, Car car
+        String id, Date createdAt, Date updatedAt, String name, String email, GenderEnum gender,
+        String phone, CarType carType
     ) {
         super(id, createdAt, updatedAt);
 
@@ -36,6 +39,6 @@ public class Customer extends BaseModel {
         this.email = email;
         this.gender = gender;
         this.phone = phone;
-        this.car = car;
+        this.carType = carType;
     }
 }
