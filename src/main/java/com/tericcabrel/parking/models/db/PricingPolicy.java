@@ -1,12 +1,13 @@
 package com.tericcabrel.parking.models.db;
 
-import com.tericcabrel.parking.models.interfaces.IParkingPolicy;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.HashMap;
+
+import com.tericcabrel.parking.models.interfaces.IParkingPolicy;
 
 @Getter
 @Setter
