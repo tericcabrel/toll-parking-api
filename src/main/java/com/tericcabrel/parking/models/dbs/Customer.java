@@ -3,7 +3,6 @@ package com.tericcabrel.parking.models.dbs;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -17,10 +16,8 @@ import com.tericcabrel.parking.models.enums.GenderEnum;
 @Data
 @Document(collection = "customers")
 public class Customer extends BaseModel {
-    @Indexed
     private String name;
 
-    @Indexed(unique = true)
     private String email;
 
     @Field(targetType = FieldType.STRING)

@@ -2,7 +2,6 @@ package com.tericcabrel.parking.models.dbs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -22,7 +21,6 @@ import com.tericcabrel.parking.models.enums.GenderEnum;
 public class User extends BaseModel {
     private String name;
 
-    @Indexed(unique = true)
     private String email;
 
     @JsonIgnore

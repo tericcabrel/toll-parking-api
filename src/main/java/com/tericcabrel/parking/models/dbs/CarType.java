@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -12,9 +11,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Document(collection = "carsTypes")
+@Document(collection = "carTypes")
 public class CarType extends BaseModel {
-    @Indexed
     private String name;
 
     @Builder

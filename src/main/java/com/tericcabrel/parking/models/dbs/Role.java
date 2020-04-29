@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -14,7 +13,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Document(collection = "roles")
 public class Role extends BaseModel {
-    @Indexed(unique = true)
     private String name;
 
     private String description;
