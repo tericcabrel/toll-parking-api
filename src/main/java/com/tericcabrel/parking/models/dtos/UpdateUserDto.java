@@ -8,9 +8,13 @@ import lombok.EqualsAndHashCode;
 public class UpdateUserDto extends BaseUserDto {
     private String name;
 
-    private boolean enabled;
+    private int enabled;
 
-    public UpdateUserDto(String name, boolean enabled, String gender) {
+    public UpdateUserDto() {
+        this.enabled = -1;
+    }
+
+    public UpdateUserDto(String name, int enabled, String gender) {
         this.name = name;
         this.enabled = enabled;
         this.gender = gender;

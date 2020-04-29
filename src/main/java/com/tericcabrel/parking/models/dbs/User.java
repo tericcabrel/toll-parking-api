@@ -29,25 +29,29 @@ public class User extends BaseModel {
     @Field(value = "gender", targetType = FieldType.STRING)
     private GenderEnum gender;
 
+    private boolean enabled;
+
     @DBRef
     private List<Role> roles;
 
     public User() {
+        enabled = true;
         roles = new ArrayList<>();
     }
 
     @Builder
     public User(
-        String id, Date createdAt, Date updatedAt, String name, String email, String password, GenderEnum gender
+        String id, Date createdAt, Date updatedAt, String name, String email, String password,
+        GenderEnum gender, boolean enabled, List<Role> roles
     ) {
         super(id, createdAt, updatedAt);
 
         this.name = name;
         this.email = email;
         this.password = password;
+        this.enabled = enabled;
         this.gender = gender;
-
-        roles = new ArrayList<>();
+        this.roles = roles;
     }
 
     /**
