@@ -3,7 +3,6 @@ package com.tericcabrel.parking.models.dbs;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -13,7 +12,6 @@ import java.util.Date;
 import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
 
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Document(collection = "parkingSlots")
 public class ParkingSlot extends BaseModel {
@@ -23,6 +21,10 @@ public class ParkingSlot extends BaseModel {
     private ParkingSlotStateEnum state;
 
     private PricingPolicy pricingPolicy;
+
+    public ParkingSlot() {
+        this.state = ParkingSlotStateEnum.FREE;
+    }
 
     @Builder
     public ParkingSlot(
