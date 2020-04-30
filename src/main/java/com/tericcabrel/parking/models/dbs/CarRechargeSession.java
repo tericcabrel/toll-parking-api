@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Document(collection = "carRechargeSessions")
-public class CarRechargeSession extends  BaseModel {
+public class CarRechargeSession extends BaseModel {
     private Date startTime;
 
     private Date endTime;
@@ -27,12 +27,17 @@ public class CarRechargeSession extends  BaseModel {
     private Customer customer;
 
     @Builder
-    public CarRechargeSession(String id, Date createdAt, Date updatedAt, Date startTime, Date endTime, float price) {
+    public CarRechargeSession(
+        String id, Date createdAt, Date updatedAt, Date startTime, Date endTime, float price,
+        ParkingSlot parkingSlot, Customer customer
+    ) {
         super(id, createdAt, updatedAt);
 
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
+        this.parkingSlot = parkingSlot;
+        this.customer = customer;
     }
 
     /**
