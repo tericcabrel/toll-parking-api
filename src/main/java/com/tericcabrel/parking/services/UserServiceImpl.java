@@ -4,7 +4,7 @@ import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.exceptions.ResourceAlreadyExistsException;
 import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.dtos.UpdateUserDto;
-import com.tericcabrel.parking.models.dtos.UserDto;
+import com.tericcabrel.parking.models.dtos.CreateUserDto;
 import com.tericcabrel.parking.repositories.UserRepository;
 import com.tericcabrel.parking.services.interfaces.UserService;
 import org.bson.types.ObjectId;
@@ -20,27 +20,27 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private BCryptPasswordEncoder bCryptEncoder; // Fails when injected by the constructor
+    private BCryptPasswordEncoder bCryptPasswordEncoder; // Fails when injected by the constructor
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public User save(UserDto userDto) {
-        User user = userRepository.findByEmail(userDto.getEmail());
+    public User save(CreateUserDto createUserDto) {
+        User user = userRepository.findByEmail(createUserDto.getEmail());
 
         if (user != null) {
             throw new ResourceAlreadyExistsException("A user with this email already exists!");
         }
 
         user = User.builder()
-                    .email(userDto.getEmail())
-                    .name(userDto.getName())
-                    .password(bCryptEncoder.encode(userDto.getPassword()))
-                    .gender(userDto.getGenderEnum())
-                    .enabled(userDto.isEnabled())
-                    .roles(userDto.getRoles())
+                    .email(createUserDto.getEmail())
+                    .name(createUserDto.getName())
+                    .password(bCryptEncoder.encode(createUserDto.getPassword()))
+                    .gender(createUserDto.getGenderEnum())
+                    .enabled(createUserDto.isEnabled())
+                    .roles(createUserDto.getRoles())
                     .build();
 
         return userRepository.save(user);

@@ -14,7 +14,7 @@ import java.util.List;
 })
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserDto extends BaseUserDto {
+public class CreateUserDto extends BaseUserDto {
     private String id;
 
     @NotBlank(message = "The first name is required")
@@ -39,14 +39,15 @@ public class UserDto extends BaseUserDto {
 
     private List<Role> roles;
 
-    public UserDto() {
+    public CreateUserDto() {
         enabled = true;
         roleNames = new String[]{ };
     }
 
     @Builder
-    public UserDto(
-        String name, String email, String password, String confirmPassword, boolean enabled, List<Role> roles
+    public CreateUserDto(
+        String name, String email, String password, String confirmPassword, boolean enabled, List<Role> roles,
+        String gender
     ) {
         this.name = name;
         this.email = email;
@@ -54,5 +55,6 @@ public class UserDto extends BaseUserDto {
         this.confirmPassword = confirmPassword;
         this.enabled = enabled;
         this.roles = roles;
+        this.gender = gender;
     }
 }

@@ -2,12 +2,12 @@ package com.tericcabrel.parking.services.interfaces;
 
 import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.dtos.UpdateUserDto;
-import com.tericcabrel.parking.models.dtos.UserDto;
+import com.tericcabrel.parking.models.dtos.CreateUserDto;
 
 import java.util.List;
 
 public interface UserService {
-    User save(UserDto userDto);
+    User save(CreateUserDto createUserDto);
 
     List<User> findAll();
 
