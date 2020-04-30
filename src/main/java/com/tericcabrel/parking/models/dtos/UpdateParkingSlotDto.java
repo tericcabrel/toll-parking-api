@@ -7,31 +7,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @NoArgsConstructor
 @Data
-public class ParkingSlotDto {
-    @NotBlank(message = "The name is required")
+public class UpdateParkingSlotDto {
     private String label;
 
     @Pattern(regexp = "FREE|BUSY", message = "The value for state must be FREE or BUSY")
-    @NotBlank(message = "The state is required")
     private String state;
 
     @NotNull(message = "Pricing policy is required")
     @Valid
     private PricingPolicyDto pricingPolicyDto;
 
-    @NotBlank(message = "This field is required")
     private String  carTypeId;
 
     private CarType carType;
 
     @Builder
-    public ParkingSlotDto(String label, String state, String carTypeId, PricingPolicyDto pricingPolicyDto)
+    public UpdateParkingSlotDto(String label, String state, String carTypeId, PricingPolicyDto pricingPolicyDto)
     {
         this.label = label;
         this.state = state;

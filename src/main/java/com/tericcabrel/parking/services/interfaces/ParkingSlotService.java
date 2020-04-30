@@ -1,12 +1,13 @@
 package com.tericcabrel.parking.services.interfaces;
 
 import com.tericcabrel.parking.models.dbs.ParkingSlot;
-import com.tericcabrel.parking.models.dtos.ParkingSlotDto;
+import com.tericcabrel.parking.models.dtos.CreateParkingSlotDto;
+import com.tericcabrel.parking.models.dtos.UpdateParkingSlotDto;
 
 import java.util.List;
 
 public interface ParkingSlotService {
-    ParkingSlot save(ParkingSlotDto parkingSlotDto);
+    ParkingSlot save(CreateParkingSlotDto createParkingSlotDto);
 
     List<ParkingSlot> findAll();
 
@@ -16,5 +17,5 @@ public interface ParkingSlotService {
 
     ParkingSlot findById(String id);
 
-    ParkingSlot update(String id, ParkingSlotDto parkingSlotDto);
+    ParkingSlot update(String id, UpdateParkingSlotDto updateParkingSlotDto);
 }

@@ -3,7 +3,8 @@ package com.tericcabrel.parking.services;
 import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.models.dbs.ParkingSlot;
 import com.tericcabrel.parking.models.dbs.PricingPolicy;
-import com.tericcabrel.parking.models.dtos.ParkingSlotDto;
+import com.tericcabrel.parking.models.dtos.CreateParkingSlotDto;
+import com.tericcabrel.parking.models.dtos.UpdateParkingSlotDto;
 import com.tericcabrel.parking.repositories.ParkingSlotRepository;
 import com.tericcabrel.parking.services.interfaces.ParkingSlotService;
 import org.bson.types.ObjectId;
@@ -21,19 +22,19 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
     }
 
     @Override
-    public ParkingSlot save(ParkingSlotDto parkingSlotDto) {
+    public ParkingSlot save(CreateParkingSlotDto createParkingSlotDto) {
 
         PricingPolicy pricingPolicy = PricingPolicy.builder()
-                                                    .parameters(parkingSlotDto.getPricingPolicyDto().getParameters())
-                                                    .evaluation(parkingSlotDto.getPricingPolicyDto().getEvaluation())
-                                                    .build();
+                                                .parameters(createParkingSlotDto.getPricingPolicyDto().getParameters())
+                                                .evaluation(createParkingSlotDto.getPricingPolicyDto().getEvaluation())
+                                                .build();
 
         ParkingSlot parkingSlot = ParkingSlot.builder()
-                                            .label(parkingSlotDto.getLabel())
-                                            .state(parkingSlotDto.getParkingSlotStateEnum())
-                                            .pricingPolicy(pricingPolicy)
-                                            .carType(parkingSlotDto.getCarType())
-                                            .build();
+                                        .label(createParkingSlotDto.getLabel())
+                                        .state(createParkingSlotDto.getParkingSlotStateEnum())
+                                        .pricingPolicy(pricingPolicy)
+                                        .carType(createParkingSlotDto.getCarType())
+                                        .build();
 
         return parkingSlotRepository.save(parkingSlot);
     }
@@ -65,21 +66,21 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
     }
 
     @Override
-    public ParkingSlot update(String id, ParkingSlotDto parkingSlotDto) {
+    public ParkingSlot update(String id, UpdateParkingSlotDto updateParkingSlotDto) {
         ParkingSlot item = findById(id);
 
-        if (parkingSlotDto.getLabel() != null) {
-            item.setLabel(parkingSlotDto.getLabel());
+        if (updateParkingSlotDto.getLabel() != null) {
+            item.setLabel(updateParkingSlotDto.getLabel());
         }
 
-        if (parkingSlotDto.getState() != null) {
-            item.setState(parkingSlotDto.getParkingSlotStateEnum());
+        if (updateParkingSlotDto.getState() != null) {
+            item.setState(updateParkingSlotDto.getParkingSlotStateEnum());
         }
 
         PricingPolicy pricingPolicy = PricingPolicy.builder()
-            .parameters(parkingSlotDto.getPricingPolicyDto().getParameters())
-            .evaluation(parkingSlotDto.getPricingPolicyDto().getEvaluation())
-            .build();
+                                            .parameters(updateParkingSlotDto.getPricingPolicyDto().getParameters())
+                                            .evaluation(updateParkingSlotDto.getPricingPolicyDto().getEvaluation())
+                                            .build();
 
         item.setPricingPolicy(pricingPolicy);
 
