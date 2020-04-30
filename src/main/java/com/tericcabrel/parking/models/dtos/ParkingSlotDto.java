@@ -1,6 +1,6 @@
 package com.tericcabrel.parking.models.dtos;
 
-import com.tericcabrel.parking.models.dbs.PricingPolicy;
+import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,5 +30,12 @@ public class ParkingSlotDto {
         this.label = label;
         this.state = state;
         this.pricingPolicyDto = pricingPolicyDto;
+    }
+
+    /**
+     * @return State of the parking slot in enum type
+     */
+    public ParkingSlotStateEnum getParkingSlotStateEnum() {
+        return state.equals("FREE") ? ParkingSlotStateEnum.FREE : ParkingSlotStateEnum.BUSY;
     }
 }

@@ -93,9 +93,7 @@ public class UserServiceImpl implements UserService {
                 user.setEnabled(updateUserDto.getEnabled() != 0);
             }
 
-            userRepository.save(user);
-
-            return user;
+            return userRepository.save(user);
         }
 
         return null;
@@ -111,8 +109,7 @@ public class UserServiceImpl implements UserService {
         User user = findById(id);
 
         user.setPassword(bCryptEncoder.encode(newPassword));
-        userRepository.save(user);
 
-        return user;
+        return userRepository.save(user);
     }
 }

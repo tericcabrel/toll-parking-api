@@ -1,28 +1,50 @@
 package com.tericcabrel.parking.services;
 
-import com.tericcabrel.parking.models.dbs.CarType;
+import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.models.dbs.ParkingSlot;
+import com.tericcabrel.parking.models.dbs.PricingPolicy;
 import com.tericcabrel.parking.models.dtos.ParkingSlotDto;
+import com.tericcabrel.parking.repositories.ParkingSlotRepository;
 import com.tericcabrel.parking.services.interfaces.ParkingSlotService;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("parkingSlotService")
 public class ParkingSlotServiceImpl implements ParkingSlotService {
-    @Override
-    public ParkingSlot save(ParkingSlotDto parkingSlotDto) {
-        return null;
+    private ParkingSlotRepository parkingSlotRepository;
+
+    public ParkingSlotServiceImpl(ParkingSlotRepository parkingSlotRepository) {
+        this.parkingSlotRepository = parkingSlotRepository;
     }
 
     @Override
-    public List<CarType> findAll() {
-        return null;
+    public ParkingSlot save(ParkingSlotDto parkingSlotDto) {
+
+        PricingPolicy pricingPolicy = PricingPolicy.builder()
+                                                    .parameters(parkingSlotDto.getPricingPolicyDto().getParameters())
+                                                    .evaluation(parkingSlotDto.getPricingPolicyDto().getEvaluation())
+                                                    .build();
+
+        ParkingSlot parkingSlot = ParkingSlot.builder()
+                                            .label(parkingSlotDto.getLabel())
+                                            .state(parkingSlotDto.getParkingSlotStateEnum())
+                                            .pricingPolicy(pricingPolicy)
+                                            .build();
+
+        return parkingSlotRepository.save(parkingSlot);
+    }
+
+    @Override
+    public List<ParkingSlot> findAll() {
+        return parkingSlotRepository.findAll();
     }
 
     @Override
     public void delete(String id) {
-
+        parkingSlotRepository.deleteById(new ObjectId(id));
     }
 
     @Override
@@ -32,11 +54,32 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
 
     @Override
     public ParkingSlot findById(String id) {
-        return null;
+        Optional<ParkingSlot> optionalRole = parkingSlotRepository.findById(new ObjectId(id));
+
+        if (optionalRole.isPresent()) {
+            return optionalRole.get();
+        }
+
+        throw new ResourceNotFoundException("Parking slot not found!");
     }
 
     @Override
     public ParkingSlot update(String id, ParkingSlotDto parkingSlotDto) {
-        return null;
+        ParkingSlot parkingSlot = findById(id);
+
+        parkingSlot.setLabel(parkingSlotDto.getLabel());
+
+        if (parkingSlotDto.getState() != null) {
+            parkingSlot.setState(parkingSlotDto.getParkingSlotStateEnum());
+        }
+
+        PricingPolicy pricingPolicy = PricingPolicy.builder()
+            .parameters(parkingSlotDto.getPricingPolicyDto().getParameters())
+            .evaluation(parkingSlotDto.getPricingPolicyDto().getEvaluation())
+            .build();
+
+        parkingSlot.setPricingPolicy(pricingPolicy);
+
+        return parkingSlotRepository.save(parkingSlot);
     }
 }

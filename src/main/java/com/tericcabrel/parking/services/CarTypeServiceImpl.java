@@ -5,7 +5,7 @@ import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dtos.CarTypeDto;
 import com.tericcabrel.parking.repositories.CarTypeRepository;
-import com.tericcabrel.parking.services.interfaces.CarTypeInterface;
+import com.tericcabrel.parking.services.interfaces.CarTypeService;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service(value = "carTypeService")
-public class CarTypeServiceImpl implements CarTypeInterface {
+public class CarTypeServiceImpl implements CarTypeService {
     private CarTypeRepository carTypeRepository;
 
     public CarTypeServiceImpl(CarTypeRepository carTypeRepository) {
@@ -67,8 +67,6 @@ public class CarTypeServiceImpl implements CarTypeInterface {
 
         carType.setName(carTypeDto.getName());
 
-        carTypeRepository.save(carType);
-
-        return carType;
+        return carTypeRepository.save(carType);
     }
 }
