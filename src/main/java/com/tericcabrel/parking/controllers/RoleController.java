@@ -34,11 +34,11 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @ApiOperation(value = "Create a role", response = CustomResponse.class)
+    @ApiOperation(value = "Create a role", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Role created successfully!", response = RoleResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -49,11 +49,11 @@ public class RoleController {
         return ResponseEntity.ok(new RoleResponse(role));
     }
 
-    @ApiOperation(value = "Get all roles", response = CustomResponse.class)
+    @ApiOperation(value = "Get all roles", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "List retrieved successfully!", response = RoleListResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
@@ -61,12 +61,12 @@ public class RoleController {
         return ResponseEntity.ok(new RoleListResponse(roleService.findAll()));
     }
 
-    @ApiOperation(value = "Get one role", response = CustomResponse.class)
+    @ApiOperation(value = "Get one role", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Item retrieved successfully!", response = RoleResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
@@ -74,11 +74,11 @@ public class RoleController {
         return ResponseEntity.ok(new RoleResponse(roleService.findById(id)));
     }
 
-    @ApiOperation(value = "Update a role", response = CustomResponse.class)
+    @ApiOperation(value = "Update a role", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Role updated successfully!", response = RoleResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -87,11 +87,11 @@ public class RoleController {
         return ResponseEntity.ok(new RoleResponse(roleService.update(id, roleDto)));
     }
 
-    @ApiOperation(value = "Delete a role", response = CustomResponse.class)
+    @ApiOperation(value = "Delete a role", response = GenericResponse.class)
     @ApiResponses(value = {
-        @ApiResponse(code = 204, message = "Role deleted successfully!", response = CustomResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 204, message = "Role deleted successfully!", response = GenericResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
@@ -101,11 +101,11 @@ public class RoleController {
         return ResponseEntity.noContent().build();
     }
 
-    @ApiOperation(value = "Assign roles to an user", response = CustomResponse.class)
+    @ApiOperation(value = "Assign roles to an user", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Roles successfully assigned to user!", response = UserResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -124,11 +124,11 @@ public class RoleController {
         return ResponseEntity.ok().body(new UserResponse(userService.update(user)));
     }
 
-    @ApiOperation(value = "Assign roles to an user", response = CustomResponse.class)
+    @ApiOperation(value = "Assign roles to an user", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Roles successfully assigned to user!", response = UserResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")

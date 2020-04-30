@@ -1,7 +1,7 @@
 package com.tericcabrel.parking.exceptions;
 
 import com.tericcabrel.parking.models.responses.ConstraintViolationResponse;
-import com.tericcabrel.parking.models.responses.CustomResponse;
+import com.tericcabrel.parking.models.responses.GenericResponse;
 import com.tericcabrel.parking.models.responses.InvalidDataResponse;
 import com.tericcabrel.parking.utils.Helpers;
 import org.springframework.http.HttpStatus;
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-        CustomResponse response = new CustomResponse(formatMessage(ex.getMessage()));
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(PasswordNotMatchException.class)
     public ResponseEntity<?> passwordNotMatchException(PasswordNotMatchException ex, WebRequest request) {
-        CustomResponse response = new CustomResponse(formatMessage(ex.getMessage()));
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -162,7 +162,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> accessDeniedException(AccessDeniedException ex, WebRequest request) {
-        CustomResponse response = new CustomResponse(formatMessage(ex.getMessage()));
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
@@ -177,7 +177,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<?> badCredentialsException(BadCredentialsException ex, WebRequest request) {
-        CustomResponse response = new CustomResponse(formatMessage(ex.getMessage()));
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
@@ -191,8 +191,8 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with status code 400
      */
     @ExceptionHandler(UserNotActiveException.class)
-    public ResponseEntity<CustomResponse> userNotActiveException(UserNotActiveException ex, WebRequest request) {
-        CustomResponse response = new CustomResponse(formatMessage(ex.getMessage()));
+    public ResponseEntity<GenericResponse> userNotActiveException(UserNotActiveException ex, WebRequest request) {
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -206,8 +206,8 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with status code 400
      */
     @ExceptionHandler(TokenErrorException.class)
-    public ResponseEntity<CustomResponse> tokenErrorException(TokenErrorException ex, WebRequest request) {
-        CustomResponse response = new CustomResponse(formatMessage(ex.getMessage()));
+    public ResponseEntity<GenericResponse> tokenErrorException(TokenErrorException ex, WebRequest request) {
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -222,7 +222,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
-        CustomResponse response = new CustomResponse(formatMessage(ex.getMessage()));
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         ex.printStackTrace();
 

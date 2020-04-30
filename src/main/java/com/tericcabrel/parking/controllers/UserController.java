@@ -83,11 +83,11 @@ public class UserController {
         return ResponseEntity.ok(new UserResponse(user));
     }
 
-    @ApiOperation(value = "Authenticate a user", response = CustomResponse.class)
+    @ApiOperation(value = "Authenticate a user", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Authenticated successfully!", response = AuthTokenResponse.class),
-        @ApiResponse(code = 400, message = "Bad credentials | The account is deactivated ", response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 400, message = "Bad credentials | The account is deactivated ", response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PostMapping(value = "/login")
@@ -115,11 +115,11 @@ public class UserController {
         return ResponseEntity.ok(new AuthTokenResponse(new AuthToken(token, expirationDate.getTime())));
     }
 
-    @ApiOperation(value = "Get all users", response = CustomResponse.class)
+    @ApiOperation(value = "Get all users", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "List retrieved successfully!", response = UserListResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = INVALID_DATA_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = INVALID_DATA_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
@@ -127,10 +127,10 @@ public class UserController {
         return ResponseEntity.ok(new UserListResponse(userService.findAll()));
     }
 
-    @ApiOperation(value = "Get the authenticated user", response = CustomResponse.class)
+    @ApiOperation(value = "Get the authenticated user", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "User retrieved successfully!", response = UserResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
@@ -140,11 +140,11 @@ public class UserController {
         return ResponseEntity.ok(new UserResponse(userService.findByEmail(authentication.getName())));
     }
 
-    @ApiOperation(value = "Get one user", response = CustomResponse.class)
+    @ApiOperation(value = "Get one user", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Item retrieved successfully!", response = UserResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{id}")
@@ -155,8 +155,8 @@ public class UserController {
     @ApiOperation(value = "Update an user", response = UserResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "User updated successfully!", response = UserResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
@@ -168,9 +168,9 @@ public class UserController {
     @ApiOperation(value = "Update user password", response = UserResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "The password updated successfully!", response = UserResponse.class),
-        @ApiResponse(code = 400, message = "The current password is invalid", response = CustomResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 400, message = "The current password is invalid", response = GenericResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
@@ -181,11 +181,11 @@ public class UserController {
         return ResponseEntity.ok(new UserResponse(userService.updatePassword(id, updatePasswordDto)));
     }
 
-    @ApiOperation(value = "Delete an user", response = CustomResponse.class)
+    @ApiOperation(value = "Delete an user", response = GenericResponse.class)
     @ApiResponses(value = {
-        @ApiResponse(code = 204, message = "User deleted successfully!", response = CustomResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 204, message = "User deleted successfully!", response = GenericResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")

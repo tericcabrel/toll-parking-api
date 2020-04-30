@@ -2,18 +2,19 @@ package com.tericcabrel.parking.models.responses;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tericcabrel.parking.models.dbs.Customer;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.HashMap;
+import lombok.experimental.Accessors;
 
 @Getter
 @Setter
-public class CustomResponse {
-    private HashMap<String, Object> data;
+@Accessors(chain = true)
+public class CustomerResponse {
+    private Customer data;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public CustomResponse(@JsonProperty("data") HashMap<String, Object> data) {
+    public CustomerResponse(@JsonProperty("data") Customer data) {
         this.data = data;
     }
 }

@@ -2,11 +2,12 @@ package com.tericcabrel.parking.controllers;
 
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dtos.CreateCarTypeDto;
-import com.tericcabrel.parking.models.responses.CustomResponse;
+import com.tericcabrel.parking.models.responses.GenericResponse;
 import com.tericcabrel.parking.models.responses.InvalidDataResponse;
 import com.tericcabrel.parking.models.responses.CarTypeListResponse;
 import com.tericcabrel.parking.models.responses.CarTypeResponse;
 import com.tericcabrel.parking.services.interfaces.CarTypeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 
+@Api(tags = "Car's type management", description = "Operations pertaining to car's type creation, update, fetch and delete")
 @RestController
 @RequestMapping(value = "/cars-types")
 public class CarTypeController {
@@ -27,11 +29,11 @@ public class CarTypeController {
         this.carTypeService = carTypeService;
     }
 
-    @ApiOperation(value = "Create car's type", response = CustomResponse.class)
+    @ApiOperation(value = "Create car's type", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Car's type created successfully!", response = CarTypeResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -42,11 +44,11 @@ public class CarTypeController {
         return ResponseEntity.ok(new CarTypeResponse(carType));
     }
 
-    @ApiOperation(value = "Get all car's types", response = CustomResponse.class)
+    @ApiOperation(value = "Get all car's types", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "List retrieved successfully!", response = CarTypeListResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
@@ -54,12 +56,12 @@ public class CarTypeController {
         return ResponseEntity.ok(new CarTypeListResponse(carTypeService.findAll()));
     }
 
-    @ApiOperation(value = "Get one car's type", response = CustomResponse.class)
+    @ApiOperation(value = "Get one car's type", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Item retrieved successfully!", response = CarTypeResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
@@ -67,11 +69,11 @@ public class CarTypeController {
         return ResponseEntity.ok(new CarTypeResponse(carTypeService.findById(id)));
     }
 
-    @ApiOperation(value = "Update a car's type", response = CustomResponse.class)
+    @ApiOperation(value = "Update a car's type", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Car's type updated successfully!", response = CarTypeResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -80,11 +82,11 @@ public class CarTypeController {
         return ResponseEntity.ok(new CarTypeResponse(carTypeService.update(id, carTypeDto)));
     }
 
-    @ApiOperation(value = "Delete a car's type", response = CustomResponse.class)
+    @ApiOperation(value = "Delete a car's type", response = GenericResponse.class)
     @ApiResponses(value = {
-        @ApiResponse(code = 204, message = "Car's type deleted successfully!", response = CustomResponse.class),
-        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = CustomResponse.class),
-        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = CustomResponse.class),
+        @ApiResponse(code = 204, message = "Car's type deleted successfully!", response = GenericResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
