@@ -18,20 +18,31 @@ class PricingPolicyServiceImplTest {
     void beforeAll() {
         pricingPolicyService = new PricingPolicyServiceImpl();
 
-        HashMap<String, Float>  badParameters = new HashMap<>();
-        badParameters.put("pricePerHour", 100f);
-        badParameters.put("nbOfHour", 3f);
-        badParameters.put("tax", 200f);
-
         pricingPolicy = PricingPolicy.builder()
-                                .parameters(badParameters)
                                 .evaluation("(pricePerHour * numberOfHour) + tax")
                                 .build();
+    }
+
+    @AfterEach
+    void afterEach() {
+        HashMap<String, Double> goodParameters = new HashMap<>();
+        goodParameters.put("pricePerHour", 100d);
+        goodParameters.put("numberOfHour", -1d);
+        goodParameters.put("tax", 200d);
+
+        pricingPolicy.setParameters(goodParameters);
     }
 
     @Test
     @Order(1)
     void failToValidateFormat() {
+        HashMap<String, Double> badParameters = new HashMap<>();
+        badParameters.put("pricePerHour", 100d);
+        badParameters.put("nbOfHour", -1d);
+        badParameters.put("tax", 200d);
+
+        pricingPolicy.setParameters(badParameters);
+
         boolean isValid = pricingPolicyService.validateFormat(pricingPolicy);
 
         assertThat(isValid).isFalse();
@@ -40,16 +51,23 @@ class PricingPolicyServiceImplTest {
     @Test
     @Order(2)
     void validateFormatSuccess() {
-        HashMap<String, Float>  parameters = new HashMap<>();
-        parameters.put("pricePerHour", 100f);
-        parameters.put("numberOfHour", 3f);
-        parameters.put("tax", 200f);
-
-        pricingPolicy.setParameters(parameters);
-
         boolean isValid = pricingPolicyService.validateFormat(pricingPolicy);
 
         assertThat(isValid).isTrue();
+    }
+
+    @Test
+    @Order(3)
+    void getArithmeticalExpressionSuccess() {
+        HashMap<String, Double> userParameters = new HashMap<>();
+        userParameters.put("pricePerHour", 100d);
+        userParameters.put("numberOfHour", 3d);
+        userParameters.put("tax", 200d);
+
+        String result = pricingPolicyService.getArithmeticalExpression(pricingPolicy, userParameters);
+
+        assertThat(result).isNotNull();
+        assertThat(result.replaceAll(" ", "")).hasSize(17);
     }
 
 

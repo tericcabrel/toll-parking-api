@@ -16,13 +16,13 @@ import java.util.HashMap;
 public class PricingPolicyDto {
     @Size(min = 1, message = "At least one role's parameter is required")
     @NotNull(message = "This field is required")
-    private HashMap<String, Float> parameters;
+    private HashMap<String, Double> parameters;
 
     @NotBlank(message = "This field is required")
     private String evaluation;
 
     @Builder
-    public PricingPolicyDto(HashMap<String, Float> parameters, String evaluation) {
+    public PricingPolicyDto(HashMap<String, Double> parameters, String evaluation) {
         this.parameters = parameters;
         this.evaluation = evaluation;
     }

@@ -20,7 +20,7 @@ public class PricingPolicy {
      * }
      * Keys with value -1 indicates the value will be provided at moment of calculation
      */
-    private HashMap<String, Float> parameters;
+    private HashMap<String, Double> parameters;
 
     /**
      * Describe formula to calculate the price. It's an arithmetical expression who will be parsed and evaluated
@@ -36,7 +36,7 @@ public class PricingPolicy {
     }
 
     @Builder
-    public PricingPolicy(HashMap<String, Float> parameters, String evaluation) {
+    public PricingPolicy(HashMap<String, Double> parameters, String evaluation) {
         this.parameters = parameters;
         this.evaluation = evaluation;
     }

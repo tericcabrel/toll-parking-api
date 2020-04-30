@@ -5,11 +5,11 @@ import com.tericcabrel.parking.models.dbs.PricingPolicy;
 import java.util.HashMap;
 
 public interface PricingPolicyService {
-    String  getArithmeticalExpression(PricingPolicy pricingPolicy);
+    String  getArithmeticalExpression(PricingPolicy pricingPolicy, HashMap<String, Double> parameters);
 
     boolean validateFormat(PricingPolicy pricingPolicy);
 
     boolean validateExpression(String expression);
 
-    float calculate(PricingPolicy pricingPolicy, HashMap<String, Float> parameters);
+    double calculate(PricingPolicy pricingPolicy, HashMap<String, Double> parameters);
 }

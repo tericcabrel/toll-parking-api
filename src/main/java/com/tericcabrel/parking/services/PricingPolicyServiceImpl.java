@@ -15,8 +15,28 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      * @return evaluation property with the parameters replaced by numeric value
      */
     @Override
-    public String getArithmeticalExpression(PricingPolicy pricingPolicy) {
-        return null;
+    public String getArithmeticalExpression(PricingPolicy pricingPolicy, HashMap<String, Double> parameters) {
+        HashMap<String, Double> defaultParameters = pricingPolicy.getParameters();
+        String evaluation = pricingPolicy.getEvaluation();
+
+        Set<String> keys = pricingPolicy.getParameters().keySet();
+
+        // Remove all the strings in the evaluation
+        for (String key: keys) {
+            double value = defaultParameters.get(key);
+
+            if (parameters.containsKey(key)) {
+                value = parameters.get(key);
+            }
+
+            if (value < 0) {
+                // TODO Throw an exception
+            }
+
+            evaluation = evaluation.replaceAll(key, String.valueOf(value));
+        }
+
+        return evaluation;
     }
 
     /**
@@ -53,10 +73,16 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      * @return The price
      */
     @Override
-    public float calculate(PricingPolicy pricingPolicy, HashMap<String, Float> parameters) {
-        // TODO validate format
+    public double calculate(PricingPolicy pricingPolicy, HashMap<String, Double> parameters) {
+        // Validate format
+        boolean isValidFormat = validateFormat(pricingPolicy);
 
-        // TODO get arithmetical expression
+        if (!isValidFormat) {
+            // TODO throw exception
+        }
+
+        // get arithmetical expression
+        String expression = getArithmeticalExpression(pricingPolicy, parameters);
 
         // TODO validate expression
 
