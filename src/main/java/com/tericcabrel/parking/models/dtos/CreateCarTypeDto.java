@@ -8,12 +8,12 @@ import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @Data
-public class CarTypeDto {
+public class CreateCarTypeDto {
     @NotBlank(message = "The name is required")
     private String name;
 
     @Builder
-    public CarTypeDto(String name) {
+    public CreateCarTypeDto(String name) {
         this.name = name;
     }
 }

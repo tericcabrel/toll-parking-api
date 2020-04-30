@@ -1,12 +1,12 @@
 package com.tericcabrel.parking.services.interfaces;
 
 import com.tericcabrel.parking.models.dbs.CarType;
-import com.tericcabrel.parking.models.dtos.CarTypeDto;
+import com.tericcabrel.parking.models.dtos.CreateCarTypeDto;
 
 import java.util.List;
 
 public interface CarTypeService {
-    CarType save(CarTypeDto roleDto);
+    CarType save(CreateCarTypeDto createCarTypeDto);
 
     List<CarType> findAll();
 
@@ -16,5 +16,5 @@ public interface CarTypeService {
 
     CarType findById(String id);
 
-    CarType update(String id, CarTypeDto roleDto);
+    CarType update(String id, CreateCarTypeDto createCarTypeDto);
 }

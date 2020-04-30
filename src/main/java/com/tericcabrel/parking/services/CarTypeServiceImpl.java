@@ -3,7 +3,7 @@ package com.tericcabrel.parking.services;
 import com.tericcabrel.parking.exceptions.ResourceAlreadyExistsException;
 import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.models.dbs.CarType;
-import com.tericcabrel.parking.models.dtos.CarTypeDto;
+import com.tericcabrel.parking.models.dtos.CreateCarTypeDto;
 import com.tericcabrel.parking.repositories.CarTypeRepository;
 import com.tericcabrel.parking.services.interfaces.CarTypeService;
 import org.bson.types.ObjectId;
@@ -21,15 +21,15 @@ public class CarTypeServiceImpl implements CarTypeService {
     }
 
     @Override
-    public CarType save(CarTypeDto carTypeDto) {
-        CarType carType = carTypeRepository.findByName(carTypeDto.getName());
+    public CarType save(CreateCarTypeDto createCarTypeDto) {
+        CarType carType = carTypeRepository.findByName(createCarTypeDto.getName());
 
         if (carType != null) {
             throw new ResourceAlreadyExistsException("A car's type with this name already exists!");
         }
 
         carType = CarType.builder()
-                            .name(carTypeDto.getName())
+                            .name(createCarTypeDto.getName())
                             .build();
 
         return carTypeRepository.save(carType);
@@ -62,10 +62,10 @@ public class CarTypeServiceImpl implements CarTypeService {
     }
 
     @Override
-    public CarType update(String id, CarTypeDto carTypeDto) {
+    public CarType update(String id, CreateCarTypeDto createCarTypeDto) {
         CarType item = findById(id);
 
-        item.setName(carTypeDto.getName());
+        item.setName(createCarTypeDto.getName());
 
         return carTypeRepository.save(item);
     }
