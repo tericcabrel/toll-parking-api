@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         user = User.builder()
                     .email(createUserDto.getEmail())
                     .name(createUserDto.getName())
-                    .password(bCryptEncoder.encode(createUserDto.getPassword()))
+                    .password(bCryptPasswordEncoder.encode(createUserDto.getPassword()))
                     .gender(createUserDto.getGenderEnum())
                     .enabled(createUserDto.isEnabled())
                     .roles(createUserDto.getRoles())
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
     public User updatePassword(String id, String newPassword) {
         User user = findById(id);
 
-        user.setPassword(bCryptEncoder.encode(newPassword));
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
 
         return userRepository.save(user);
     }

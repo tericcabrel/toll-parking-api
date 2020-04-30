@@ -6,6 +6,7 @@ import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.dtos.CreateCarTypeDto;
 import com.tericcabrel.parking.models.dtos.CreateUserDto;
 import com.tericcabrel.parking.models.dtos.RoleDto;
+import com.tericcabrel.parking.models.enums.GenderEnum;
 import com.tericcabrel.parking.services.interfaces.CarTypeService;
 import com.tericcabrel.parking.services.interfaces.RoleService;
 import com.tericcabrel.parking.services.interfaces.UserService;
@@ -69,7 +70,6 @@ public class DataSeeder implements ApplicationListener<ContextRefreshedEvent> {
         });
     }
 
-
     /**
      * Load the default user
      */
@@ -80,7 +80,7 @@ public class DataSeeder implements ApplicationListener<ContextRefreshedEvent> {
             .email("admin@admin.com")
             .name("Admin User")
             .enabled(true)
-            .gender("M")
+            .gender(GenderEnum.MALE.toString())
             .password("qwerty")
             .build();
 
