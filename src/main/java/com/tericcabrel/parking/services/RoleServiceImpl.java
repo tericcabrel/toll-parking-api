@@ -5,7 +5,7 @@ import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.models.dbs.Role;
 import com.tericcabrel.parking.models.dtos.RoleDto;
 import com.tericcabrel.parking.repositories.RoleRepository;
-import com.tericcabrel.parking.services.interfaces.RoleInterface;
+import com.tericcabrel.parking.services.interfaces.RoleService;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service(value = "roleService")
-public class RoleServiceImpl implements RoleInterface {
+public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     public RoleServiceImpl(RoleRepository roleRepository) {

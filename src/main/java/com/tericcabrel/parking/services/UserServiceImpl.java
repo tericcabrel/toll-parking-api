@@ -6,7 +6,7 @@ import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.dtos.UpdateUserDto;
 import com.tericcabrel.parking.models.dtos.UserDto;
 import com.tericcabrel.parking.repositories.UserRepository;
-import com.tericcabrel.parking.services.interfaces.UserInterface;
+import com.tericcabrel.parking.services.interfaces.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service(value = "userService")
-public class UserServiceImpl implements UserInterface {
+public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired

@@ -5,7 +5,7 @@ import com.tericcabrel.parking.models.dtos.CarTypeDto;
 
 import java.util.List;
 
-public interface CarTypeInterface {
+public interface CarTypeService {
     CarType save(CarTypeDto roleDto);
 
     List<CarType> findAll();

@@ -5,7 +5,7 @@ import com.tericcabrel.parking.models.dtos.RoleDto;
 
 import java.util.List;
 
-public interface RoleInterface {
+public interface RoleService {
     Role save(RoleDto roleDto);
 
     List<Role> findAll();

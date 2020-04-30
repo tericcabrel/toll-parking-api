@@ -6,7 +6,7 @@ import com.tericcabrel.parking.models.dtos.UserDto;
 
 import java.util.List;
 
-public interface UserInterface {
+public interface UserService {
     User save(UserDto userDto);
 
     List<User> findAll();
