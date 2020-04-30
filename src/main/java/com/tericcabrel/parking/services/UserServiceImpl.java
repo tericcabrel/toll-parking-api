@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.services;
 
+import com.tericcabrel.parking.exceptions.PasswordNotMatchException;
 import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.exceptions.ResourceAlreadyExistsException;
 import com.tericcabrel.parking.models.dbs.User;

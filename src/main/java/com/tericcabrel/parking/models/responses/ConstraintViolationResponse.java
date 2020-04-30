@@ -7,16 +7,15 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.HashMap;
-import java.util.List;
 
 @Getter
 @Setter
 @Accessors(chain = true)
-public class InvalidDataResponse {
-    private HashMap<String, HashMap<String, List<String>>> data;
+public class ConstraintViolationResponse {
+    private HashMap<String, HashMap<String, String>> data;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public InvalidDataResponse(@JsonProperty("data") HashMap<String, HashMap<String, List<String>>> data) {
+    public ConstraintViolationResponse(@JsonProperty("data") HashMap<String, HashMap<String, String>> data) {
         this.data = data;
     }
 }
