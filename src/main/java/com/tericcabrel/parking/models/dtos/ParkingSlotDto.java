@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.models.dtos;
 
+import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
 import lombok.Builder;
 import lombok.Data;
@@ -24,11 +25,17 @@ public class ParkingSlotDto {
     @Valid
     private PricingPolicyDto pricingPolicyDto;
 
+    @NotBlank(message = "This field is required")
+    private String  carTypeId;
+
+    private CarType carType;
+
     @Builder
-    public ParkingSlotDto(String label, String state, PricingPolicyDto pricingPolicyDto)
+    public ParkingSlotDto(String label, String state, String carTypeId, PricingPolicyDto pricingPolicyDto)
     {
         this.label = label;
         this.state = state;
+        this.carTypeId = carTypeId;
         this.pricingPolicyDto = pricingPolicyDto;
     }
 

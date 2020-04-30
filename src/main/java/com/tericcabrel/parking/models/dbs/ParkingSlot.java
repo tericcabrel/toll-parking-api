@@ -3,6 +3,7 @@ package com.tericcabrel.parking.models.dbs;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -22,18 +23,23 @@ public class ParkingSlot extends BaseModel {
 
     private PricingPolicy pricingPolicy;
 
+    @DBRef
+    private CarType carType;
+
     public ParkingSlot() {
         this.state = ParkingSlotStateEnum.FREE;
     }
 
     @Builder
     public ParkingSlot(
-        String id, Date createdAt, Date updatedAt, String label, ParkingSlotStateEnum state, PricingPolicy pricingPolicy
+        String id, Date createdAt, Date updatedAt, String label, ParkingSlotStateEnum state,
+        PricingPolicy pricingPolicy, CarType carType
     ) {
         super(id, createdAt, updatedAt);
 
         this.label = label;
         this.state = state;
         this.pricingPolicy = pricingPolicy;
+        this.carType = carType;
     }
 }

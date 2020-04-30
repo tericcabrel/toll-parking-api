@@ -32,6 +32,7 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
                                             .label(parkingSlotDto.getLabel())
                                             .state(parkingSlotDto.getParkingSlotStateEnum())
                                             .pricingPolicy(pricingPolicy)
+                                            .carType(parkingSlotDto.getCarType())
                                             .build();
 
         return parkingSlotRepository.save(parkingSlot);
