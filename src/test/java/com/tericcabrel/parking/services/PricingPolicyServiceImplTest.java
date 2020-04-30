@@ -2,6 +2,8 @@ package com.tericcabrel.parking.services;
 
 import com.tericcabrel.parking.models.dbs.PricingPolicy;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 
@@ -58,17 +60,37 @@ class PricingPolicyServiceImplTest {
 
     @Test
     @Order(3)
-    void getArithmeticalExpressionSuccess() {
+    void getArithmeticExpressionSuccess() {
         HashMap<String, Double> userParameters = new HashMap<>();
         userParameters.put("pricePerHour", 100d);
         userParameters.put("numberOfHour", 3d);
         userParameters.put("tax", 200d);
 
-        String result = pricingPolicyService.getArithmeticalExpression(pricingPolicy, userParameters);
+        String result = pricingPolicyService.getArithmeticExpression(pricingPolicy, userParameters);
 
         assertThat(result).isNotNull();
         assertThat(result.replaceAll(" ", "")).hasSize(17);
     }
 
+
+
+    @Order(4)
+    @ParameterizedTest
+    @ValueSource(strings = { "100*2+6", "100*2*12", "100*(2+12)+(3-2)", "100*(2+12)/14", "3.78+4.78*(1.55)", "15-23*46" })
+    void validateArithmeticExpressionSuccess(String expression) {
+        boolean result = pricingPolicyService.validateArithmeticExpression(expression);
+
+        assertThat(result).isTrue();
+    }
+
+
+    @Order(5)
+    @ParameterizedTest
+    @ValueSource(strings = { "(2+)", "10+2*+6", "(4+5", "6+5-5)", "+4-5", "33*45/", "*6-", "+*9", "4.75)+5.25-*55" })
+    void failToValidateArithmeticExpression(String expression) {
+        boolean result = pricingPolicyService.validateArithmeticExpression(expression);
+
+        assertThat(result).isFalse();
+    }
 
 }

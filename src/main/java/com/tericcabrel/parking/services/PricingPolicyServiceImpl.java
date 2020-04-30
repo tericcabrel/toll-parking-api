@@ -15,7 +15,7 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      * @return evaluation property with the parameters replaced by numeric value
      */
     @Override
-    public String getArithmeticalExpression(PricingPolicy pricingPolicy, HashMap<String, Double> parameters) {
+    public String getArithmeticExpression(PricingPolicy pricingPolicy, HashMap<String, Double> parameters) {
         HashMap<String, Double> defaultParameters = pricingPolicy.getParameters();
         String evaluation = pricingPolicy.getEvaluation();
 
@@ -63,8 +63,23 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      * @return <code>true</code> if evaluation replaced by numeric value is a valid arithmetical expression
      */
     @Override
-    public boolean validateExpression(String expression) {
-        return false;
+    public boolean validateArithmeticExpression(String expression) {
+        String pattern = "(([\\(])?(\\d+|\\d+\\.\\d+)([\\+\\*\\-\\/])?(\\d+|\\d+\\.\\d+)?([\\)])?([\\*\\+\\-\\/])?)+";
+        String expressionWithNoSpace = expression.replaceAll(" ", "");
+
+        boolean result = Pattern.matches(pattern, expressionWithNoSpace);
+
+        if (!result) return result;
+
+        result = !hasSuccessiveOperator(expressionWithNoSpace);
+
+        if (!result) return result;
+
+        result = !endWithOperator(expressionWithNoSpace);
+
+        if (!result) return result;
+
+        return result;
     }
 
     /**
@@ -82,12 +97,44 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
         }
 
         // get arithmetical expression
-        String expression = getArithmeticalExpression(pricingPolicy, parameters);
+        String expression = getArithmeticExpression(pricingPolicy, parameters);
 
         // TODO validate expression
 
         // TODO Evaluate arithmetical expression
 
         return 0;
+    }
+
+    /**
+     * @param expression Expression to evaluate
+     *
+     * @return true if has successive operator otherwise false
+     */
+    private boolean hasSuccessiveOperator(String expression) {
+        int expressionLength = expression.length();
+        int charCount = 0;
+        String operators = "+-*/()";
+
+        for (int i =0; i < expressionLength; i++) {
+            charCount = operators.indexOf(expression.charAt(i)) >= 0 ? charCount + 1 : 0;
+
+            if (charCount == 2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param expression Expression to evaluate
+     *
+     * @return true if end with any operators otherwise false
+     */
+    private boolean endWithOperator(String expression) {
+        String operators = "+-*/(";
+
+        return operators.indexOf(expression.charAt(expression.length() - 1)) >= 0;
     }
 }
