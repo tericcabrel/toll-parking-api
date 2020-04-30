@@ -2,6 +2,8 @@ package com.tericcabrel.parking.controllers;
 
 import com.tericcabrel.parking.models.dtos.UpdatePasswordDto;
 import com.tericcabrel.parking.models.dtos.UpdateUserDto;
+import com.tericcabrel.parking.models.responses.UserListResponse;
+import com.tericcabrel.parking.models.responses.UserResponse;
 import com.tericcabrel.parking.services.interfaces.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

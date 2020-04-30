@@ -3,6 +3,7 @@ package com.tericcabrel.parking.services;
 import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.exceptions.ResourceAlreadyExistsException;
 import com.tericcabrel.parking.models.dbs.User;
+import com.tericcabrel.parking.models.dtos.UpdatePasswordDto;
 import com.tericcabrel.parking.models.dtos.UpdateUserDto;
 import com.tericcabrel.parking.models.dtos.CreateUserDto;
 import com.tericcabrel.parking.repositories.UserRepository;
@@ -106,12 +107,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updatePassword(String id, String newPassword) {
+    public User updatePassword(String id, UpdatePasswordDto updatePasswordDto) {
         User user = findById(id);
 
-        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        if(user != null) {
+            if (bCryptPasswordEncoder.matches(updatePasswordDto.getCurrentPassword(), user.getPassword())) {
+                user.setPassword(bCryptPasswordEncoder.encode(updatePasswordDto.getNewPassword()));
 
-        return userRepository.save(user);
+                userRepository.save(user);
+            } else {
+                throw new PasswordNotMatchException("The current password don't match!");
+            }
+        }
+
+        return user;
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

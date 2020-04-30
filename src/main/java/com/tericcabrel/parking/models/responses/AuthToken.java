@@ -1,0 +1,17 @@
+package com.tericcabrel.parking.models.responses;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+@AllArgsConstructor
+@Getter
+@Setter
+@Accessors(chain = true)
+class AuthToken {
+    private String accessToken;
+    private long expiresIn;
+}
+
+
