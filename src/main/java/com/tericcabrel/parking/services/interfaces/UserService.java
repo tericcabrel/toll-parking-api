@@ -3,10 +3,11 @@ package com.tericcabrel.parking.services.interfaces;
 import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.dtos.UpdateUserDto;
 import com.tericcabrel.parking.models.dtos.CreateUserDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     User save(CreateUserDto createUserDto);
 
     List<User> findAll();

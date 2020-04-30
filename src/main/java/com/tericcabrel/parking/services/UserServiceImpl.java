@@ -9,11 +9,16 @@ import com.tericcabrel.parking.repositories.UserRepository;
 import com.tericcabrel.parking.services.interfaces.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserService {
@@ -107,5 +112,24 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
 
         return userRepository.save(user);
+    }
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username);
+
+        if(user == null){
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+
+        return new org.springframework.security.core.userdetails.User(
+            user.getEmail(), user.getPassword(), true, true, true, true, getAuthority(user)
+        );
+    }
+
+    private Set<SimpleGrantedAuthority> getAuthority(User user) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
+
+        return authorities;
     }
 }
