@@ -5,6 +5,8 @@ import com.tericcabrel.parking.services.interfaces.PricingPolicyService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 @Service("pricingPolicyService")
 public class PricingPolicyServiceImpl implements PricingPolicyService {
@@ -22,7 +24,19 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      */
     @Override
     public boolean validateFormat(PricingPolicy pricingPolicy) {
-        return false;
+        String pattern = "[\\(\\)\\/\\+\\*\\s-]+";
+
+        String evaluation = pricingPolicy.getEvaluation();
+
+        Set<String> keys = pricingPolicy.getParameters().keySet();
+
+        // Remove all the strings in the evaluation
+        for (String key: keys) {
+            evaluation = evaluation.replaceAll(key, "");
+        }
+
+        // After the strings removed it will remain only +, -, *, ,/, (, ). if not, it's means the format is not valid
+        return Pattern.matches(pattern, evaluation);
     }
 
     /**
