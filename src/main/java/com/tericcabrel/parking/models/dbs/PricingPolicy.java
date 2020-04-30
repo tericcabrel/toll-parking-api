@@ -7,12 +7,10 @@ import lombok.experimental.Accessors;
 
 import java.util.HashMap;
 
-import com.tericcabrel.parking.models.interfaces.IParkingPolicy;
-
 @Getter
 @Setter
 @Accessors(chain = true)
-public class PricingPolicy implements IParkingPolicy {
+public class PricingPolicy {
     /**
      * Contains the parameters to build pricing evaluation. here is and exeample
      * {
@@ -41,39 +39,5 @@ public class PricingPolicy implements IParkingPolicy {
     public PricingPolicy(HashMap<String, Float> parameters, String evaluation) {
         this.parameters = parameters;
         this.evaluation = evaluation;
-    }
-
-    /**
-     * @return evaluation property with the parameters replaced by numeric value
-     */
-    @Override
-    public String getArithmeticalExpresion() {
-        return null;
-    }
-
-    /**
-     * @return <code>true</code> if the parameters and evaluation are valid otherwise <code>false</code>
-     */
-    @Override
-    public boolean validateFormat() {
-        return false;
-    }
-
-    /**
-     * @return <code>true</code> if evaluation replaced by numeric value is a valid arithmetical expression
-     */
-    @Override
-    public boolean validateExpression() {
-        return false;
-    }
-
-    /**
-     * @param parameters parameters containing the values to be used for calculation
-     *
-     * @return The price
-     */
-    @Override
-    public float calculate(HashMap<String, Float> parameters) {
-        return 0;
     }
 }
