@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class CustomerDto extends BaseUserDto {
+public class CreateCustomerDto extends BaseUserDto {
     @NotBlank(message = "The name is required")
     private String name;
 
@@ -29,7 +29,7 @@ public class CustomerDto extends BaseUserDto {
     private CarType carType;
 
     @Builder
-    public CustomerDto(String name, String gender, String email, String phone, String carTypeId) {
+    public CreateCustomerDto(String name, String gender, String email, String phone, String carTypeId) {
         this.name = name;
         this.email = email;
         this.phone = phone;

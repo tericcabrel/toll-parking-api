@@ -4,7 +4,7 @@ import com.tericcabrel.parking.exceptions.ResourceAlreadyExistsException;
 import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.models.dbs.Customer;
 import com.tericcabrel.parking.models.dtos.UpdateCustomerDto;
-import com.tericcabrel.parking.models.dtos.CustomerDto;
+import com.tericcabrel.parking.models.dtos.CreateCustomerDto;
 import com.tericcabrel.parking.repositories.CustomerRepository;
 import com.tericcabrel.parking.services.interfaces.CustomerService;
 import org.bson.types.ObjectId;
@@ -22,19 +22,19 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save(CustomerDto customerDto) {
-        Customer customer = customerRepository.findByEmail(customerDto.getEmail());
+    public Customer save(CreateCustomerDto createCustomerDto) {
+        Customer customer = customerRepository.findByEmail(createCustomerDto.getEmail());
 
         if (customer != null) {
             throw new ResourceAlreadyExistsException("A customer with this email already exists!");
         }
 
         customer = Customer.builder()
-                    .email(customerDto.getEmail())
-                    .name(customerDto.getName())
-                    .gender(customerDto.getGenderEnum())
-                    .phone(customerDto.getPhone())
-                    .carType(customerDto.getCarType())
+                    .email(createCustomerDto.getEmail())
+                    .name(createCustomerDto.getName())
+                    .gender(createCustomerDto.getGenderEnum())
+                    .phone(createCustomerDto.getPhone())
+                    .carType(createCustomerDto.getCarType())
                     .build();
 
         return customerRepository.save(customer);
