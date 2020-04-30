@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.events.OnCreateUserCompleteEvent;
 import com.tericcabrel.parking.exceptions.UserNotActiveException;
 import com.tericcabrel.parking.models.dbs.Role;
 import com.tericcabrel.parking.models.dbs.User;
@@ -59,7 +60,7 @@ public class UserController {
         this.eventPublisher = eventPublisher;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    // @PreAuthorize("hasRole('ROLE_ADMIN')") To make the test of API easy
     @PostMapping(value = "/create")
     public ResponseEntity<UserResponse> create(@Valid @RequestBody CreateUserDto createUserDto) {
         Role role = roleService.findByName(ROLE_USER);
@@ -71,7 +72,7 @@ public class UserController {
 
         User user = userService.save(createUserDto);
 
-        // eventPublisher.publishEvent(new OnCreateUserCompleteEvent(user));
+        eventPublisher.publishEvent(new OnCreateUserCompleteEvent(user, createUserDto.getConfirmPassword()));
 
         return ResponseEntity.ok(new UserResponse(user));
     }
