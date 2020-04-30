@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-class AuthToken {
+public class AuthToken {
     private String accessToken;
     private long expiresIn;
 }
