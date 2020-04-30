@@ -66,12 +66,14 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
 
     @Override
     public ParkingSlot update(String id, ParkingSlotDto parkingSlotDto) {
-        ParkingSlot parkingSlot = findById(id);
+        ParkingSlot item = findById(id);
 
-        parkingSlot.setLabel(parkingSlotDto.getLabel());
+        if (parkingSlotDto.getLabel() != null) {
+            item.setLabel(parkingSlotDto.getLabel());
+        }
 
         if (parkingSlotDto.getState() != null) {
-            parkingSlot.setState(parkingSlotDto.getParkingSlotStateEnum());
+            item.setState(parkingSlotDto.getParkingSlotStateEnum());
         }
 
         PricingPolicy pricingPolicy = PricingPolicy.builder()
@@ -79,8 +81,8 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
             .evaluation(parkingSlotDto.getPricingPolicyDto().getEvaluation())
             .build();
 
-        parkingSlot.setPricingPolicy(pricingPolicy);
+        item.setPricingPolicy(pricingPolicy);
 
-        return parkingSlotRepository.save(parkingSlot);
+        return parkingSlotRepository.save(item);
     }
 }

@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.models.dbs;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class Customer extends BaseModel {
     @DBRef
     private CarType carType;
 
+    @Builder
     public Customer(
         String id, Date createdAt, Date updatedAt, String name, String email, GenderEnum gender,
         String phone, CarType carType

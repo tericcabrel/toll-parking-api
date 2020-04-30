@@ -64,14 +64,14 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role update(String id, RoleDto roleDto) {
-        Role role = findById(id);
+        Role item = findById(id);
 
-        role.setName(roleDto.getName());
+        item.setName(roleDto.getName());
 
         if (roleDto.getDescription() != null) {
-            role.setDescription(roleDto.getDescription());
+            item.setDescription(roleDto.getDescription());
         }
 
-        return roleRepository.save(role);
+        return roleRepository.save(item);
     }
 }

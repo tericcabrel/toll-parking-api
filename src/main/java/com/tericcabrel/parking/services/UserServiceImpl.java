@@ -74,29 +74,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(String id, UpdateUserDto updateUserDto) {
-        User user = findById(id);
+        User item = findById(id);
 
-        if(user != null) {
-            // All properties must exists in the DTO even if you don't intend to update it
-            // Otherwise, it will set to null
-            // BeanUtils.copyProperties(userDto, user, "password");
+        // All properties must exists in the DTO even if you don't intend to update it
+        // Otherwise, it will set to null
+        // BeanUtils.copyProperties(userDto, user, "password");
 
-            if(updateUserDto.getName() != null) {
-                user.setName(updateUserDto.getName());
-            }
-
-            if(updateUserDto.getGender() != null) {
-                user.setGender(updateUserDto.getGenderEnum());
-            }
-
-            if (updateUserDto.getEnabled() < 0) {
-                user.setEnabled(updateUserDto.getEnabled() != 0);
-            }
-
-            return userRepository.save(user);
+        if(updateUserDto.getName() != null) {
+            item.setName(updateUserDto.getName());
         }
 
-        return null;
+        if(updateUserDto.getGender() != null) {
+            item.setGender(updateUserDto.getGenderEnum());
+        }
+
+        if (updateUserDto.getEnabled() < 0) {
+            item.setEnabled(updateUserDto.getEnabled() != 0);
+        }
+
+        return userRepository.save(item);
     }
 
     @Override

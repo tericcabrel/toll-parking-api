@@ -63,10 +63,10 @@ public class CarTypeServiceImpl implements CarTypeService {
 
     @Override
     public CarType update(String id, CarTypeDto carTypeDto) {
-        CarType carType = findById(id);
+        CarType item = findById(id);
 
-        carType.setName(carTypeDto.getName());
+        item.setName(carTypeDto.getName());
 
-        return carTypeRepository.save(carType);
+        return carTypeRepository.save(item);
     }
 }
