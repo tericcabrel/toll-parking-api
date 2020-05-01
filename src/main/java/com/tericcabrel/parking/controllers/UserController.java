@@ -12,6 +12,7 @@ import com.tericcabrel.parking.models.responses.*;
 import com.tericcabrel.parking.services.interfaces.RoleService;
 import com.tericcabrel.parking.services.interfaces.UserService;
 import com.tericcabrel.parking.utils.JwtTokenUtil;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -137,7 +138,7 @@ public class UserController {
     })
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
-    public ResponseEntity<UserResponse> currentUser(){
+    public ResponseEntity<UserResponse> currentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         return ResponseEntity.ok(new UserResponse(userService.findByEmail(authentication.getName())));
@@ -151,7 +152,7 @@ public class UserController {
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> one(@PathVariable String id){
+    public ResponseEntity<UserResponse> one(@PathVariable String id) {
         return ResponseEntity.ok(new UserResponse(userService.findById(id)));
     }
 
