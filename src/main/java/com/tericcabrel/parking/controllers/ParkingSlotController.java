@@ -2,6 +2,7 @@ package com.tericcabrel.parking.controllers;
 
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dbs.ParkingSlot;
+import com.tericcabrel.parking.models.dtos.CalculatePricingDto;
 import com.tericcabrel.parking.models.dtos.CreateParkingSlotDto;
 import com.tericcabrel.parking.models.dtos.UpdateParkingSlotDto;
 import com.tericcabrel.parking.models.responses.ParkingSlotListResponse;
@@ -10,6 +11,7 @@ import com.tericcabrel.parking.models.responses.GenericResponse;
 import com.tericcabrel.parking.models.responses.InvalidDataResponse;
 import com.tericcabrel.parking.services.interfaces.CarTypeService;
 import com.tericcabrel.parking.services.interfaces.ParkingSlotService;
+import com.tericcabrel.parking.services.interfaces.PricingPolicyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -19,6 +21,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.HashMap;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 
@@ -30,9 +34,14 @@ public class ParkingSlotController {
 
     private CarTypeService carTypeService;
 
-    public ParkingSlotController(ParkingSlotService parkingSlotService, CarTypeService carTypeService) {
+    private PricingPolicyService pricingPolicyService;
+
+    public ParkingSlotController(
+        ParkingSlotService parkingSlotService, CarTypeService carTypeService, PricingPolicyService pricingPolicyService
+    ) {
         this.parkingSlotService = parkingSlotService;
         this.carTypeService = carTypeService;
+        this.pricingPolicyService = pricingPolicyService;
     }
 
     @ApiOperation(value = "Create parking's slot", response = GenericResponse.class)
@@ -110,5 +119,23 @@ public class ParkingSlotController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "Calculate the price of the parking's slot location by a car", response = GenericResponse.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Parking's slot updated successfully!", response = ParkingSlotResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
+    })
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PostMapping("/{id}/price")
+    public ResponseEntity<GenericResponse> update(@PathVariable String id, @Valid @RequestBody CalculatePricingDto calculatePricingDto) {
+        ParkingSlot parkingSlot = parkingSlotService.findById(id);
 
+        double price = pricingPolicyService.calculate(parkingSlot.getPricingPolicy(), calculatePricingDto.getParameters());
+
+        HashMap<String, Object> content = new HashMap<>();
+        content.put("price", price);
+
+        return ResponseEntity.ok(new GenericResponse(content));
+    }
 }
