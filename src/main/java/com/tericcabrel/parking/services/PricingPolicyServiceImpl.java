@@ -2,6 +2,7 @@ package com.tericcabrel.parking.services;
 
 import com.tericcabrel.parking.models.dbs.PricingPolicy;
 import com.tericcabrel.parking.services.interfaces.PricingPolicyService;
+import com.tericcabrel.parking.utils.ArithmeticExpressionEvaluation;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -109,16 +110,15 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
         // get arithmetical expression
         String expression = getArithmeticExpression(pricingPolicy, parameters);
 
-        // validate expression
+        // Validate expression
         boolean isValidExpression = validateArithmeticExpression(expression);
 
-        if (!isValidFormat) {
+        if (!isValidExpression) {
             // TODO throw exception
         }
 
-        // TODO Evaluate arithmetical expression
-
-        return 0;
+        // Evaluate arithmetical expression
+        return ArithmeticExpressionEvaluation.evaluate(expression);
     }
 
     /**

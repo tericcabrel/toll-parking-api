@@ -25,8 +25,8 @@ class PricingPolicyServiceImplTest {
                                 .build();
     }
 
-    @AfterEach
-    void afterEach() {
+    @BeforeEach
+    void beforeEach() {
         HashMap<String, Double> goodParameters = new HashMap<>();
         goodParameters.put("pricePerHour", 100d);
         goodParameters.put("numberOfHour", -1d);
@@ -73,7 +73,6 @@ class PricingPolicyServiceImplTest {
     }
 
 
-
     @Order(4)
     @ParameterizedTest
     @ValueSource(strings = { "100*2+6", "100*2*12", "100*(2+12)+(3-2)", "100*(2+12)/14", "3.78+4.78*(1.55)", "15-23*46" })
@@ -91,6 +90,19 @@ class PricingPolicyServiceImplTest {
         boolean result = pricingPolicyService.validateArithmeticExpression(expression);
 
         assertThat(result).isFalse();
+    }
+
+    @Test
+    @Order(6)
+    void calculatePricingPolicySuccess() {
+        HashMap<String, Double> userParameters = new HashMap<>();
+        userParameters.put("pricePerHour", 100d);
+        userParameters.put("numberOfHour", 3d);
+        userParameters.put("tax", 200d);
+
+        Double result = pricingPolicyService.calculate(pricingPolicy, userParameters);
+
+        assertThat(result).isEqualTo(500);
     }
 
 }
