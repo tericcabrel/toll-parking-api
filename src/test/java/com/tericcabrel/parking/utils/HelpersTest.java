@@ -1,18 +1,25 @@
 package com.tericcabrel.parking.utils;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HelpersTest {
 
     @Test
+    void createDateFromValue() {
+        Date date = Helpers.createDateFromValue(2020, Calendar.MAY, 1, 22, 40, 15);
+
+        assertThat(date).isInstanceOf(Date.class);
+        assertThat(date.toString()).isEqualTo("Fri May 01 22:40:15 WAT 2020");
+    }
+
+    @Test
     void calculateDuration() {
-        Date startTime = new Date(2020, Calendar.MAY, 1, 11, 3, 4);
-        Date endTime = new Date(2020, Calendar.MAY, 1, 14, 36, 4);
+        Date startTime = Helpers.createDateFromValue(2020, Calendar.MAY, 1, 11, 3, 4);
+        Date endTime = Helpers.createDateFromValue(2020, Calendar.MAY, 1, 14, 36, 4);
 
         double hour = Helpers.calculateDuration(startTime, endTime); // 3.55
 
@@ -21,11 +28,46 @@ class HelpersTest {
 
     @Test
     void formatDate() {
-        Date startTime = new Date(2020, Calendar.MAY, 1, 11, 3, 4);
+        Date startTime = Helpers.createDateFromValue(2020, Calendar.MAY, 1, 11, 3, 4);
 
         String dateString = Helpers.formatDate(startTime);
 
         assertThat(dateString).isNotNull();
         assertThat(dateString).isEqualTo("01 May 2020 at 11:03");
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @TestMethodOrder(MethodOrderer.OrderAnnotation.OrderAnnotation.class)
+    class UpdateErrorHashMap {
+        HashMap<String, List<String>> errors;
+
+        @BeforeAll
+        void beforeAll() {
+            errors = new HashMap<>();
+
+            errors.put("username", Arrays.asList("Error Username 1", "Error Username 2"));
+            errors.put("email", Collections.singletonList("Error Email 1"));
+        }
+
+        @Test
+        @Order(1)
+        void addMessageInUnExistingFieldError() {
+            Helpers.updateErrorHashMap(errors, "input", "Error Input 1");
+
+            assertThat(errors.size()).isEqualTo(3);
+            assertThat(errors.get("input")).hasSize(1);
+            assertThat(errors.get("input")).contains("Error Input 1");
+        }
+
+        @Test
+        @Order(2)
+        void addMessageInExistingFieldError() {
+            Helpers.updateErrorHashMap(errors, "input", "Error Input 2");
+
+            assertThat(errors.size()).isEqualTo(3);
+            assertThat(errors.get("input")).hasSize(2);
+            assertThat(errors.get("input")).contains("Error Input 2");
+        }
     }
 }

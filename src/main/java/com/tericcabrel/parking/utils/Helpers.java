@@ -3,10 +3,7 @@ package com.tericcabrel.parking.utils;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Contains useful methods used in the project
@@ -59,6 +56,30 @@ public class Helpers {
     }
 
     /**
+     * @param year Year
+     * @param month Month (0 based)
+     * @param day Day
+     * @param hour Hour
+     * @param minute Minute
+     * @param second Second
+     *
+     * @return Instance of Date
+     */
+    public static Date createDateFromValue(int year, int month, int day, int hour, int minute, int second) {
+        Calendar cal = Calendar.getInstance();
+
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.SECOND, second);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        return cal.getTime();
+    }
+
+    /**
      * @param date format a date to MM/dd/yyyy HH:mm
      *
      * @return the date formatted
@@ -68,6 +89,6 @@ public class Helpers {
         SimpleDateFormat hourFormat = new SimpleDateFormat(" 'at' HH:mm");
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 
-        return dateFormat.format(date) + (Integer.valueOf(yearFormat.format(date)) - 1900) + hourFormat.format(date);
+        return dateFormat.format(date) + Integer.valueOf(yearFormat.format(date)) + hourFormat.format(date);
     }
 }
