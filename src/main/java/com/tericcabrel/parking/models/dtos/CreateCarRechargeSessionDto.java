@@ -8,19 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
 
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
 public class CreateCarRechargeSessionDto {
-    @NotBlank(message = "This field is required")
-    private Date startTime;
-
-    private Date endTime;
-
-    private float price;
-
     @NotBlank(message = "This field is required")
     private String customerId;
 
@@ -29,12 +21,7 @@ public class CreateCarRechargeSessionDto {
     private ParkingSlot parkingSlot;
 
     @Builder
-    public CreateCarRechargeSessionDto(
-        Date startTime, Date endTime, float price, Customer customer
-    ) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.price = price;
+    public CreateCarRechargeSessionDto(Customer customer) {
         this.customer = customer;
     }
 }

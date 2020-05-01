@@ -71,7 +71,7 @@ public class CarRechargeSessionController {
     ) {
         Customer customer = customerService.findById(createCarRechargeSessionDto.getCustomerId());
 
-        List<ParkingSlot> parkingSlotListAvailable = parkingSlotService.findAvailableByCarType(customer.getCarType().getId());
+        List<ParkingSlot> parkingSlotListAvailable = parkingSlotService.findAvailableByCarType(customer.getCarType());
 
         if (parkingSlotListAvailable.size() == 0) {
             throw new NoParkingSlotAvailableException(
@@ -179,7 +179,8 @@ public class CarRechargeSessionController {
 
         Date dateNow = new Date();
 
-        content.put("price", Helpers.calculateDuration(carRechargeSession.getStartTime(), dateNow));
+        content.put("time", dateNow);
+        content.put("duration", Helpers.calculateDuration(carRechargeSession.getStartTime(), dateNow));
 
         return ResponseEntity.ok(new GenericResponse(content));
     }

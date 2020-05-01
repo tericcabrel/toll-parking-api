@@ -1,6 +1,7 @@
 package com.tericcabrel.parking.services;
 
 import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
+import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dbs.ParkingSlot;
 import com.tericcabrel.parking.models.dbs.PricingPolicy;
 import com.tericcabrel.parking.models.dtos.CreateParkingSlotDto;
@@ -97,10 +98,8 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
     }
 
     @Override
-    public List<ParkingSlot> findAvailableByCarType(String carTypeId) {
-        return parkingSlotRepository.findAllByCarTypeAndStateOrderByLastUsedTimeAsc(
-            new ObjectId(carTypeId), ParkingSlotStateEnum.FREE
-        );
+    public List<ParkingSlot> findAvailableByCarType(CarType carType) {
+        return parkingSlotRepository.findAllByCarTypeAndStateOrderByLastUsedTimeAsc(carType, ParkingSlotStateEnum.FREE);
     }
 
 

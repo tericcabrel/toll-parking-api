@@ -9,6 +9,7 @@ import com.tericcabrel.parking.services.interfaces.CarRechargeSessionService;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +24,7 @@ public class CarRechargeSessionServiceImpl implements CarRechargeSessionService 
     @Override
     public CarRechargeSession save(CreateCarRechargeSessionDto createCarRechargeSessionDto) {
         CarRechargeSession carRechargeSession = CarRechargeSession.builder()
-                                                            .startTime(createCarRechargeSessionDto.getStartTime())
-                                                            .price(createCarRechargeSessionDto.getPrice())
+                                                            .startTime(new Date())
                                                             .parkingSlot(createCarRechargeSessionDto.getParkingSlot())
                                                             .customer(createCarRechargeSessionDto.getCustomer())
                                                             .build();
@@ -78,6 +78,6 @@ public class CarRechargeSessionServiceImpl implements CarRechargeSessionService 
             item.setPrice(updateCarRechargeSessionDto.getPrice());
         }
 
-        return null;
+        return carRechargeSessionRepository.save(item);
     }
 }

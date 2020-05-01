@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.services.interfaces;
 
+import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dbs.ParkingSlot;
 import com.tericcabrel.parking.models.dtos.CreateParkingSlotDto;
 import com.tericcabrel.parking.models.dtos.UpdateParkingSlotDto;
@@ -19,7 +20,7 @@ public interface ParkingSlotService {
 
     ParkingSlot update(String id, UpdateParkingSlotDto updateParkingSlotDto);
 
-    List<ParkingSlot> findAvailableByCarType(String carTypeId);
+    List<ParkingSlot> findAvailableByCarType(CarType carType);
 
     ParkingSlot update(ParkingSlot parkingSlot);
 }

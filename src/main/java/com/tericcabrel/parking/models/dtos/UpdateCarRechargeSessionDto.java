@@ -4,13 +4,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @NoArgsConstructor
 @Data
 public class UpdateCarRechargeSessionDto {
-    @NotBlank(message = "This field is required")
+    @NotNull(message = "This field is required")
     private Date endTime;
 
     // TODO Greather than Zero
