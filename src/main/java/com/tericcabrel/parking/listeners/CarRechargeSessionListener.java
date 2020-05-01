@@ -1,10 +1,9 @@
 package com.tericcabrel.parking.listeners;
 
 import com.tericcabrel.parking.events.OnCarRechargeSessionCompleteEvent;
-import com.tericcabrel.parking.events.OnCreateUserCompleteEvent;
 import com.tericcabrel.parking.models.dbs.CarRechargeSession;
 import com.tericcabrel.parking.models.dbs.Customer;
-import com.tericcabrel.parking.models.dbs.User;
+import com.tericcabrel.parking.utils.Helpers;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
@@ -50,6 +49,7 @@ public class CarRechargeSessionListener implements ApplicationListener<OnCarRech
     private void sendEmail(OnCarRechargeSessionCompleteEvent event) {
         Customer customer = event.getCustomer();
         CarRechargeSession carRechargeSession = event.getCarRechargeSession();
+        double duration = Helpers.calculateDuration(carRechargeSession.getStartTime(), carRechargeSession.getEndTime());
 
         String mailFrom = environment.getProperty("spring.mail.properties.mail.smtp.from");
         String mailFromName = environment.getProperty("mail.from.name", "Identity");
@@ -64,10 +64,14 @@ public class CarRechargeSessionListener implements ApplicationListener<OnCarRech
             email.setFrom(new InternetAddress(mailFrom, mailFromName));
 
             final Context ctx = new Context(LocaleContextHolder.getLocale());
-            ctx.setVariable("email", customer.getEmail());
-            ctx.setVariable("name", customer.getName());
             ctx.setVariable("springLogo", SPRING_LOGO_IMAGE);
-            // ctx.setVariable("password", event.getRawPassword());
+            ctx.setVariable("customer", customer);
+            ctx.setVariable("carRecharge", carRechargeSession);
+            ctx.setVariable("duration", duration);
+            ctx.setVariable("carRechargeStartTime", Helpers.formatDate(carRechargeSession.getStartTime()));
+            ctx.setVariable("carRechargeEndTime", Helpers.formatDate(carRechargeSession.getEndTime()));
+            ctx.setVariable("name", customer.getName());
+            ctx.setVariable("email", customer.getEmail());
 
             final String htmlContent = htmlTemplateEngine.process(TEMPLATE_NAME, ctx);
 

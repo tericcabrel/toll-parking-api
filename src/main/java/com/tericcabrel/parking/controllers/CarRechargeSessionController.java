@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.events.OnCarRechargeSessionCompleteEvent;
 import com.tericcabrel.parking.exceptions.NoParkingSlotAvailableException;
 import com.tericcabrel.parking.models.dbs.CarRechargeSession;
 import com.tericcabrel.parking.models.dbs.Customer;
@@ -19,6 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,15 +42,19 @@ public class CarRechargeSessionController {
     private CustomerService customerService;
 
     private ParkingSlotService parkingSlotService;
-    
+
+    private ApplicationEventPublisher eventPublisher;
+
     public CarRechargeSessionController(
         CarRechargeSessionService carRechargeSessionService,
         CustomerService customerService,
-        ParkingSlotService parkingSlotService
+        ParkingSlotService parkingSlotService,
+        ApplicationEventPublisher eventPublisher
     ) {
         this.carRechargeSessionService = carRechargeSessionService;
         this.customerService = customerService;
         this.parkingSlotService = parkingSlotService;
+        this.eventPublisher = eventPublisher;
     }
 
     @ApiOperation(value = "Create car's recharge session", response = GenericResponse.class)
@@ -135,7 +141,10 @@ public class CarRechargeSessionController {
 
             parkingSlotService.update(parkingSlot);
 
-            // TODO Send email to customer
+            // Notify the event to the listener to send the email
+            eventPublisher.publishEvent(
+                new OnCarRechargeSessionCompleteEvent(carRechargeSession.getCustomer(), carRechargeSession)
+            );
         }
 
         return ResponseEntity.ok(new CarRechargeSessionResponse(carRechargeSession));
