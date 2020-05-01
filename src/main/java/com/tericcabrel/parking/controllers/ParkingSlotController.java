@@ -97,7 +97,9 @@ public class ParkingSlotController {
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PutMapping("/{id}")
-    public ResponseEntity<ParkingSlotResponse> update(@PathVariable String id, @Valid @RequestBody UpdateParkingSlotDto updateParkingSlotDto) {
+    public ResponseEntity<ParkingSlotResponse> update(
+        @PathVariable String id, @Valid @RequestBody UpdateParkingSlotDto updateParkingSlotDto
+    ) {
         if (updateParkingSlotDto.getCarTypeId() != null) {
             updateParkingSlotDto.setCarType(carTypeService.findById(updateParkingSlotDto.getCarTypeId()));
         }
@@ -128,7 +130,9 @@ public class ParkingSlotController {
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/{id}/price")
-    public ResponseEntity<GenericResponse> update(@PathVariable String id, @Valid @RequestBody CalculatePricingDto calculatePricingDto) {
+    public ResponseEntity<GenericResponse> getPrice(
+        @PathVariable String id, @Valid @RequestBody CalculatePricingDto calculatePricingDto
+    ) {
         ParkingSlot parkingSlot = parkingSlotService.findById(id);
 
         double price = pricingPolicyService.calculate(parkingSlot.getPricingPolicy(), calculatePricingDto.getParameters());

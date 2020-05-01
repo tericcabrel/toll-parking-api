@@ -4,9 +4,12 @@ import com.tericcabrel.parking.models.enums.GenderEnum;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 public abstract class BaseUserDto {
+    @NotBlank(message = "This field is required")
     protected String gender;
 
     /**

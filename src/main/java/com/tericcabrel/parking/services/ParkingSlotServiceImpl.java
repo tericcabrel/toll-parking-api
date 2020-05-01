@@ -26,8 +26,8 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
     public ParkingSlot save(CreateParkingSlotDto createParkingSlotDto) {
 
         PricingPolicy pricingPolicy = PricingPolicy.builder()
-                                                .parameters(createParkingSlotDto.getPricingPolicyDto().getParameters())
-                                                .evaluation(createParkingSlotDto.getPricingPolicyDto().getEvaluation())
+                                                .parameters(createParkingSlotDto.getPricingPolicy().getParameters())
+                                                .evaluation(createParkingSlotDto.getPricingPolicy().getEvaluation())
                                                 .build();
 
         ParkingSlot parkingSlot = ParkingSlot.builder()
@@ -78,9 +78,13 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
             item.setState(updateParkingSlotDto.getParkingSlotStateEnum());
         }
 
+        if (updateParkingSlotDto.getCarType() != null) {
+            item.setCarType(updateParkingSlotDto.getCarType());
+        }
+
         PricingPolicy pricingPolicy = PricingPolicy.builder()
-                                            .parameters(updateParkingSlotDto.getPricingPolicyDto().getParameters())
-                                            .evaluation(updateParkingSlotDto.getPricingPolicyDto().getEvaluation())
+                                            .parameters(updateParkingSlotDto.getPricingPolicy().getParameters())
+                                            .evaluation(updateParkingSlotDto.getPricingPolicy().getEvaluation())
                                             .build();
 
         item.setPricingPolicy(pricingPolicy);

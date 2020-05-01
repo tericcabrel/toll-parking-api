@@ -20,7 +20,7 @@ public class UpdateParkingSlotDto {
 
     @NotNull(message = "Pricing policy is required")
     @Valid
-    private PricingPolicyDto pricingPolicyDto;
+    private PricingPolicyDto pricingPolicy;
 
     private String  carTypeId;
 
@@ -32,7 +32,7 @@ public class UpdateParkingSlotDto {
         this.label = label;
         this.state = state;
         this.carTypeId = carTypeId;
-        this.pricingPolicyDto = pricingPolicyDto;
+        this.pricingPolicy = pricingPolicyDto;
     }
 
     /**

@@ -23,7 +23,7 @@ public class CreateParkingSlotDto {
 
     @NotNull(message = "Pricing policy is required")
     @Valid
-    private PricingPolicyDto pricingPolicyDto;
+    private PricingPolicyDto pricingPolicy;
 
     @NotBlank(message = "This field is required")
     private String  carTypeId;
@@ -36,7 +36,7 @@ public class CreateParkingSlotDto {
         this.label = label;
         this.state = state;
         this.carTypeId = carTypeId;
-        this.pricingPolicyDto = pricingPolicyDto;
+        this.pricingPolicy = pricingPolicyDto;
     }
 
     /**
