@@ -49,6 +49,21 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Throw when an item already exists in the database
+     *
+     * @param ex instance of ResourceAlreadyExistsException
+     * @param request instance of WebRequest
+     *
+     * @return ResponseEntity with status code 400
+     */
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<?> resourceAlreadyExistsException(ResourceAlreadyExistsException ex, WebRequest request) {
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
      * Throw when an item not found in the database
      *
      * @param ex instance of ResourceNotFoundException
