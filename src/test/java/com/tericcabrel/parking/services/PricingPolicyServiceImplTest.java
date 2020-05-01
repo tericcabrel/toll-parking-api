@@ -21,7 +21,7 @@ class PricingPolicyServiceImplTest {
         pricingPolicyService = new PricingPolicyServiceImpl();
 
         pricingPolicy = PricingPolicy.builder()
-                                .evaluation("(pricePerHour * numberOfHour) + tax")
+                                .evaluation("pricePerHour * numberOfHour + tax")
                                 .build();
     }
 

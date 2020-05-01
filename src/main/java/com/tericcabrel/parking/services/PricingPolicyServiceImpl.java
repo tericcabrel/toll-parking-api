@@ -169,7 +169,6 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
         return operators.indexOf(expression.charAt(expression.length() - 1)) >= 0;
     }
 
-
     /**
      * @param expression Expression to evaluate
      *
