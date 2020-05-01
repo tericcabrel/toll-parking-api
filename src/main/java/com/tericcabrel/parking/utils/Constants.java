@@ -22,4 +22,8 @@ public class Constants {
     public static final String CAR_TYPE_GASOLINE = "Gasoline";
     public static final String CAR_TYPE_20KW = "Electric 20Kw";
     public static final String CAR_TYPE_50KW = "Electric 50Kw";
+
+    public static final String PRICING_POLICY_VALIDATION_MESSAGE = "Failed to parse pricing policy!";
+    public static final String PRICING_POLICY_VALIDATION_FORMAT = "FORMAT";
+    public static final String PRICING_POLICY_VALIDATION_EXPRESSION = "EXPRESSION";
 }

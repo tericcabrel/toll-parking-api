@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.services;
 
+import com.tericcabrel.parking.exceptions.PricingPolicyValidationErrorException;
 import com.tericcabrel.parking.models.dbs.PricingPolicy;
 import com.tericcabrel.parking.services.interfaces.PricingPolicyService;
 import com.tericcabrel.parking.utils.ArithmeticExpressionEvaluation;
@@ -10,6 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Pattern;
+
+import static com.tericcabrel.parking.utils.Constants.*;
 
 @Service("pricingPolicyService")
 public class PricingPolicyServiceImpl implements PricingPolicyService {
@@ -104,17 +107,21 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
         boolean isValidFormat = validateFormat(pricingPolicy);
 
         if (!isValidFormat) {
-            // TODO throw exception
+            throw new PricingPolicyValidationErrorException(
+                PRICING_POLICY_VALIDATION_MESSAGE, PRICING_POLICY_VALIDATION_FORMAT
+            );
         }
 
-        // get arithmetical expression
+        // Get arithmetical expression
         String expression = getArithmeticExpression(pricingPolicy, parameters);
 
         // Validate expression
         boolean isValidExpression = validateArithmeticExpression(expression);
 
         if (!isValidExpression) {
-            // TODO throw exception
+            throw new PricingPolicyValidationErrorException(
+                PRICING_POLICY_VALIDATION_MESSAGE, PRICING_POLICY_VALIDATION_EXPRESSION
+            );
         }
 
         // Evaluate arithmetical expression
@@ -174,7 +181,7 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      *
      * @return true parenthesis match in the expression
      */
-    public static boolean isParenthesisMatch(String expression) {
+    private boolean isParenthesisMatch(String expression) {
         Map<Character, Character> matches = new HashMap<>();
         matches.put('(', ')');
 
@@ -208,7 +215,7 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      *
      * @return true parenthesis match in the expression
      */
-    public static boolean isCountParenthesisMatch(String expression) {
+    private boolean isCountParenthesisMatch(String expression) {
         Map<Character, Integer> parenthesisCounter = new HashMap<>();
         parenthesisCounter.put('(', 0);
         parenthesisCounter.put(')', 0);

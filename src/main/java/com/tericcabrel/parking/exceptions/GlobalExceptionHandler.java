@@ -213,6 +213,27 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Throw when token validation fails
+     *
+     * @param ex instance of TokenErrorException
+     * @param request instance of WebRequest
+     *
+     * @return ResponseEntity with status code 400
+     */
+    @ExceptionHandler(PricingPolicyValidationErrorException.class)
+    public ResponseEntity<GenericResponse> pricingPolicyValidationErrorException(
+        PricingPolicyValidationErrorException ex, WebRequest request
+    ) {
+        HashMap<String, Object> content = formatMessage(ex.getMessage());
+
+        content.put("validationType", ex.getValidationType());
+
+        GenericResponse response = new GenericResponse(content);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
      * Throw when unhandled exception is raised
      *
      * @param ex instance of Exception
