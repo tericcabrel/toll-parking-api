@@ -1,5 +1,7 @@
 package com.tericcabrel.parking.utils;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +51,11 @@ public class Helpers {
         double remaining = diffInSeconds % 3600;
         double differenceInHour = (diffInSeconds - remaining) / 3600;
 
-        return differenceInHour + (remaining / 3600);
+        // Round to 2 decimals
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setRoundingMode(RoundingMode.UP);
+
+        return Double.valueOf(df.format(differenceInHour + (remaining / 3600)));
     }
 
     /**
@@ -58,9 +64,10 @@ public class Helpers {
      * @return the date formatted
      */
     public static String formatDate(Date date) {
-        SimpleDateFormat format1 = new SimpleDateFormat("dd/MMM/");
-        SimpleDateFormat format2 = new SimpleDateFormat(" HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM ");
+        SimpleDateFormat hourFormat = new SimpleDateFormat(" 'at' HH:mm");
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 
-        return format1.format(date) + date.getYear() + format2.format(date);
+        return dateFormat.format(date) + (Integer.valueOf(yearFormat.format(date)) - 1900) + hourFormat.format(date);
     }
 }

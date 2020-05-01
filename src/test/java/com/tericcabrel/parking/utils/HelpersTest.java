@@ -18,4 +18,14 @@ class HelpersTest {
 
         assertThat(hour).isGreaterThan(3.5);
     }
+
+    @Test
+    void formatDate() {
+        Date startTime = new Date(2020, Calendar.MAY, 1, 11, 3, 4);
+
+        String dateString = Helpers.formatDate(startTime);
+
+        assertThat(dateString).isNotNull();
+        assertThat(dateString).isEqualTo("01 May 2020 at 11:03");
+    }
 }
