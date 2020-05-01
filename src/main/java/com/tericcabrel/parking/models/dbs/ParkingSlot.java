@@ -26,6 +26,8 @@ public class ParkingSlot extends BaseModel {
     @DBRef
     private CarType carType;
 
+    private Date lastUsedTime;
+
     public ParkingSlot() {
         this.state = ParkingSlotStateEnum.FREE;
     }

@@ -18,4 +18,8 @@ public interface ParkingSlotService {
     ParkingSlot findById(String id);
 
     ParkingSlot update(String id, UpdateParkingSlotDto updateParkingSlotDto);
+
+    List<ParkingSlot> findAvailableByCarType(String carTypeId);
+
+    ParkingSlot update(ParkingSlot parkingSlot);
 }

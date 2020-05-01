@@ -1,13 +1,18 @@
 package com.tericcabrel.parking.controllers;
 
 import com.tericcabrel.parking.models.dbs.CarRechargeSession;
+import com.tericcabrel.parking.models.dbs.Customer;
+import com.tericcabrel.parking.models.dbs.ParkingSlot;
 import com.tericcabrel.parking.models.dtos.CreateCarRechargeSessionDto;
 import com.tericcabrel.parking.models.dtos.UpdateCarRechargeSessionDto;
+import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
 import com.tericcabrel.parking.models.responses.CarRechargeSessionListResponse;
 import com.tericcabrel.parking.models.responses.CarRechargeSessionResponse;
 import com.tericcabrel.parking.models.responses.GenericResponse;
 import com.tericcabrel.parking.models.responses.InvalidDataResponse;
 import com.tericcabrel.parking.services.interfaces.CarRechargeSessionService;
+import com.tericcabrel.parking.services.interfaces.CustomerService;
+import com.tericcabrel.parking.services.interfaces.ParkingSlotService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -18,16 +23,28 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static com.tericcabrel.parking.utils.Constants.*;
 
 @Api(tags = "Car's recharge session management", description = "Operations pertaining to car's recharge session creation, update, fetch and delete")
 @RestController
-@RequestMapping(value = "/cars-types")
+@RequestMapping(value = "/cars-recharges")
 public class CarRechargeSessionController {
     private CarRechargeSessionService carRechargeSessionService;
+
+    private CustomerService customerService;
+
+    private ParkingSlotService parkingSlotService;
     
-    public CarRechargeSessionController(CarRechargeSessionService carRechargeSessionService) {
+    public CarRechargeSessionController(
+        CarRechargeSessionService carRechargeSessionService,
+        CustomerService customerService,
+        ParkingSlotService parkingSlotService
+    ) {
         this.carRechargeSessionService = carRechargeSessionService;
+        this.customerService = customerService;
+        this.parkingSlotService = parkingSlotService;
     }
 
     @ApiOperation(value = "Create car's recharge session", response = GenericResponse.class)
@@ -42,7 +59,23 @@ public class CarRechargeSessionController {
     public ResponseEntity<CarRechargeSessionResponse> create(
         @Valid @RequestBody CreateCarRechargeSessionDto createCarRechargeSessionDto
     ) {
+        Customer customer = customerService.findById(createCarRechargeSessionDto.getCustomerId());
+
+        List<ParkingSlot> parkingSlotListAvailable = parkingSlotService.findAvailableByCarType(customer.getCarType().getId());
+
+        if (parkingSlotListAvailable.size() == 0) {
+            // throw new exception
+        }
+
+        createCarRechargeSessionDto
+            .setCustomer(customer)
+            .setParkingSlot(parkingSlotListAvailable.get(0));
+
         CarRechargeSession carRechargeSession = carRechargeSessionService.save(createCarRechargeSessionDto);
+
+        // Mark the parking slot as busy
+        parkingSlotListAvailable.get(0).setState(ParkingSlotStateEnum.BUSY);
+        parkingSlotService.update(parkingSlotListAvailable.get(0));
 
         return ResponseEntity.ok(new CarRechargeSessionResponse(carRechargeSession));
     }
@@ -80,12 +113,27 @@ public class CarRechargeSessionController {
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/complete")
     public ResponseEntity<CarRechargeSessionResponse> update(
         @PathVariable String id, @Valid @RequestBody UpdateCarRechargeSessionDto updateCarRechargeSessionDto
     ) {
+        CarRechargeSession carRechargeSession = carRechargeSessionService.findById(id);
+
+        if (carRechargeSession.getEndTime() == null) {
+            carRechargeSession = carRechargeSessionService.update(id, updateCarRechargeSessionDto);
+
+            ParkingSlot parkingSlot = parkingSlotService.findById(carRechargeSession.getParkingSlot().getId());
+
+            parkingSlot.setState(ParkingSlotStateEnum.FREE);
+            parkingSlot.setLastUsedTime(carRechargeSession.getEndTime());
+
+            parkingSlotService.update(parkingSlot);
+
+            // TODO Send email to customer
+        }
+
         return ResponseEntity.ok(
-            new CarRechargeSessionResponse(carRechargeSessionService.update(id, updateCarRechargeSessionDto))
+            new CarRechargeSessionResponse(carRechargeSession)
         );
     }
 

@@ -5,6 +5,7 @@ import com.tericcabrel.parking.models.dbs.ParkingSlot;
 import com.tericcabrel.parking.models.dbs.PricingPolicy;
 import com.tericcabrel.parking.models.dtos.CreateParkingSlotDto;
 import com.tericcabrel.parking.models.dtos.UpdateParkingSlotDto;
+import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
 import com.tericcabrel.parking.repositories.ParkingSlotRepository;
 import com.tericcabrel.parking.services.interfaces.ParkingSlotService;
 import org.bson.types.ObjectId;
@@ -86,4 +87,17 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
 
         return parkingSlotRepository.save(item);
     }
+
+    public ParkingSlot update(ParkingSlot parkingSlot) {
+        return parkingSlotRepository.save(parkingSlot);
+    }
+
+    @Override
+    public List<ParkingSlot> findAvailableByCarType(String carTypeId) {
+        return parkingSlotRepository.findAllByCarTypeAndStateOrderByLastUsedTimeAsc(
+            new ObjectId(carTypeId), ParkingSlotStateEnum.FREE
+        );
+    }
+
+
 }

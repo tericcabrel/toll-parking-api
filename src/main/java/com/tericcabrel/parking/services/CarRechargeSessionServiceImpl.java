@@ -24,7 +24,6 @@ public class CarRechargeSessionServiceImpl implements CarRechargeSessionService 
     public CarRechargeSession save(CreateCarRechargeSessionDto createCarRechargeSessionDto) {
         CarRechargeSession carRechargeSession = CarRechargeSession.builder()
                                                             .startTime(createCarRechargeSessionDto.getStartTime())
-                                                            .endTime(createCarRechargeSessionDto.getEndTime())
                                                             .price(createCarRechargeSessionDto.getPrice())
                                                             .parkingSlot(createCarRechargeSessionDto.getParkingSlot())
                                                             .customer(createCarRechargeSessionDto.getCustomer())
