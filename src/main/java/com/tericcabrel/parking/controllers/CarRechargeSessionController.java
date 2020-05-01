@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.exceptions.NoParkingSlotAvailableException;
 import com.tericcabrel.parking.models.dbs.CarRechargeSession;
 import com.tericcabrel.parking.models.dbs.Customer;
 import com.tericcabrel.parking.models.dbs.ParkingSlot;
@@ -57,7 +58,7 @@ public class CarRechargeSessionController {
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping
     public ResponseEntity<CarRechargeSessionResponse> create(
         @Valid @RequestBody CreateCarRechargeSessionDto createCarRechargeSessionDto
@@ -67,7 +68,9 @@ public class CarRechargeSessionController {
         List<ParkingSlot> parkingSlotListAvailable = parkingSlotService.findAvailableByCarType(customer.getCarType().getId());
 
         if (parkingSlotListAvailable.size() == 0) {
-            // throw new exception
+            throw new NoParkingSlotAvailableException(
+                "No parking's Slot available for the car's type " + customer.getCarType().getName() + " at the moment"
+            );
         }
 
         createCarRechargeSessionDto
@@ -89,7 +92,7 @@ public class CarRechargeSessionController {
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping
     public ResponseEntity<CarRechargeSessionListResponse> all(){
         return ResponseEntity.ok(new CarRechargeSessionListResponse(carRechargeSessionService.findAll()));
@@ -102,7 +105,7 @@ public class CarRechargeSessionController {
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = GenericResponse.class),
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{id}")
     public ResponseEntity<CarRechargeSessionResponse> one(@PathVariable String id){
         return ResponseEntity.ok(new CarRechargeSessionResponse(carRechargeSessionService.findById(id)));
@@ -115,7 +118,7 @@ public class CarRechargeSessionController {
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PutMapping("/{id}/complete")
     public ResponseEntity<CarRechargeSessionResponse> update(
         @PathVariable String id, @Valid @RequestBody UpdateCarRechargeSessionDto updateCarRechargeSessionDto
@@ -161,7 +164,7 @@ public class CarRechargeSessionController {
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{id}/duration")
     public ResponseEntity<GenericResponse> getDuration(@PathVariable String id) {
         CarRechargeSession carRechargeSession = carRechargeSessionService.findById(id);

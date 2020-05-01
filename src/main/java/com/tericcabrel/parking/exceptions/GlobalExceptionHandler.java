@@ -213,9 +213,9 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Throw when token validation fails
+     * Throw when pricing policy validation fails
      *
-     * @param ex instance of TokenErrorException
+     * @param ex instance of PricingPolicyValidationErrorException
      * @param request instance of WebRequest
      *
      * @return ResponseEntity with status code 400
@@ -229,6 +229,23 @@ public class GlobalExceptionHandler {
         content.put("validationType", ex.getValidationType());
 
         GenericResponse response = new GenericResponse(content);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Throw when there is no parking's lot to assign to the car of customer
+     *
+     * @param ex instance of NoParkingSlotAvailableException
+     * @param request instance of WebRequest
+     *
+     * @return ResponseEntity with status code 400
+     */
+    @ExceptionHandler(NoParkingSlotAvailableException.class)
+    public ResponseEntity<GenericResponse> noParkingSlotAvailableException(
+        NoParkingSlotAvailableException ex, WebRequest request
+    ) {
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
