@@ -182,27 +182,19 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      * @return true parenthesis match in the expression
      */
     private boolean isParenthesisMatch(String expression) {
-        Map<Character, Character> matches = new HashMap<>();
-        matches.put('(', ')');
-
         Stack<Character> stack = new Stack<>();
 
         for (char c: expression.toCharArray()) {
+            if (c != '(' && c != ')') {
+                continue;
+            }
             // Check if it's a left character add in the stack
-            if (matches.containsKey(c)) {
+            if (c == '(') {
                 stack.push(c);
             } else {
-                // If the stack is not empty, it's invalid
+                // If the stack is not empty, it's means it matches so we remove it
                 if (!stack.empty()) {
-                    // If the last inserted in the stack is the key in th map which the value is equal to
-                    // the current character it's means it matches so we remove it
-                    if (matches.get(stack.peek()) == c) {
-                        stack.pop();
-                    } else {
-                        break;
-                    }
-                } else {
-                    break;
+                    stack.pop();
                 }
             }
         }

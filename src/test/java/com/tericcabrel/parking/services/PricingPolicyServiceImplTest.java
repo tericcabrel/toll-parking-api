@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.services;
 
+import com.tericcabrel.parking.exceptions.PricingPolicyValidationErrorException;
 import com.tericcabrel.parking.models.dbs.PricingPolicy;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -92,17 +94,68 @@ class PricingPolicyServiceImplTest {
         assertThat(result).isFalse();
     }
 
-    @Test
-    @Order(6)
-    void calculatePricingPolicySuccess() {
-        HashMap<String, Double> userParameters = new HashMap<>();
-        userParameters.put("pricePerHour", 100d);
-        userParameters.put("numberOfHour", 3d);
-        userParameters.put("tax", 200d);
+    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+    @Nested
+    class CalculatePricingPolicyTest {
+        PricingPolicy pricingPolicyInstance;
 
-        Double result = pricingPolicyService.calculate(pricingPolicy, userParameters);
+        @BeforeEach
+        void beforeEach() {
+            pricingPolicyInstance = PricingPolicy.builder()
+                .evaluation("pricePerHour * (numberOfHour) + tax")
+                .build();
 
-        assertThat(result).isEqualTo(500);
+            HashMap<String, Double> goodParameters = new HashMap<>();
+            goodParameters.put("pricePerHour", 100d);
+            goodParameters.put("numberOfHour", -1d);
+            goodParameters.put("tax", 200d);
+
+            pricingPolicyInstance.setParameters(goodParameters);
+        }
+
+        @Test
+        @Order(1)
+        void calculatePricingPolicySuccess() {
+            HashMap<String, Double> userParameters = new HashMap<>();
+            userParameters.put("pricePerHour", 100d);
+            userParameters.put("numberOfHour", 3d);
+            userParameters.put("tax", 200d);
+
+            Double result = pricingPolicyService.calculate(pricingPolicyInstance, userParameters);
+
+            assertThat(result).isEqualTo(500);
+        }
+
+        @Test
+        @Order(2)
+        void failToCalculatePricingPolicyDueToInvalidFormat() {
+            pricingPolicyInstance.setEvaluation("pricePerHour * (numOfHour) + tax");
+
+            HashMap<String, Double> invalidParameters = new HashMap<>();
+            invalidParameters.put("pricePerHour", 100d);
+            invalidParameters.put("nbOfHour", 3d);
+            invalidParameters.put("tax", 200d);
+
+            assertThrows(PricingPolicyValidationErrorException.class, () -> {
+                Double result = pricingPolicyService.calculate(pricingPolicyInstance, invalidParameters);
+            });
+        }
+
+        @Test
+        @Order(3)
+        void failToCalculatePricingPolicyDueToInvalidExpression() {
+            pricingPolicyInstance.setEvaluation("pricePerHour * (((numberOfHour + tax");
+
+            HashMap<String, Double> invalidParameters = new HashMap<>();
+            invalidParameters.put("pricePerHour", 100d);
+            invalidParameters.put("numberOfHour", 3d);
+            invalidParameters.put("tax", 200d);
+
+            assertThrows(PricingPolicyValidationErrorException.class, () -> {
+                Double result = pricingPolicyService.calculate(pricingPolicyInstance, invalidParameters);
+            });
+        }
     }
+
 
 }
