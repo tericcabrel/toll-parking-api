@@ -109,8 +109,7 @@ public class ArithmeticExpressionEvaluation
                 return a * b;
             case '/':
                 if (b == 0)
-                    throw new
-                        UnsupportedOperationException("Cannot divide by zero");
+                    throw new UnsupportedOperationException("Cannot divide by zero");
                 return a / b;
         }
         return 0;
