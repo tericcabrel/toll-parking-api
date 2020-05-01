@@ -5,7 +5,9 @@ import com.tericcabrel.parking.services.interfaces.PricingPolicyService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 @Service("pricingPolicyService")
@@ -79,6 +81,14 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
 
         if (!result) return result;
 
+        result = isParenthesisMatch(expressionWithNoSpace);
+
+        if (!result) return result;
+
+        result = isCountParenthesisMatch(expressionWithNoSpace);
+
+        if (!result) return result;
+
         return result;
     }
 
@@ -99,7 +109,12 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
         // get arithmetical expression
         String expression = getArithmeticExpression(pricingPolicy, parameters);
 
-        // TODO validate expression
+        // validate expression
+        boolean isValidExpression = validateArithmeticExpression(expression);
+
+        if (!isValidFormat) {
+            // TODO throw exception
+        }
 
         // TODO Evaluate arithmetical expression
 
@@ -115,12 +130,28 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
         int expressionLength = expression.length();
         int charCount = 0;
         String operators = "+-*/()";
+        StringBuilder builder = new StringBuilder();
 
-        for (int i =0; i < expressionLength; i++) {
-            charCount = operators.indexOf(expression.charAt(i)) >= 0 ? charCount + 1 : 0;
+        for (int i = 0; i < expressionLength; i++) {
+            if (operators.indexOf(expression.charAt(i)) >= 0) {
+                charCount += 1;
+
+                builder.append(expression.charAt(i));
+            } else {
+                charCount = 0;
+                builder.delete(0, builder.length());
+            }
 
             if (charCount == 2) {
-                return true;
+                String validPattern = "^[\\+\\/\\*-]\\(|\\)[\\+\\/\\*-]$"; // +( or )*
+
+                if (Pattern.matches(validPattern, builder.toString())) {
+                    charCount = 0;
+
+                    builder.delete(0, builder.length() - 1);
+                } else {
+                    return true;
+                }
             }
         }
 
@@ -136,5 +167,59 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
         String operators = "+-*/(";
 
         return operators.indexOf(expression.charAt(expression.length() - 1)) >= 0;
+    }
+
+
+    /**
+     * @param expression Expression to evaluate
+     *
+     * @return true parenthesis match in the expression
+     */
+    public static boolean isParenthesisMatch(String expression) {
+        Map<Character, Character> matches = new HashMap<>();
+        matches.put('(', ')');
+
+        Stack<Character> stack = new Stack<>();
+
+        for (char c: expression.toCharArray()) {
+            // Check if it's a left character add in the stack
+            if (matches.containsKey(c)) {
+                stack.push(c);
+            } else {
+                // If the stack is not empty, it's invalid
+                if (!stack.empty()) {
+                    // If the last inserted in the stack is the key in th map which the value is equal to
+                    // the current character it's means it matches so we remove it
+                    if (matches.get(stack.peek()) == c) {
+                        stack.pop();
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+
+        return stack.size() == 0;
+    }
+
+    /**
+     * @param expression Expression to evaluate
+     *
+     * @return true parenthesis match in the expression
+     */
+    public static boolean isCountParenthesisMatch(String expression) {
+        Map<Character, Integer> parenthesisCounter = new HashMap<>();
+        parenthesisCounter.put('(', 0);
+        parenthesisCounter.put(')', 0);
+
+        for (char c : expression.toCharArray()) {
+            if(c == '(' || c == ')') {
+                parenthesisCounter.put(c, parenthesisCounter.getOrDefault(c, 0) + 1);
+            }
+        }
+
+        return parenthesisCounter.get('(').equals(parenthesisCounter.get(')'));
     }
 }
