@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * This controller is used edit the template of mail
+ * We create a route to render the template with static data to see if everything is okay
+ */
 @Controller
 public class TemplateController {
 

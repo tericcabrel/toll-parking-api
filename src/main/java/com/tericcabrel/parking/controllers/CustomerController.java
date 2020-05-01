@@ -38,6 +38,7 @@ public class CustomerController {
         @ApiResponse(code = 200, message = "Customer created successfully!", response = CustomerResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
@@ -82,6 +83,7 @@ public class CustomerController {
         @ApiResponse(code = 200, message = "Customer updated successfully!", response = CustomerResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")

@@ -33,7 +33,7 @@ import java.util.List;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 
-@Api(tags = "Car's recharge session management", description = "Operations pertaining to car's recharge session creation, update, fetch and delete")
+@Api(tags = "Car's recharge management", description = "Operations pertaining to car's recharge creation, update, fetch and delete")
 @RestController
 @RequestMapping(value = "/cars-recharges")
 public class CarRechargeSessionController {
@@ -57,9 +57,10 @@ public class CarRechargeSessionController {
         this.eventPublisher = eventPublisher;
     }
 
-    @ApiOperation(value = "Create car's recharge session", response = GenericResponse.class)
+    @ApiOperation(value = "Create car's recharge", response = GenericResponse.class)
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Car's recharge session created successfully!", response = CarRechargeSessionResponse.class),
+        @ApiResponse(code = 200, message = "Car's recharge created successfully!", response = CarRechargeSessionResponse.class),
+        @ApiResponse(code = 400, message = "No parking's slot available", response = GenericResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
@@ -75,7 +76,7 @@ public class CarRechargeSessionController {
 
         if (parkingSlotListAvailable.size() == 0) {
             throw new NoParkingSlotAvailableException(
-                "No parking's Slot available for the car's type " + customer.getCarType().getName() + " at the moment"
+                "No parking's slot available for the car's type " + customer.getCarType().getName() + " at the moment"
             );
         }
 
@@ -92,7 +93,7 @@ public class CarRechargeSessionController {
         return ResponseEntity.ok(new CarRechargeSessionResponse(carRechargeSession));
     }
 
-    @ApiOperation(value = "Get all car's recharge sessions", response = GenericResponse.class)
+    @ApiOperation(value = "Get all car's recharges", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "List retrieved successfully!", response = CarRechargeSessionListResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
@@ -104,7 +105,7 @@ public class CarRechargeSessionController {
         return ResponseEntity.ok(new CarRechargeSessionListResponse(carRechargeSessionService.findAll()));
     }
 
-    @ApiOperation(value = "Get one car's recharge session", response = GenericResponse.class)
+    @ApiOperation(value = "Get one car's recharge", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Item retrieved successfully!", response = CarRechargeSessionResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
@@ -117,11 +118,12 @@ public class CarRechargeSessionController {
         return ResponseEntity.ok(new CarRechargeSessionResponse(carRechargeSessionService.findById(id)));
     }
 
-    @ApiOperation(value = "Update a car's recharge session", response = GenericResponse.class)
+    @ApiOperation(value = "Update a car's recharge", response = GenericResponse.class)
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Car's recharge session updated successfully!", response = CarRechargeSessionResponse.class),
+        @ApiResponse(code = 200, message = "Car's recharge updated successfully!", response = CarRechargeSessionResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
@@ -150,9 +152,9 @@ public class CarRechargeSessionController {
         return ResponseEntity.ok(new CarRechargeSessionResponse(carRechargeSession));
     }
 
-    @ApiOperation(value = "Delete a car's recharge session", response = GenericResponse.class)
+    @ApiOperation(value = "Delete a car's recharge", response = GenericResponse.class)
     @ApiResponses(value = {
-        @ApiResponse(code = 204, message = "Car's recharge session deleted successfully!", response = GenericResponse.class),
+        @ApiResponse(code = 204, message = "Car's recharge deleted successfully!", response = GenericResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
     })
@@ -164,11 +166,12 @@ public class CarRechargeSessionController {
         return ResponseEntity.noContent().build();
     }
 
-    @ApiOperation(value = "Update a car's recharge session", response = GenericResponse.class)
+    @ApiOperation(value = "Update a car's recharge", response = GenericResponse.class)
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Car's recharge session updated successfully!", response = CarRechargeSessionResponse.class),
+        @ApiResponse(code = 200, message = "Car's recharge updated successfully!", response = CarRechargeSessionResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
