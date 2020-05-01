@@ -69,7 +69,7 @@ class PricingPolicyServiceImplTest {
         String result = pricingPolicyService.getArithmeticExpression(pricingPolicy, userParameters);
 
         assertThat(result).isNotNull();
-        assertThat(result.replaceAll(" ", "")).hasSize(17);
+        assertThat(result.replaceAll(" ", "")).hasSize(15);
     }
 
 
