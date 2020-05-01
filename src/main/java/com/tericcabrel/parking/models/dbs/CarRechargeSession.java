@@ -18,7 +18,7 @@ public class CarRechargeSession extends BaseModel {
 
     private Date endTime;
 
-    private float price;
+    private double price;
 
     @DBRef
     private ParkingSlot parkingSlot;
@@ -28,7 +28,7 @@ public class CarRechargeSession extends BaseModel {
 
     @Builder
     public CarRechargeSession(
-        String id, Date createdAt, Date updatedAt, Date startTime, Date endTime, float price,
+        String id, Date createdAt, Date updatedAt, Date startTime, Date endTime, double price,
         ParkingSlot parkingSlot, Customer customer
     ) {
         super(id, createdAt, updatedAt);

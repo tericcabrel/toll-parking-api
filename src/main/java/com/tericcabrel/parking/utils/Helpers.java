@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,5 +50,17 @@ public class Helpers {
         double differenceInHour = (diffInSeconds - remaining) / 3600;
 
         return differenceInHour + (remaining / 3600);
+    }
+
+    /**
+     * @param date format a date to MM/dd/yyyy HH:mm
+     *
+     * @return the date formatted
+     */
+    public static String formatDate(Date date) {
+        SimpleDateFormat format1 = new SimpleDateFormat("dd/MMM/");
+        SimpleDateFormat format2 = new SimpleDateFormat(" HH:mm");
+
+        return format1.format(date) + date.getYear() + format2.format(date);
     }
 }

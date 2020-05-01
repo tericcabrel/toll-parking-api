@@ -23,11 +23,13 @@
                 <tr class="header"><td colspan="2">Recharge details</td> </tr>
                 <tr>
                     <td>Start time:</td>
-                    <td th:text="${#dates.format(carRecharge.startTime, 'dd/MMM/yyyy HH:mm')}">01/Jan/1970 00:00</td>
+                    <td th:text="${carRechargeStartTime}">
+                        01/Jan/1970 00:00
+                    </td>
                 </tr>
                 <tr>
                     <td>End time:</td>
-                    <td th:text="${#dates.format(carRecharge.endTime, 'dd/MMM/yyyy HH:mm')}">01/Jan/1970 00:00</td>
+                    <td th:text="${carRechargeEndTime}">01/Jan/1970 00:00</td>
                 </tr>
                 <tr>
                     <td>Duration:</td>
@@ -35,7 +37,7 @@
                 </tr>
                 <tr>
                     <td>Price:</td>
-                    <td th:text="${carRecharge.price + '€'}">00.0 €</td>
+                    <td th:text="${carRecharge.price + ' €'}">00.0 €</td>
                 </tr>
                 <tr>
                     <td>Parking Slot Name:</td>
