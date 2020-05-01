@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Car Recharge completed</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style type="text/css">
+            body {
+                font-family: calibri, 'DejaVu Sans', Arial, Helvetica, sans-serif;
+            }
+            .tb-details, td{  padding: 5px 0;  }
+            .tb-details .header{  text-align: center;  font-weight: bold;  padding: 5px 0;  }
+            .tb-details .header td{ padding: 10px 0; }
+        </style>
+    </head>
+    <body>
+        <div>Hi M.<b th:text="${customer.name}">name</b> we are happy to see you agian!</div>
+        <p>
+            You just completed the recharge of your car's in our parking.
+            Here is the details of the transaction
+        </p>
+        <table bgcolor="#f1f1f1" style="width: 600px" class="tb-details">
+            <tbody>
+                <tr class="header"><td colspan="2">Recharge details</td> </tr>
+                <tr>
+                    <td>Start time:</td>
+                    <td th:text="${#dates.format(carRecharge.startTime, 'dd/MMM/yyyy HH:mm')}">01/Jan/1970 00:00</td>
+                </tr>
+                <tr>
+                    <td>End time:</td>
+                    <td th:text="${#dates.format(carRecharge.endTime, 'dd/MMM/yyyy HH:mm')}">01/Jan/1970 00:00</td>
+                </tr>
+                <tr>
+                    <td>Duration:</td>
+                    <td  th:text="${duration + ' hour'}">0.0 hour</td>
+                </tr>
+                <tr>
+                    <td>Price:</td>
+                    <td th:text="${carRecharge.price + '€'}">00.0 €</td>
+                </tr>
+                <tr>
+                    <td>Parking Slot Name:</td>
+                    <td th:text="${carRecharge.parkingSlot.label}">Slot A</td>
+                </tr>
+                <tr class="header"><td colspan="2">Customer info</td></tr>
+                <tr>
+                    <td>Name:</td>
+                    <td th:text="${customer.name}">Name</td>
+                </tr>
+                <tr>
+                    <td>CarType:</td>
+                    <td th:text="${customer.carType.name}">Gasoline</td>
+                </tr>
+                <tr>
+                    <td>Phone number:</td>
+                    <td th:text="${customer.phone}">Phone</td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <p style="font-size: 12px; margin-top:15px;">
+                For any problem or concern, do not hesitate to contact us at
+                <a href="mailto:contact@toll-parking.com">conctact@toll-parking.com</a>
+            </p>
+        </div>
+        <p>
+            <img src="images/spring.png" data-th-src="|cid:springLogo|" height="80" />
+        </p>
+        <p>
+            Regards, <br />
+            &emsp; <em>The Toll Parking Team</em>
+        </p>
+    </body>
+</html>

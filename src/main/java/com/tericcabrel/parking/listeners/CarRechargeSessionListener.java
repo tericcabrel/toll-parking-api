@@ -1,6 +1,9 @@
 package com.tericcabrel.parking.listeners;
 
+import com.tericcabrel.parking.events.OnCarRechargeSessionCompleteEvent;
 import com.tericcabrel.parking.events.OnCreateUserCompleteEvent;
+import com.tericcabrel.parking.models.dbs.CarRechargeSession;
+import com.tericcabrel.parking.models.dbs.Customer;
 import com.tericcabrel.parking.models.dbs.User;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,14 +21,14 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Send email to the user we just created the account
+ * Send email to the customer with the details of his recharge
  */
 @Component
-public class CreateUserListener implements ApplicationListener<OnCreateUserCompleteEvent> {
-    private static final String TEMPLATE_NAME = "html/registration";
+public class CarRechargeSessionListener implements ApplicationListener<OnCarRechargeSessionCompleteEvent> {
+    private static final String TEMPLATE_NAME = "html/recharge";
     private static final String SPRING_LOGO_IMAGE = "templates/html/images/spring.png";
     private static final String PNG_MIME = "image/png";
-    private static final String MAIL_SUBJECT = "Registration Confirmation";
+    private static final String MAIL_SUBJECT = "Car Recharge Completed";
 
     private Environment environment;
 
@@ -33,19 +36,20 @@ public class CreateUserListener implements ApplicationListener<OnCreateUserCompl
 
     private TemplateEngine htmlTemplateEngine;
 
-    public CreateUserListener(JavaMailSender mailSender, Environment environment, TemplateEngine htmlTemplateEngine) {
+    public CarRechargeSessionListener(JavaMailSender mailSender, Environment environment, TemplateEngine htmlTemplateEngine) {
         this.mailSender = mailSender;
         this.environment = environment;
         this.htmlTemplateEngine = htmlTemplateEngine;
     }
 
     @Override
-    public void onApplicationEvent(OnCreateUserCompleteEvent event) {
+    public void onApplicationEvent(OnCarRechargeSessionCompleteEvent event) {
         this.sendEmail(event);
     }
 
-    private void sendEmail(OnCreateUserCompleteEvent event) {
-        User user = event.getUser();
+    private void sendEmail(OnCarRechargeSessionCompleteEvent event) {
+        Customer customer = event.getCustomer();
+        CarRechargeSession carRechargeSession = event.getCarRechargeSession();
 
         String mailFrom = environment.getProperty("spring.mail.properties.mail.smtp.from");
         String mailFromName = environment.getProperty("mail.from.name", "Identity");
@@ -55,15 +59,15 @@ public class CreateUserListener implements ApplicationListener<OnCreateUserCompl
         try {
             email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            email.setTo(user.getEmail());
+            email.setTo(customer.getEmail());
             email.setSubject(MAIL_SUBJECT);
             email.setFrom(new InternetAddress(mailFrom, mailFromName));
 
             final Context ctx = new Context(LocaleContextHolder.getLocale());
-            ctx.setVariable("email", user.getEmail());
-            ctx.setVariable("name", user.getName());
+            ctx.setVariable("email", customer.getEmail());
+            ctx.setVariable("name", customer.getName());
             ctx.setVariable("springLogo", SPRING_LOGO_IMAGE);
-            ctx.setVariable("password", event.getRawPassword());
+            // ctx.setVariable("password", event.getRawPassword());
 
             final String htmlContent = htmlTemplateEngine.process(TEMPLATE_NAME, ctx);
 

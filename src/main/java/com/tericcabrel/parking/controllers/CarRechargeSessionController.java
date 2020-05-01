@@ -138,9 +138,7 @@ public class CarRechargeSessionController {
             // TODO Send email to customer
         }
 
-        return ResponseEntity.ok(
-            new CarRechargeSessionResponse(carRechargeSession)
-        );
+        return ResponseEntity.ok(new CarRechargeSessionResponse(carRechargeSession));
     }
 
     @ApiOperation(value = "Delete a car's recharge session", response = GenericResponse.class)
