@@ -1,7 +1,6 @@
 package com.tericcabrel.parking.models.dtos;
 
 import com.tericcabrel.parking.models.dbs.Customer;
-import com.tericcabrel.parking.models.dbs.ParkingSlot;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,24 +19,18 @@ public class CreateCarRechargeSessionDto {
     private float price;
 
     @NotBlank(message = "This field is required")
-    private String parkingSlotId;
-
-    @NotBlank(message = "This field is required")
     private String customerId;
-
-    private ParkingSlot parkingSlot;
 
     private Customer customer;
 
 
     @Builder
     public CreateCarRechargeSessionDto(
-        Date startTime, Date endTime, float price, ParkingSlot parkingSlot, Customer customer
+        Date startTime, Date endTime, float price, Customer customer
     ) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
-        this.parkingSlot = parkingSlot;
         this.customer = customer;
     }
 }

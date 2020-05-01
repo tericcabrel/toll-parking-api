@@ -119,7 +119,7 @@ public class ParkingSlotController {
         return ResponseEntity.noContent().build();
     }
 
-    @ApiOperation(value = "Calculate the price of the parking's slot location by a car", response = GenericResponse.class)
+    @ApiOperation(value = "Calculate the price of the parking's slot rent by a car", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Parking's slot updated successfully!", response = ParkingSlotResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
