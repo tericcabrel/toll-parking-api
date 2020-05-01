@@ -13,6 +13,7 @@ import com.tericcabrel.parking.models.responses.InvalidDataResponse;
 import com.tericcabrel.parking.services.interfaces.CarRechargeSessionService;
 import com.tericcabrel.parking.services.interfaces.CustomerService;
 import com.tericcabrel.parking.services.interfaces.ParkingSlotService;
+import com.tericcabrel.parking.utils.Helpers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.tericcabrel.parking.utils.Constants.*;
@@ -149,5 +152,25 @@ public class CarRechargeSessionController {
         carRechargeSessionService.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "Update a car's recharge session", response = GenericResponse.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Car's recharge session updated successfully!", response = CarRechargeSessionResponse.class),
+        @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
+        @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
+    })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/{id}/duration")
+    public ResponseEntity<GenericResponse> getDuration(@PathVariable String id) {
+        CarRechargeSession carRechargeSession = carRechargeSessionService.findById(id);
+        HashMap<String, Object> content = new HashMap<>();
+
+        Date dateNow = new Date();
+
+        content.put("price", Helpers.calculateDuration(carRechargeSession.getStartTime(), dateNow));
+
+        return ResponseEntity.ok(new GenericResponse(content));
     }
 }

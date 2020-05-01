@@ -1,6 +1,7 @@
 package com.tericcabrel.parking.utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,5 +34,20 @@ public class Helpers {
         }
 
         return errors;
+    }
+
+    /**
+     * @param startTime Start time
+     * @param endTime End time
+     *
+     * @return the difference between two times in hour
+     */
+    public static double calculateDuration(Date startTime, Date endTime) {
+        long diffInSeconds = (endTime.getTime() - startTime.getTime()) / 1000;
+
+        double remaining = diffInSeconds % 3600;
+        double differenceInHour = (diffInSeconds - remaining) / 3600;
+
+        return differenceInHour + (remaining / 3600);
     }
 }
