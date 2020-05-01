@@ -62,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .disable()
             .authorizeRequests()
             .antMatchers(
+                "/users/create", // Added to allow test with postman easy. It's supposed to be open
                 "/users/login",
                 "/v2/api-docs",
                 "/swagger-resources/**",

@@ -64,15 +64,17 @@ public class UserController {
     @ApiOperation(value = "Register a new user in the system", response = UserResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Registered successfully!", response = UserResponse.class),
+        @ApiResponse(code = 400, message = "User already exists!", response = GenericResponse.class),
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     // @PreAuthorize("hasRole('ROLE_ADMIN')") To make the test of API easy
     @PostMapping(value = "/create")
     public ResponseEntity<UserResponse> create(@Valid @RequestBody CreateUserDto createUserDto) {
-        Role role = roleService.findByName(ROLE_USER);
-
         List<Role> roles = new ArrayList<>();
-        roles.add(role);
+
+        Arrays.stream(createUserDto.getRoleNames()).forEach(roleName -> {
+            roles.add(roleService.findByName(roleName));
+        });
 
         createUserDto.setRoles(roles);
 
@@ -108,6 +110,7 @@ public class UserController {
         }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         final String token = jwtTokenUtil.createTokenFromAuth(authentication);
 
         Date expirationDate = jwtTokenUtil.getExpirationDateFromToken(token);

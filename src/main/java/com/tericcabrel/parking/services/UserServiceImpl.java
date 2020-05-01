@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
             item.setGender(updateUserDto.getGenderEnum());
         }
 
-        if (updateUserDto.getEnabled() < 0) {
+        if (updateUserDto.getEnabled() >= 0) {
             item.setEnabled(updateUserDto.getEnabled() != 0);
         }
 
