@@ -8,6 +8,7 @@ import com.tericcabrel.parking.utils.Helpers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,7 +16,10 @@ import java.util.Date;
 /**
  * This controller is used edit the template of mail
  * We create a route to render the template with static data to see if everything is okay
+ *
+ * ApiIgnore annotaton indicate we don't want swagger to index this controller
  */
+@ApiIgnore
 @Controller
 public class TemplateController {
 
