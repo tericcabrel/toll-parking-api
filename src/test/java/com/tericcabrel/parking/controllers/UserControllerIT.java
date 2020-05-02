@@ -64,13 +64,14 @@ public class UserControllerIT {
 
         createUserDto = testUtility.getCreateUserDto();
 
-        // Delete user test if it's already exists
-        User item = userRepository.findByEmail(createUserDto.getEmail());
-        if (item != null) {
-            userRepository.deleteById(new ObjectId(item.getId()));
-        }
-
         createUserDto.setEnabled(false);
+    }
+
+    @AfterAll
+    void afterAll() {
+        if (user != null) {
+            testUtility.deleteUser(user.getId());
+        }
     }
 
     @BeforeEach
@@ -81,7 +82,7 @@ public class UserControllerIT {
     @DisplayName("CreateUser - Fail: Invalid data")
     @Test
     @Order(1)
-    void failToCreateCauseInvalidData() {
+    void failToCreateUserCauseInvalidData() {
         HttpEntity<CreateUserDto> request = new HttpEntity<>(new CreateUserDto(), headers);
 
         ResponseEntity<InvalidDataResponse> result = restTemplate.postForEntity("/users/create", request, InvalidDataResponse.class);
@@ -103,7 +104,7 @@ public class UserControllerIT {
         assertThat(errors.containsKey("roleNames")).isTrue();
     }
 
-    @DisplayName("Register - Create User Successfully")
+    @DisplayName("CreateUser - Create User Successfully")
     @Test
     @Order(2)
     void createSuccess() {
@@ -135,9 +136,24 @@ public class UserControllerIT {
         assertThat(user.getId()).isNotNull();
     }
 
-    @DisplayName("Login - Fail: User not enabled")
+    @DisplayName("CreateUser - Fail: Already exists")
     @Test
     @Order(3)
+    void failToCreateUserCauseAlreadyExists() {
+        HttpEntity<CreateUserDto> request = new HttpEntity<>(createUserDto, headers);
+
+        ResponseEntity<GenericResponse> result = restTemplate.postForEntity("/users/create", request, GenericResponse.class);
+
+        assertThat(result.getStatusCodeValue()).isEqualTo(400);
+
+        HashMap<String, Object> response = result.getBody().getData();
+
+        assertThat(response).containsKey("message");
+    }
+
+    @DisplayName("Login - Fail: User not enabled")
+    @Test
+    @Order(4)
     void failToLoginCauseNotEnabled() {
         LoginUserDto loginUserDto = LoginUserDto.builder()
             .email(user.getEmail())
@@ -167,7 +183,7 @@ public class UserControllerIT {
 
     @DisplayName("Login - Success")
     @Test
-    @Order(4)
+    @Order(5)
     void loginSuccess() {
         LoginUserDto loginUserDto = LoginUserDto.builder()
             .email(createUserDto.getEmail())
@@ -190,7 +206,7 @@ public class UserControllerIT {
 
     @DisplayName("GetAllUsers - Success")
     @Test
-    @Order(5)
+    @Order(6)
     void getAllUserSuccess() {
         HttpEntity request = new HttpEntity(headers);
 
@@ -205,7 +221,7 @@ public class UserControllerIT {
 
     @DisplayName("GetCurrentUser - Success")
     @Test
-    @Order(6)
+    @Order(7)
     void getCurrentUserSuccess() {
         HttpEntity request = new HttpEntity(headers);
 
@@ -221,7 +237,7 @@ public class UserControllerIT {
 
     @DisplayName("GetOneUser - Fail: Not exists")
     @Test
-    @Order(7)
+    @Order(8)
     void failToGetOneUserCauseNotExists() {
         HttpEntity request = new HttpEntity(headers);
 
@@ -234,7 +250,7 @@ public class UserControllerIT {
 
     @DisplayName("GetOneUser - Success")
     @Test
-    @Order(8)
+    @Order(9)
     void getOneUserSuccess() {
         HttpEntity request = new HttpEntity(headers);
 
@@ -250,7 +266,7 @@ public class UserControllerIT {
 
     @DisplayName("UpdateUser - Fail: Invalid data")
     @Test
-    @Order(9)
+    @Order(10)
     void failToUpdateUserCauseInvalidData() {
         HttpEntity<UpdateUserDto> request = new HttpEntity<>(new UpdateUserDto(), headers);
         String url = "/users/" + user.getId();
@@ -262,7 +278,7 @@ public class UserControllerIT {
 
     @DisplayName("UpdateUser - Fail: User not found")
     @Test
-    @Order(10)
+    @Order(11)
     void failToUpdateUserCauseUserNotFound() {
         UpdateUserDto updateUserDto = UpdateUserDto.builder()
             .name("Jamie Stenton")
@@ -281,7 +297,7 @@ public class UserControllerIT {
 
     @DisplayName("UpdateUser - Success")
     @Test
-    @Order(11)
+    @Order(12)
     void updateUserSuccess() {
         UpdateUserDto updateUserDto = UpdateUserDto.builder()
             .name("Jamie Stenton")
@@ -306,7 +322,7 @@ public class UserControllerIT {
 
     @DisplayName("UpdateUserPassword - Fail: Invalid data")
     @Test
-    @Order(12)
+    @Order(13)
     void failToUpdateUserPasswordCauseInvalidData() {
         HttpEntity<UpdatePasswordDto> request = new HttpEntity<>(new UpdatePasswordDto(), headers);
         String url = "/users/" + user.getId() + "/password";
@@ -327,7 +343,7 @@ public class UserControllerIT {
 
     @DisplayName("UpdateUserPassword - Fail: User not found")
     @Test
-    @Order(13)
+    @Order(14)
     void failToUpdateUserPasswordCauseUserNotFound() {
         UpdatePasswordDto updatePasswordDto = UpdatePasswordDto.builder()
             .currentPassword("123456")
@@ -346,7 +362,7 @@ public class UserControllerIT {
 
     @DisplayName("UpdateUserPassword - Fail: Pssword not match")
     @Test
-    @Order(14)
+    @Order(15)
     void failToUpdateUserPasswordCausePasswordNotMatch() {
         UpdatePasswordDto updatePasswordDto = UpdatePasswordDto.builder()
             .currentPassword("bad-paswd")
@@ -365,7 +381,7 @@ public class UserControllerIT {
 
     @DisplayName("UpdateUserPassword - Success")
     @Test
-    @Order(15)
+    @Order(16)
     void updateUserPasswordSuccess() {
         UpdatePasswordDto updatePasswordDto = UpdatePasswordDto.builder()
             .currentPassword("123456")
@@ -388,7 +404,7 @@ public class UserControllerIT {
 
     @DisplayName("UpdateUserPassword - Login Success")
     @Test
-    @Order(16)
+    @Order(17)
     void loginUserSuccess() {
         LoginUserDto loginUserDto = LoginUserDto.builder()
             .email(user.getEmail())
@@ -408,7 +424,7 @@ public class UserControllerIT {
 
     @DisplayName("DeleteUser - Success")
     @Test
-    @Order(17)
+    @Order(18)
     void deleteUserSuccess() {
         HttpEntity request = new HttpEntity(headers);
 
@@ -420,5 +436,16 @@ public class UserControllerIT {
 
         assertThat(userEmails).hasSize(1);
         assertThat(user.getEmail()).isNotIn(userEmails);
+    }
+
+    @DisplayName("Throw unauthorized exception")
+    @Test
+    @Order(19)
+    void throwUsernameNotFound() {
+        HttpEntity request = new HttpEntity(headers);
+
+        ResponseEntity<Object> result = restTemplate.exchange("/users", HttpMethod.GET, request, Object.class);
+
+        assertThat(result.getStatusCodeValue()).isEqualTo(401);
     }
 }

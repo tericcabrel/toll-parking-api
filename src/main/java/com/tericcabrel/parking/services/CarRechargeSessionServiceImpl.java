@@ -43,16 +43,6 @@ public class CarRechargeSessionServiceImpl implements CarRechargeSessionService 
     }
 
     @Override
-    public List<CarRechargeSession> findByCustomer(String customerId) {
-        return carRechargeSessionRepository.findByCustomer(new ObjectId(customerId));
-    }
-
-    @Override
-    public List<CarRechargeSession> findByParkingSlot(String parkingSlotId) {
-        return carRechargeSessionRepository.findByParkingSlot(new ObjectId(parkingSlotId));
-    }
-
-    @Override
     public CarRechargeSession findById(String id) {
         Optional<CarRechargeSession> optionalCustomer = carRechargeSessionRepository.findById(new ObjectId(id));
 

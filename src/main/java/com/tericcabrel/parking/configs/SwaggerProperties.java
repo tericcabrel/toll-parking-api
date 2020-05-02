@@ -31,7 +31,6 @@ public class SwaggerProperties {
     private String deepLinking;
 
     @Value("${swagger.defaultModelsExpandDepth}")
-
     private String defaultModelsExpandDepth;
 
     @Value("${swagger.defaultModelExpandDepth}")

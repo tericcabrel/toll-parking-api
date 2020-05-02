@@ -231,6 +231,8 @@ class CustomerControllerIT {
             .name("Name Update")
             .gender(GenderEnum.FEMALE.toString())
             .carTypeId(carType.getId())
+            .phone("+345788899")
+            .email("new.email@customer.com")
             .build();
 
         HttpEntity<UpdateCustomerDto> request = new HttpEntity<>(updateCustomerDto, headers);

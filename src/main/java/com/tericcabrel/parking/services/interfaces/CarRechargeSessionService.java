@@ -13,10 +13,6 @@ public interface CarRechargeSessionService {
 
     void delete(String id);
 
-    List<CarRechargeSession> findByCustomer(String customerId);
-
-    List<CarRechargeSession> findByParkingSlot(String parkingSlotId);
-
     CarRechargeSession findById(String id);
 
     CarRechargeSession update(String id, UpdateCarRechargeSessionDto updateCarRechargeSessionDto);
