@@ -38,12 +38,11 @@ class CarTypeControllerIT {
 
     private HttpHeaders headers;
 
-    private CarType carTypeTest;
+    private CarType carType;
 
     @BeforeAll
     void beforeAll() {
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers = testUtility.createHeaders();
 
         User user = testUtility.createTestUser();
 
@@ -102,10 +101,10 @@ class CarTypeControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(200);
 
-        carTypeTest = Objects.requireNonNull(result.getBody()).getData();
+        carType = Objects.requireNonNull(result.getBody()).getData();
 
-        assertThat(carTypeTest.getId()).isNotNull();
-        assertThat(carTypeTest.getName()).isEqualTo(CAR_TYPE_NAME);
+        assertThat(carType.getId()).isNotNull();
+        assertThat(carType.getName()).isEqualTo(CAR_TYPE_NAME);
     }
 
     @DisplayName("GetAllCarTypes - Success")
@@ -144,7 +143,7 @@ class CarTypeControllerIT {
     void getOneCarTypeSuccess() {
         HttpEntity request = new HttpEntity(headers);
 
-        String url = "/cars-types/" + carTypeTest.getId();
+        String url = "/cars-types/" + carType.getId();
 
         ResponseEntity<CarTypeResponse> result = restTemplate.exchange(url, HttpMethod.GET, request, CarTypeResponse.class);
 
@@ -152,8 +151,8 @@ class CarTypeControllerIT {
 
         CarType data = Objects.requireNonNull(result.getBody()).getData();
 
-        assertThat(data.getId()).isEqualTo(carTypeTest.getId());
-        assertThat(data.getName()).isEqualTo(carTypeTest.getName());
+        assertThat(data.getId()).isEqualTo(carType.getId());
+        assertThat(data.getName()).isEqualTo(carType.getName());
     }
 
     @DisplayName("UpdateCarType - Fail: Invalid Data")
@@ -161,7 +160,7 @@ class CarTypeControllerIT {
     @Order(7)
     void failToUpdateCauseInvalidData() {
         HttpEntity<CreateCarTypeDto> request = new HttpEntity<>(new CreateCarTypeDto(), headers);
-        String url = "/cars-types/" + carTypeTest.getId();
+        String url = "/cars-types/" + carType.getId();
 
         ResponseEntity<InvalidDataResponse> result = restTemplate.exchange(url, HttpMethod.PUT, request, InvalidDataResponse.class);
 
@@ -197,7 +196,7 @@ class CarTypeControllerIT {
         CreateCarTypeDto carTypeDto = new CreateCarTypeDto(CAR_TYPE_NAME + "_UPDATE");
 
         HttpEntity<CreateCarTypeDto> request = new HttpEntity<>(carTypeDto, headers);
-        String url = "/cars-types/" + carTypeTest.getId();
+        String url = "/cars-types/" + carType.getId();
 
         ResponseEntity<CarTypeResponse> result = restTemplate.exchange(url, HttpMethod.PUT, request, CarTypeResponse.class);
 
@@ -205,10 +204,10 @@ class CarTypeControllerIT {
 
         CarType carTypeUpdated = result.getBody().getData();
 
-        assertThat(carTypeUpdated.getId()).isEqualTo(carTypeTest.getId());
-        assertThat(carTypeUpdated.getName()).isNotEqualTo(carTypeTest.getName());
+        assertThat(carTypeUpdated.getId()).isEqualTo(carType.getId());
+        assertThat(carTypeUpdated.getName()).isNotEqualTo(carType.getName());
 
-        carTypeTest = carTypeUpdated;
+        carType = carTypeUpdated;
     }
 
     @DisplayName("DeleteCarType - Success")
@@ -217,13 +216,13 @@ class CarTypeControllerIT {
     void deleteCarTypeSuccess() {
         HttpEntity request = new HttpEntity(headers);
 
-        ResponseEntity result = restTemplate.exchange("/cars-types/" + carTypeTest.getId(), HttpMethod.DELETE, request, ResponseEntity.class);
+        ResponseEntity result = restTemplate.exchange("/cars-types/" + carType.getId(), HttpMethod.DELETE, request, ResponseEntity.class);
 
         assertThat(result.getStatusCodeValue()).isEqualTo(204);
 
         List<String> carTypeNames = carTypeRepository.findAll().stream().map(CarType::getName).collect(Collectors.toList());
 
         assertThat(carTypeNames).hasSize(3);
-        assertThat(carTypeTest.getName()).isNotIn(carTypeNames);
+        assertThat(carType.getName()).isNotIn(carTypeNames);
     }
 }

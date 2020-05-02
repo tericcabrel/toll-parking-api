@@ -60,8 +60,7 @@ public class UserControllerIT {
 
     @BeforeAll
     void beforeAll() {
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers = testUtility.createHeaders();
 
         createUserDto = testUtility.getCreateUserDto();
 
