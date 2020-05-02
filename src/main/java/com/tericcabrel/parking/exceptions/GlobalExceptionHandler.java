@@ -214,21 +214,6 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Throw when token validation fails
-     *
-     * @param ex instance of TokenErrorException
-     * @param request instance of WebRequest
-     *
-     * @return ResponseEntity with status code 400
-     */
-    @ExceptionHandler(TokenErrorException.class)
-    public ResponseEntity<GenericResponse> tokenErrorException(TokenErrorException ex, WebRequest request) {
-        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
-
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
      * Throw when pricing policy validation fails
      *
      * @param ex instance of PricingPolicyValidationErrorException

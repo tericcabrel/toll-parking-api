@@ -2,7 +2,7 @@ package com.tericcabrel.parking.configs;
 
 import com.tericcabrel.parking.utils.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,15 +42,14 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
             authToken = header.replace(TOKEN_PREFIX,"");
-
             try {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
+            } catch (MalformedJwtException e) {
+                logger.error(JWT_MALFORMED_MESSAGE, e);
             } catch (IllegalArgumentException e) {
                 logger.error(JWT_ILLEGAL_ARGUMENT_MESSAGE, e);
             } catch (ExpiredJwtException e) {
                 logger.warn(JWT_EXPIRED_MESSAGE, e);
-            } catch(SignatureException e){
-                logger.error(JWT_SIGNATURE_MESSAGE);
             }
         } else {
             logger.warn("couldn't find bearer string, will ignore the header");
