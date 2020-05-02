@@ -34,9 +34,9 @@ public class TemplateController {
 
         Customer customer = Customer.builder()
             .carType(carType)
-            .phone("+33 6 93 64 28 89")
-            .name("Eric Cabrel TIOGO")
-            .email("tericcabrel@yahoo.com")
+            .phone("+33693642889")
+            .name("Sansa Stark")
+            .email("sansa@stark.com")
             .build();
 
         ParkingSlot parkingSlot = ParkingSlot.builder()
