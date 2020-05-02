@@ -341,7 +341,7 @@ class ParkingSlotControllerIT {
         parameters.put("priceOfHour", 100d);
         parameters.put("taxes", 200d);
 
-        CalculatePricingDto calculatePricingDto = new CalculatePricingDto(parameters);
+        CalculatePricingDto calculatePricingDto = CalculatePricingDto.builder().parameters(parameters).build();
 
         HttpEntity<CalculatePricingDto> request = new HttpEntity<>(calculatePricingDto, headers);
         String url = "/parking-slots/" + parkingSlot.getId() + "/price";

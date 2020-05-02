@@ -10,7 +10,6 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 @Getter
-@Setter
 @Accessors(chain = true)
 public class CustomerListResponse {
     private List<Customer> data;

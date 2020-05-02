@@ -84,7 +84,10 @@ class RoleControllerIT {
     @Test
     @Order(2)
     void createRoleSuccess() {
-        RoleDto roleDto = new RoleDto(ROLE_TEST, "Description of the role test");
+        RoleDto roleDto = RoleDto.builder()
+            .name(ROLE_TEST)
+            .description("Description of the role test")
+            .build();
 
         HttpEntity<RoleDto> request = new HttpEntity<>(roleDto, headers);
 
@@ -242,7 +245,10 @@ class RoleControllerIT {
     @Test
     @Order(11)
     void failToAssignRolesToUserCauseUserNotFound() {
-        RoleUpdateDto roleUpdateDto = new RoleUpdateDto(roleTest.getId(), new String[] { roleTest.getName() });
+        RoleUpdateDto roleUpdateDto = RoleUpdateDto.builder()
+            .userId(roleTest.getId())
+            .roles(new String[] { roleTest.getName() })
+            .build();
 
         HttpEntity<RoleUpdateDto> request = new HttpEntity<>(roleUpdateDto, headers);
 

@@ -83,7 +83,7 @@ class CarTypeControllerIT {
     @Test
     @Order(2)
     void failToCreateCarTypeCauseAlreadyExists() {
-        CreateCarTypeDto createCarTypeDto = new CreateCarTypeDto(CAR_TYPE_20KW);
+        CreateCarTypeDto createCarTypeDto = CreateCarTypeDto.builder().name(CAR_TYPE_20KW).build();
 
         HttpEntity<CreateCarTypeDto> request = new HttpEntity<>(createCarTypeDto, headers);
 

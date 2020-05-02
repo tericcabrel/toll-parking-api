@@ -7,7 +7,6 @@ import lombok.experimental.Accessors;
 
 @AllArgsConstructor
 @Getter
-@Setter
 @Accessors(chain = true)
 public class AuthToken {
     private String accessToken;

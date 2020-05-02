@@ -33,7 +33,7 @@ public class MappingErrorController implements ErrorController {
 
         String trace = (String) body.get("trace");
 
-        if(trace != null){
+        if(trace != null) {
             String[] lines = trace.split("\n\t");
             body.put("trace", lines);
         }

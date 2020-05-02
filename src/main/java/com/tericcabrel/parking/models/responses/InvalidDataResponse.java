@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 
 @Getter
-@Setter
 @Accessors(chain = true)
 public class InvalidDataResponse {
     private HashMap<String, HashMap<String, List<String>>> data;

@@ -1,6 +1,5 @@
 package com.tericcabrel.parking.exceptions;
 
-import com.tericcabrel.parking.models.responses.ConstraintViolationResponse;
 import com.tericcabrel.parking.models.responses.GenericResponse;
 import com.tericcabrel.parking.models.responses.InvalidDataResponse;
 import com.tericcabrel.parking.utils.Helpers;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;
 

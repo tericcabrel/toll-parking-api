@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Getter
-@Setter
 @Accessors(chain = true)
 public class AuthTokenResponse {
     private AuthToken data;

@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.util.HashMap;
 
 @Getter
-@Setter
 public class GenericResponse {
     private HashMap<String, Object> data;
 

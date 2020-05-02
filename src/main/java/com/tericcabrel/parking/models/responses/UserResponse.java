@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Getter
-@Setter
 @Accessors(chain = true)
 public class UserResponse {
     private User data;
