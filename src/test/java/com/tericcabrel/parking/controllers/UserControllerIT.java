@@ -4,7 +4,6 @@ import com.tericcabrel.parking.models.dtos.CreateUserDto;
 import com.tericcabrel.parking.models.dtos.LoginUserDto;
 import com.tericcabrel.parking.models.dtos.UpdatePasswordDto;
 import com.tericcabrel.parking.models.dtos.UpdateUserDto;
-import com.tericcabrel.parking.models.dbs.Role;
 import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.enums.GenderEnum;
 import com.tericcabrel.parking.models.responses.*;
@@ -64,7 +63,6 @@ public class UserControllerIT {
     private CreateUserDto createUserDto;
     
     private User user;
-    
 
     @BeforeAll
     void beforeAll() {
