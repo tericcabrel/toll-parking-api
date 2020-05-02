@@ -2,8 +2,8 @@ package com.tericcabrel.parking.controllers;
 
 import com.tericcabrel.parking.TestUtility;
 import com.tericcabrel.parking.models.dbs.CarType;
+import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.dtos.CreateCarTypeDto;
-import com.tericcabrel.parking.models.dtos.LoginUserDto;
 import com.tericcabrel.parking.models.responses.*;
 import com.tericcabrel.parking.repositories.CarTypeRepository;
 import org.bson.types.ObjectId;
@@ -45,20 +45,13 @@ class CarTypeControllerIT {
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        testUtility.createTestUser();
+        User user = testUtility.createTestUser();
 
-        LoginUserDto loginUserDto = LoginUserDto.builder()
-            .email(testUtility.getCreateUserDto().getEmail())
-            .password(testUtility.getCreateUserDto().getPassword())
-            .build();
+        String token = testUtility.getAccessToken(
+            restTemplate, headers, user.getEmail(), testUtility.getCreateUserDto().getPassword()
+        );
 
-        HttpEntity<LoginUserDto> request = new HttpEntity<>(loginUserDto, headers);
-
-        ResponseEntity<AuthTokenResponse> resultLogin = restTemplate.postForEntity("/users/login", request, AuthTokenResponse.class);
-
-        AuthToken response = resultLogin.getBody().getData();
-
-        headers.setBearerAuth(response.getAccessToken());
+        headers.setBearerAuth(token);
     }
 
     @DisplayName("CreateCarType - Fail: Invalid data")

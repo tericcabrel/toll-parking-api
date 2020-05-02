@@ -1,7 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
 import com.tericcabrel.parking.TestUtility;
-import com.tericcabrel.parking.models.dtos.LoginUserDto;
 import com.tericcabrel.parking.models.dtos.RoleDto;
 import com.tericcabrel.parking.models.dtos.RoleUpdateDto;
 import com.tericcabrel.parking.models.dbs.Role;
@@ -51,15 +50,11 @@ class RoleControllerIT {
 
         user = testUtility.createTestUser();
 
-        LoginUserDto loginUserDto = new LoginUserDto("admin@admin.com", "qwerty");
+        String token = testUtility.getAccessToken(
+            restTemplate, headers, user.getEmail(), testUtility.getCreateUserDto().getPassword()
+        );
 
-        HttpEntity<LoginUserDto> request = new HttpEntity<>(loginUserDto, headers);
-
-        ResponseEntity<AuthTokenResponse> resultLogin = restTemplate.postForEntity("/users/login", request, AuthTokenResponse.class);
-
-        AuthToken response = resultLogin.getBody().getData();
-
-        headers.setBearerAuth(response.getAccessToken());
+        headers.setBearerAuth(token);
     }
 
     @AfterAll
