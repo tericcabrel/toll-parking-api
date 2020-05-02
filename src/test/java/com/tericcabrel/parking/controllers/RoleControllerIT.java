@@ -58,7 +58,7 @@ class RoleControllerIT {
 
     @AfterAll
     void afterAll() {
-        testUtility.deleteUser(user);
+        testUtility.deleteUser(user.getId());
     }
 
     @DisplayName("CreateRole - Fail: Invalid data")

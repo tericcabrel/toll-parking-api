@@ -26,6 +26,9 @@ public class TestUtility {
     @Autowired
     private UserService userService;
 
+    /**
+     * @return instance of CreateUserDto
+     */
     public CreateUserDto getCreateUserDto() {
         return CreateUserDto.builder()
             .email("tericcabrel@yahoo.com")
@@ -38,6 +41,9 @@ public class TestUtility {
             .build();
     }
 
+    /**
+     * @return instance of User
+     */
     public User createTestUser() {
         CreateUserDto createUserDto = getCreateUserDto();
 
@@ -52,10 +58,18 @@ public class TestUtility {
         return user;
     }
 
-    public void deleteUser(User user) {
-        userService.delete(user.getId());
+    public void deleteUser(String userId) {
+        userService.delete(userId);
     }
 
+    /**
+     * @param restTemplate TestRestTemplate
+     * @param headers HttpHeaders
+     * @param email user's email
+     * @param password user's password
+     *
+     * @return a token if successful
+     */
     public String getAccessToken(TestRestTemplate restTemplate, HttpHeaders headers, String email, String password) {
         LoginUserDto loginUserDto = new LoginUserDto(email, password);
 
@@ -66,6 +80,9 @@ public class TestUtility {
         return resultLogin.getBody().getData().getAccessToken();
     }
 
+    /**
+     * @return HttpHeaders
+     */
     public HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
 

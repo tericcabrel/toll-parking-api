@@ -40,17 +40,24 @@ class CarTypeControllerIT {
 
     private CarType carType;
 
+    private User user;
+
     @BeforeAll
     void beforeAll() {
         headers = testUtility.createHeaders();
 
-        User user = testUtility.createTestUser();
+        user = testUtility.createTestUser();
 
         String token = testUtility.getAccessToken(
             restTemplate, headers, user.getEmail(), testUtility.getCreateUserDto().getPassword()
         );
 
         headers.setBearerAuth(token);
+    }
+
+    @AfterAll
+    void afterAll() {
+        testUtility.deleteUser(user.getId());
     }
 
     @DisplayName("CreateCarType - Fail: Invalid data")

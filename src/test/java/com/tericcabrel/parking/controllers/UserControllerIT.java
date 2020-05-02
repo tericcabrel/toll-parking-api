@@ -73,11 +73,6 @@ public class UserControllerIT {
         createUserDto.setEnabled(false);
     }
 
-    @AfterAll
-    void afterAll() {
-        // userRepository.deleteAll();
-    }
-
     @BeforeEach
     void setUp() {
         headers.setContentType(MediaType.APPLICATION_JSON);
