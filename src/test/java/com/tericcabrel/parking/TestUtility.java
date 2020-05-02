@@ -16,7 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 
@@ -59,6 +61,26 @@ public class TestUtility {
         CreateUserDto createUserDto = getCreateUserDto();
 
         createUserDto.setRoles(roleService.findAll());
+
+        User user = userService.findByEmail(createUserDto.getEmail());
+
+        if (user == null) {
+            user = userService.save(createUserDto);
+        }
+
+        return user;
+    }
+
+    /**
+     * @return instance of User
+     */
+    public User createTestUserWithRoleUser() {
+        CreateUserDto createUserDto = getCreateUserDto();
+
+        createUserDto
+            .setEmail("test@test.com")
+            .setPassword("secret")
+            .setRoles(Collections.singletonList(roleService.findByName(ROLE_USER)));
 
         User user = userService.findByEmail(createUserDto.getEmail());
 

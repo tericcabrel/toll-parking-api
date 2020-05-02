@@ -135,40 +135,6 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Throw when DTO validation fails on custom validator (validator created by me)
-     *
-     *  Example of output to the client
-     *  {
-     *      errors: {
-     *          confirmPassword: "Don't match the password",
-     *          ....
-     *      }
-     *  }
-     *
-     * @param ex instance of ConstraintViolationException
-     * @param request instance of WebRequest
-     *
-     * @return ResponseEntity with status code 422
-     */
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<?> constraintViolationException(ConstraintViolationException ex, WebRequest request) {
-        HashMap<String, String> errors = new HashMap<>();
-
-        ex.getConstraintViolations().forEach(cv -> {
-            String[] strings = cv.getPropertyPath().toString().split("\\.");
-
-            errors.put(strings[strings.length - 1], cv.getMessage());
-        });
-
-        HashMap<String, HashMap<String, String>> result = new HashMap<>();
-        result.put("errors", errors);
-
-        ConstraintViolationResponse response = new ConstraintViolationResponse(result);
-
-        return new ResponseEntity<>(response, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
-
-    /**
      * Throw when authenticated user try to access to a resource in which he didn't have required role
      *
      * @param ex instance of AccessDeniedException

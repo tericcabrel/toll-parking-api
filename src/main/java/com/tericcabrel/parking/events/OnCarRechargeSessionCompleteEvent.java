@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationEvent;
  * Event fires when a car's recharge session is marked as completed
  */
 @Getter
-@Setter
 @Accessors(chain = true)
 public class OnCarRechargeSessionCompleteEvent extends ApplicationEvent {
     private Customer customer;

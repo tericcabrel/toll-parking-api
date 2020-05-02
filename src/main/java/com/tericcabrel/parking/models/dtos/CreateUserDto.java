@@ -5,6 +5,7 @@ import com.tericcabrel.parking.models.dbs.Role;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.*;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 })
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class CreateUserDto extends BaseUserDto {
     private String id;
 

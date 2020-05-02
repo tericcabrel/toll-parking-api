@@ -10,7 +10,6 @@ import org.springframework.context.ApplicationEvent;
  * Event fires when a new user is created
  */
 @Getter
-@Setter
 @Accessors(chain = true)
 public class OnCreateUserCompleteEvent extends ApplicationEvent {
     private User user;
