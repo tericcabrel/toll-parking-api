@@ -98,9 +98,26 @@ class RoleControllerIT {
         assertThat(roleTest.getName()).isEqualTo(ROLE_TEST);
     }
 
-    @DisplayName("GetAllRoles - Success")
+    @DisplayName("CreateUser - Fail: Already exists")
     @Test
     @Order(3)
+    void failToCreateRoleCauseAlreadyExists() {
+        RoleDto roleDto = new RoleDto(ROLE_TEST, "");
+
+        HttpEntity<RoleDto> request = new HttpEntity<>(roleDto, headers);
+
+        ResponseEntity<GenericResponse> result = restTemplate.postForEntity("/roles", request, GenericResponse.class);
+
+        assertThat(result.getStatusCodeValue()).isEqualTo(400);
+
+        HashMap<String, Object> response = result.getBody().getData();
+
+        assertThat(response).containsKey("message");
+    }
+
+    @DisplayName("GetAllRoles - Success")
+    @Test
+    @Order(4)
     void getAllRoleSuccess() {
         HttpEntity request = new HttpEntity(headers);
 
@@ -116,7 +133,7 @@ class RoleControllerIT {
 
     @DisplayName("GetOneRole - Fail: Not exists")
     @Test
-    @Order(4)
+    @Order(5)
     void failToGetOneRoleCauseNotExists() {
         HttpEntity request = new HttpEntity(headers);
 
@@ -129,7 +146,7 @@ class RoleControllerIT {
 
     @DisplayName("GetOneRole - Success")
     @Test
-    @Order(5)
+    @Order(6)
     void getOneRoleSuccess() {
         HttpEntity request = new HttpEntity(headers);
 
@@ -147,7 +164,7 @@ class RoleControllerIT {
 
     @DisplayName("UpdateRole - Fail: Invalid Data")
     @Test
-    @Order(6)
+    @Order(7)
     void failToUpdateCauseInvalidData() {
         HttpEntity<RoleDto> request = new HttpEntity<>(new RoleDto(), headers);
         String url = "/roles/" + roleTest.getId();
@@ -167,7 +184,7 @@ class RoleControllerIT {
 
     @DisplayName("UpdateRole - Fail: Not found")
     @Test
-    @Order(7)
+    @Order(8)
     void failToUpdateCauseNotExists() {
         RoleDto roleDto = new RoleDto(ROLE_TEST, "");
 
@@ -181,7 +198,7 @@ class RoleControllerIT {
 
     @DisplayName("UpdateRole - Success")
     @Test
-    @Order(8)
+    @Order(9)
     void updateSuccess() {
         RoleDto roleDto = new RoleDto(ROLE_TEST+ "_UPDATE", "Description of the role test updated");
 
@@ -203,7 +220,7 @@ class RoleControllerIT {
 
     @DisplayName("AssignRole - Fail: Invalid data")
     @Test
-    @Order(9)
+    @Order(10)
     void failToAssignRolesToUserCauseInvalidData() {
         HttpEntity<RoleUpdateDto> request = new HttpEntity<>(new RoleUpdateDto(), headers);
 
@@ -223,7 +240,7 @@ class RoleControllerIT {
 
     @DisplayName("AssignRole - Fail: Invalid data")
     @Test
-    @Order(10)
+    @Order(11)
     void failToAssignRolesToUserCauseUserNotFound() {
         RoleUpdateDto roleUpdateDto = new RoleUpdateDto(roleTest.getId(), new String[] { roleTest.getName() });
 
@@ -236,7 +253,7 @@ class RoleControllerIT {
 
     @DisplayName("AssignRole - Success")
     @Test
-    @Order(11)
+    @Order(12)
     void assignRolesToUserSuccess() {
         String roleUnexistant = "ROLE_UNEXISTANT";
         RoleUpdateDto roleUpdateDto = new RoleUpdateDto(user.getId(), new String[] { roleTest.getName(), roleUnexistant });
@@ -261,7 +278,7 @@ class RoleControllerIT {
 
     @DisplayName("RevokeRole - Fail: Invalid data")
     @Test
-    @Order(12)
+    @Order(13)
     void failToRevokeRolesToUserCauseInvalidData() {
         HttpEntity<RoleUpdateDto> request = new HttpEntity<>(new RoleUpdateDto(), headers);
 
@@ -281,7 +298,7 @@ class RoleControllerIT {
 
     @DisplayName("RevokeRole - Fail: Invalid data")
     @Test
-    @Order(13)
+    @Order(14)
     void failToRevokeRolesToUserCauseUserNotFound() {
         RoleUpdateDto roleUpdateDto = new RoleUpdateDto(roleTest.getId(), new String[] { roleTest.getName() });
 
@@ -294,7 +311,7 @@ class RoleControllerIT {
 
     @DisplayName("RevokeRole - Success")
     @Test
-    @Order(14)
+    @Order(15)
     void revokeRolesToUserSuccess() {
         String roleUnexistant = "ROLE_UNEXISTANT";
         RoleUpdateDto roleUpdateDto = new RoleUpdateDto(user.getId(), new String[] { roleTest.getName(), roleUnexistant });
@@ -320,7 +337,7 @@ class RoleControllerIT {
 
     @DisplayName("DeleteRole - Success")
     @Test
-    @Order(15)
+    @Order(16)
     void deleteRoleSuccess() {
         HttpEntity request = new HttpEntity(headers);
 
