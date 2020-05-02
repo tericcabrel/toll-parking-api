@@ -83,16 +83,9 @@ class CarRechargeSessionControllerIT {
 
         user = testUtility.createTestUser();
         
-        customer = testUtility.createCustomer(CAR_TYPE_GASOLINE); // Car type => Gasoline
+        customer = testUtility.createCustomer1(); // Car type => Gasoline
 
-        CreateCustomerDto createCustomerDto = testUtility.getCreateCustomerDto(CAR_TYPE_20KW); // Car type => Gasoline
-        createCustomerDto
-            .setName("Test2 Customer")
-            .setEmail("two-test@customer")
-            .setPhone("+487834392")
-            .setGender(GenderEnum.OTHER.toString());
-
-        customer2 = testUtility.createCustomer(createCustomerDto);
+        customer2 = testUtility.createCustomer2(); // Car type =>  20KW
 
         parkingSlot = testUtility.createParkingSlot(); // Car type: 20 KW
 

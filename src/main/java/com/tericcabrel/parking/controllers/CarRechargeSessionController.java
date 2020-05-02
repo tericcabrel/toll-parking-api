@@ -72,6 +72,8 @@ public class CarRechargeSessionController {
     ) {
         Customer customer = customerService.findById(createCarRechargeSessionDto.getCustomerId());
 
+        System.out.println(customer.getCarType());
+
         List<ParkingSlot> parkingSlotListAvailable = parkingSlotService.findAvailableByCarType(customer.getCarType());
 
         if (parkingSlotListAvailable.size() == 0) {

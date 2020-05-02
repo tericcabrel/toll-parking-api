@@ -146,7 +146,27 @@ public class TestUtility {
         return saveCustomer(createCustomerDto);
     }
 
-    public Customer createCustomer(CreateCustomerDto createCustomerDto) {
+    public Customer createCustomer1() {
+        CreateCustomerDto createCustomerDto = CreateCustomerDto.builder()
+            .email("test-1@customer.com")
+            .name("Test-1 Customer")
+            .gender(GenderEnum.MALE.toString())
+            .phone("+23646374394")
+            .carType(getCarType(CAR_TYPE_GASOLINE))
+            .build();
+
+        return saveCustomer(createCustomerDto);
+    }
+
+    public Customer createCustomer2() {
+        CreateCustomerDto createCustomerDto = CreateCustomerDto.builder()
+            .email("test2@customer.com")
+            .name("Test2 Customer")
+            .gender(GenderEnum.OTHER.toString())
+            .phone("+487834392")
+            .carType(getCarType(CAR_TYPE_20KW))
+            .build();
+
         return saveCustomer(createCustomerDto);
     }
 
