@@ -3,7 +3,6 @@ package com.tericcabrel.parking.controllers;
 import com.tericcabrel.parking.TestUtility;
 import com.tericcabrel.parking.models.dbs.*;
 import com.tericcabrel.parking.models.dtos.*;
-import com.tericcabrel.parking.models.enums.GenderEnum;
 import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
 import com.tericcabrel.parking.models.responses.GenericResponse;
 import com.tericcabrel.parking.models.responses.InvalidDataResponse;
@@ -255,10 +254,11 @@ class CarRechargeSessionControllerIT {
 
         carRechargeDuration = result.getBody().getData();
 
-        System.out.println("Duration => " + carRechargeDuration.get("duration"));
-
         assertThat(carRechargeDuration).containsKey("duration");
+        assertThat(carRechargeDuration.get("duration")).isEqualTo(0.0);
         assertThat(carRechargeDuration).containsKey("time");
+
+        carRechargeDuration.put("duration", 10d);
     }
 
     @DisplayName("UpdateCarRecharge - Fail: Invalid Data")
