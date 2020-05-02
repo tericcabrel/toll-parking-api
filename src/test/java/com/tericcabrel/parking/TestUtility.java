@@ -1,10 +1,15 @@
 package com.tericcabrel.parking;
 
+import com.tericcabrel.parking.models.dbs.CarType;
+import com.tericcabrel.parking.models.dbs.Customer;
 import com.tericcabrel.parking.models.dbs.User;
+import com.tericcabrel.parking.models.dtos.CreateCustomerDto;
 import com.tericcabrel.parking.models.dtos.CreateUserDto;
 import com.tericcabrel.parking.models.dtos.LoginUserDto;
 import com.tericcabrel.parking.models.enums.GenderEnum;
 import com.tericcabrel.parking.models.responses.AuthTokenResponse;
+import com.tericcabrel.parking.services.interfaces.CarTypeService;
+import com.tericcabrel.parking.services.interfaces.CustomerService;
 import com.tericcabrel.parking.services.interfaces.RoleService;
 import com.tericcabrel.parking.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import static com.tericcabrel.parking.utils.Constants.ROLE_ADMIN;
-import static com.tericcabrel.parking.utils.Constants.ROLE_USER;
+import static com.tericcabrel.parking.utils.Constants.*;
 
 @Component
 public class TestUtility {
@@ -25,6 +29,12 @@ public class TestUtility {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private CarTypeService carTypeService;
 
     /**
      * @return instance of CreateUserDto
@@ -89,5 +99,42 @@ public class TestUtility {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         return headers;
+    }
+
+    /**
+     * @param name car's type
+     *
+     * @return instance of CarType
+     */
+    public CarType getCarType(String name) {
+        return carTypeService.findByName(name);
+    }
+
+    /**
+     * @return
+     */
+    public CreateCustomerDto getCreateCustomerDto() {
+        return CreateCustomerDto.builder()
+            .email("test@customer.com")
+            .name("Test Customer")
+            .gender(GenderEnum.MALE.toString())
+            .phone("+2354544234")
+            .carTypeId(getCarType(CAR_TYPE_20KW).getId())
+            .build();
+    }
+
+    /**
+     * @return
+     */
+    public Customer createCustomer() {
+        CreateCustomerDto createCustomerDto = getCreateCustomerDto();
+
+        Customer customer = customerService.findByEmail(createCustomerDto.getEmail());
+
+        if (customer == null) {
+            customer = customerService.save(createCustomerDto);
+        }
+
+        return customer;
     }
 }
