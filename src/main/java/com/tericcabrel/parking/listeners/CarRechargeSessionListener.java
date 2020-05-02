@@ -46,7 +46,7 @@ public class CarRechargeSessionListener implements ApplicationListener<OnCarRech
         this.sendEmail(event);
     }
 
-    private void sendEmail(OnCarRechargeSessionCompleteEvent event) {
+    public void sendEmail(OnCarRechargeSessionCompleteEvent event) {
         Customer customer = event.getCustomer();
         CarRechargeSession carRechargeSession = event.getCarRechargeSession();
         double duration = Helpers.calculateDuration(carRechargeSession.getStartTime(), carRechargeSession.getEndTime());
