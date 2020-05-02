@@ -47,7 +47,7 @@ public class CreateUserDto extends BaseUserDto {
     @Builder
     public CreateUserDto(
         String name, String email, String password, String confirmPassword, boolean enabled, List<Role> roles,
-        String gender
+        String gender, String[] roleNames
     ) {
         this.name = name;
         this.email = email;
@@ -56,5 +56,6 @@ public class CreateUserDto extends BaseUserDto {
         this.enabled = enabled;
         this.roles = roles;
         this.gender = gender;
+        this.roleNames = roleNames;
     }
 }
