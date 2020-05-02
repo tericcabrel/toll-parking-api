@@ -21,7 +21,8 @@ public class CreateCarRechargeSessionDto {
     private ParkingSlot parkingSlot;
 
     @Builder
-    public CreateCarRechargeSessionDto(Customer customer) {
+    public CreateCarRechargeSessionDto(Customer customer, String customerId) {
         this.customer = customer;
+        this.customerId = customerId;
     }
 }

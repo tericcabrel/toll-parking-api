@@ -2,9 +2,11 @@ package com.tericcabrel.parking.utils;
 
 import org.junit.jupiter.api.*;
 
+import java.text.ParseException;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class HelpersTest {
 
@@ -69,5 +71,22 @@ class HelpersTest {
             assertThat(errors.get("input")).hasSize(2);
             assertThat(errors.get("input")).contains("Error Input 2");
         }
+    }
+
+    @Test
+    void isoStringToDate() {
+        String isoDate = "2020-05-02T16:23:59.000";
+
+        Date result = Helpers.isoStringToDate(isoDate);
+
+        assertThat(result).isNotNull();
+    }
+
+    @Test
+    void isoStringToDateThrowException() {
+        String isoDate = "2020-05-02 16:23:59.000";
+        Date result = Helpers.isoStringToDate(isoDate);
+
+        assertThat(result).isNull();
     }
 }

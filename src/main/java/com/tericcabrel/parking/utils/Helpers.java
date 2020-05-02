@@ -1,7 +1,9 @@
 package com.tericcabrel.parking.utils;
 
 import java.math.RoundingMode;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -90,5 +92,22 @@ public class Helpers {
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 
         return dateFormat.format(date) + Integer.valueOf(yearFormat.format(date)) + hourFormat.format(date);
+    }
+
+    /**
+     * @param dateISOString String
+     *
+     * @return Date
+     */
+    public static Date isoStringToDate(String dateISOString) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
+        try {
+            return dateFormat.parse(dateISOString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

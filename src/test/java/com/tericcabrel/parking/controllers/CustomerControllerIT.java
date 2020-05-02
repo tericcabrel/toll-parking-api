@@ -1,7 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
 import com.tericcabrel.parking.TestUtility;
-import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dbs.Customer;
 import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.dtos.CreateCustomerDto;
@@ -57,7 +56,7 @@ class CustomerControllerIT {
 
         user = testUtility.createTestUser();
 
-        customer = testUtility.createCustomer();
+        customer = testUtility .createCustomer(CAR_TYPE_20KW);
 
         String token = testUtility.getAccessToken(
             restTemplate, headers, user.getEmail(), testUtility.getCreateUserDto().getPassword()
@@ -98,7 +97,7 @@ class CustomerControllerIT {
     @Test
     @Order(2)
     void failToCreateCustomerCauseAlreadyExists() {
-        CreateCustomerDto createCustomerDto = testUtility.getCreateCustomerDto();
+        CreateCustomerDto createCustomerDto = testUtility.getCreateCustomerDto(CAR_TYPE_20KW);
 
         HttpEntity<CreateCustomerDto> request = new HttpEntity<>(createCustomerDto, headers);
 
@@ -115,15 +114,12 @@ class CustomerControllerIT {
     @Test
     @Order(3)
     void createCustomerSuccess() {
-        CarType carType = testUtility.getCarType(CAR_TYPE_GASOLINE);
-
-        CreateCustomerDto createCustomerDto = testUtility.getCreateCustomerDto();
+        CreateCustomerDto createCustomerDto = testUtility.getCreateCustomerDto(CAR_TYPE_GASOLINE);
 
         createCustomerDto
-            .setCarTypeId(carType.getId())
-                                .setEmail("main@customer.com")
-                                .setName("Main Customer")
-                                .setPhone("+53434834222");
+            .setEmail("main@customer.com")
+            .setName("Main Customer")
+            .setPhone("+53434834222");
 
         HttpEntity<CreateCustomerDto> request = new HttpEntity<>(createCustomerDto, headers);
 
@@ -137,7 +133,7 @@ class CustomerControllerIT {
         assertThat(customer.getName()).isEqualTo(createCustomerDto.getName());
         assertThat(customer.getEmail()).isEqualTo(createCustomerDto.getEmail());
         assertThat(customer.getPhone()).isEqualTo(createCustomerDto.getPhone());
-        assertThat(customer.getCarType().getName()).isEqualTo(carType.getName());
+        assertThat(customer.getCarType().getName()).isEqualTo(createCustomerDto.getCarType().getName());
     }
 
     @DisplayName("GetAllCustomers - Success")

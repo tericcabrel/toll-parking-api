@@ -31,11 +31,12 @@ public class CreateCustomerDto extends BaseUserDto {
     private CarType carType;
 
     @Builder
-    public CreateCustomerDto(String name, String gender, String email, String phone, String carTypeId) {
+    public CreateCustomerDto(String name, String gender, String email, String phone, String carTypeId, CarType carType) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.gender = gender;
         this.carTypeId = carTypeId;
+        this.carType = carType;
     }
 }

@@ -114,22 +114,43 @@ public class TestUtility {
     /**
      * @return
      */
-    public CreateCustomerDto getCreateCustomerDto() {
+    public CreateCustomerDto getCreateCustomerDto(String carTypeName) {
+        CarType carType = getCarType(carTypeName != null ? carTypeName : CAR_TYPE_20KW);
+
         return CreateCustomerDto.builder()
             .email("test@customer.com")
             .name("Test Customer")
             .gender(GenderEnum.MALE.toString())
             .phone("+2354544234")
-            .carTypeId(getCarType(CAR_TYPE_20KW).getId())
+            .carType(carType)
+            .carTypeId(carType.getId())
             .build();
+    }
+
+    /**
+     * @param id String
+     * @param updateCustomerDto UpdateCustomerDto
+     *
+     * @return Customer
+     */
+    public Customer updateCustomer(String id, UpdateCustomerDto updateCustomerDto) {
+        return customerService.update(id, updateCustomerDto);
     }
 
     /**
      * @return instance of Customer
      */
-    public Customer createCustomer() {
-        CreateCustomerDto createCustomerDto = getCreateCustomerDto();
+    public Customer createCustomer(String carTypeName) {
+        CreateCustomerDto createCustomerDto = getCreateCustomerDto(carTypeName);
 
+        return saveCustomer(createCustomerDto);
+    }
+
+    public Customer createCustomer(CreateCustomerDto createCustomerDto) {
+        return saveCustomer(createCustomerDto);
+    }
+
+    private Customer saveCustomer(CreateCustomerDto createCustomerDto) {
         Customer customer = customerService.findByEmail(createCustomerDto.getEmail());
 
         if (customer == null) {
@@ -138,6 +159,14 @@ public class TestUtility {
 
         return customer;
     }
+
+    public void deleteCustomer(String id) {
+        customerService.delete(id);
+    }
+    public void deleteParkingSlot(String id) {
+        parkingSlotService.delete(id);
+    }
+
 
     /**
      * @return instance of CreateParkingSlotDto
@@ -160,11 +189,14 @@ public class TestUtility {
 
         PricingPolicyDto pricingPolicyDto = getPricingPolicyDto(parameters, "numberOfHour * priceOfHour");
 
+        CarType carType = getCarType(CAR_TYPE_20KW);
+
         return CreateParkingSlotDto.builder()
             .label("Slot 20KW")
             .state("FREE")
             .pricingPolicyDto(pricingPolicyDto)
-            .carTypeId(getCarType(CAR_TYPE_20KW).getId())
+            .carType(carType)
+            .carTypeId(carType.getId())
             .build();
     }
 
@@ -191,5 +223,23 @@ public class TestUtility {
      */
     public ParkingSlot updateParkingSlotDto(String id, UpdateParkingSlotDto updateParkingSlotDto) {
         return parkingSlotService.update(id, updateParkingSlotDto);
+    }
+
+    /**
+     * @param parkingSlotId String
+     *
+     * @return ParkingSlot
+     */
+    public ParkingSlot getParkingSlot(String parkingSlotId) {
+        return parkingSlotService.findById(parkingSlotId);
+    }
+
+    /**
+     * @param customerId String
+     *
+     * @return CreateCarRechargeSessionDto
+     */
+    public CreateCarRechargeSessionDto getCreateCarRechargeSessionDto(String customerId) {
+        return CreateCarRechargeSessionDto.builder().customerId(customerId).build();
     }
 }

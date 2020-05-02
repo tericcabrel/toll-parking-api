@@ -34,12 +34,13 @@ public class CreateParkingSlotDto {
     private CarType carType;
 
     @Builder
-    public CreateParkingSlotDto(String label, String state, String carTypeId, PricingPolicyDto pricingPolicyDto)
+    public CreateParkingSlotDto(String label, String state, String carTypeId, CarType carType, PricingPolicyDto pricingPolicyDto)
     {
         this.label = label;
         this.state = state;
         this.carTypeId = carTypeId;
         this.pricingPolicy = pricingPolicyDto;
+        this.carType = carType;
     }
 
     /**

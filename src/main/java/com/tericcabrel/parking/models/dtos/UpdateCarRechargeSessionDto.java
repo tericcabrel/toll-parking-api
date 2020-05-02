@@ -14,10 +14,10 @@ public class UpdateCarRechargeSessionDto {
     private Date endTime;
 
     // TODO Greather than Zero
-    private float price;
+    private double price;
 
     @Builder
-    public UpdateCarRechargeSessionDto(Date endTime, float price) {
+    public UpdateCarRechargeSessionDto(Date endTime, double price) {
         this.endTime = endTime;
         this.price = price;
     }
