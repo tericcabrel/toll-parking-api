@@ -93,9 +93,7 @@ public class UserController {
         @ApiResponse(code = 422, message = INVALID_DATA_MESSAGE, response = InvalidDataResponse.class),
     })
     @PostMapping(value = "/login")
-    public ResponseEntity<AuthTokenResponse> login(
-        @Valid @RequestBody LoginUserDto loginUserDto
-    ) throws AuthenticationException {
+    public ResponseEntity<AuthTokenResponse> login(@Valid @RequestBody LoginUserDto loginUserDto) {
         final Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 loginUserDto.getEmail(),

@@ -2,6 +2,7 @@ package com.tericcabrel.parking.listeners;
 
 import com.tericcabrel.parking.events.OnCreateUserCompleteEvent;
 import com.tericcabrel.parking.models.dbs.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
@@ -21,6 +22,7 @@ import java.io.UnsupportedEncodingException;
  * Send email to the user we just created the account
  */
 @Component
+@Slf4j
 public class CreateUserListener implements ApplicationListener<OnCreateUserCompleteEvent> {
     private static final String TEMPLATE_NAME = "html/registration";
     private static final String SPRING_LOGO_IMAGE = "templates/html/images/spring.png";
@@ -44,7 +46,7 @@ public class CreateUserListener implements ApplicationListener<OnCreateUserCompl
         this.sendEmail(event);
     }
 
-    private void sendEmail(OnCreateUserCompleteEvent event) {
+    public void sendEmail(OnCreateUserCompleteEvent event) {
         User user = event.getUser();
 
         String mailFrom = environment.getProperty("spring.mail.properties.mail.smtp.from");
@@ -74,7 +76,7 @@ public class CreateUserListener implements ApplicationListener<OnCreateUserCompl
             email.addInline("springLogo", clr, PNG_MIME);
 
             mailSender.send(mimeMessage);
-        } catch (MessagingException | UnsupportedEncodingException e) {
+        } catch (MessagingException | UnsupportedEncodingException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
