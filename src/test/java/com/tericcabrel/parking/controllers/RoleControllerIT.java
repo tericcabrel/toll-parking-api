@@ -1,14 +1,13 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.TestUtility;
 import com.tericcabrel.parking.models.dtos.LoginUserDto;
 import com.tericcabrel.parking.models.dtos.RoleDto;
 import com.tericcabrel.parking.models.dtos.RoleUpdateDto;
 import com.tericcabrel.parking.models.dbs.Role;
 import com.tericcabrel.parking.models.dbs.User;
-import com.tericcabrel.parking.models.enums.GenderEnum;
 import com.tericcabrel.parking.models.responses.*;
 import com.tericcabrel.parking.repositories.RoleRepository;
-import com.tericcabrel.parking.repositories.UserRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,7 +36,7 @@ class RoleControllerIT {
     private RoleRepository roleRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private TestUtility testUtility;
 
     private HttpHeaders headers;
 
@@ -50,20 +49,7 @@ class RoleControllerIT {
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        List<Role> roles = new ArrayList<>(Collections.singletonList(
-            roleRepository.findByName(ROLE_USER)
-        ));
-
-        user = User.builder()
-                    .email("tericcabrel@yahoo.com")
-                    .enabled(true)
-                    .name("John Doe")
-                    .gender(GenderEnum.MALE)
-                    .password("123456")
-                    .roles(roles)
-                    .build();
-
-        user = userRepository.save(user);
+        user = testUtility.createTestUser();
 
         LoginUserDto loginUserDto = new LoginUserDto("admin@admin.com", "qwerty");
 
@@ -78,8 +64,7 @@ class RoleControllerIT {
 
     @AfterAll
     void afterAll() {
-        userRepository.deleteAll();
-        roleRepository.deleteAll();
+        testUtility.deleteUser(user);
     }
 
     @DisplayName("CreateRole - Fail: Invalid data")
@@ -268,16 +253,14 @@ class RoleControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(200);
 
-        System.out.println(result.getBody());
-
         User userUpdated = result.getBody().getData();
 
         assertThat(userUpdated.getId()).isEqualTo(user.getId());
-        assertThat(userUpdated.getRoles()).hasSize(2);
+        assertThat(userUpdated.getRoles()).hasSize(3);
 
         List<String> roleNames = userUpdated.getRoles().stream().map(Role::getName).collect(Collectors.toList());
 
-        assertThat(roleNames).hasSize(2);
+        assertThat(roleNames).hasSize(3);
         assertThat(roleTest.getName()).isIn(roleNames);
         assertThat(roleUnexistant).isNotIn(roleNames);
     }
@@ -331,11 +314,11 @@ class RoleControllerIT {
         User userUpdated = result.getBody().getData();
 
         assertThat(userUpdated.getId()).isEqualTo(user.getId());
-        assertThat(userUpdated.getRoles()).hasSize(1);
+        assertThat(userUpdated.getRoles()).hasSize(2);
 
         List<String> roleNames = userUpdated.getRoles().stream().map(Role::getName).collect(Collectors.toList());
 
-        assertThat(roleNames).hasSize(1);
+        assertThat(roleNames).hasSize(2);
         assertThat(roleTest.getName()).isNotIn(roleNames);
         assertThat(roleUnexistant).isNotIn(roleNames);
         assertThat(ROLE_USER).isIn(roleNames);

@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.TestUtility;
 import com.tericcabrel.parking.models.dtos.CreateUserDto;
 import com.tericcabrel.parking.models.dtos.LoginUserDto;
 import com.tericcabrel.parking.models.dtos.UpdatePasswordDto;
@@ -7,7 +8,6 @@ import com.tericcabrel.parking.models.dtos.UpdateUserDto;
 import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.enums.GenderEnum;
 import com.tericcabrel.parking.models.responses.*;
-import com.tericcabrel.parking.repositories.RoleRepository;
 import com.tericcabrel.parking.repositories.UserRepository;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.*;
@@ -19,7 +19,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.mail.Address;
@@ -29,8 +28,6 @@ import javax.mail.internet.MimeMessage;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.tericcabrel.parking.utils.Constants.ROLE_ADMIN;
-import static com.tericcabrel.parking.utils.Constants.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
@@ -47,10 +44,7 @@ public class UserControllerIT {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptEncoder;
+    private TestUtility testUtility;
 
     @MockBean
     private JavaMailSender mailSender;
@@ -69,21 +63,20 @@ public class UserControllerIT {
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        createUserDto = CreateUserDto.builder()
-                            .email("tericcabrel@yahoo.com")
-                            .enabled(false)
-                            .name("John Doe")
-                            .gender(GenderEnum.MALE.toString())
-                            .password("123456")
-                            .confirmPassword("123456")
-                            .roleNames(new String[]{ ROLE_ADMIN, ROLE_USER })
-                            .build();
+        createUserDto = testUtility.getCreateUserDto();
+
+        // Delete user test if it's already exists
+        User item = userRepository.findByEmail(createUserDto.getEmail());
+        if (item != null) {
+            userRepository.deleteById(new ObjectId(item.getId()));
+        }
+
+        createUserDto.setEnabled(false);
     }
 
     @AfterAll
     void afterAll() {
-        userRepository.deleteAll();
-        roleRepository.deleteAll();
+        // userRepository.deleteAll();
     }
 
     @BeforeEach

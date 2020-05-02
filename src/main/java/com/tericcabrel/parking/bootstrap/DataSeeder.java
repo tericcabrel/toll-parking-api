@@ -23,7 +23,7 @@ import static com.tericcabrel.parking.utils.Constants.*;
  * This classes will insert in the database :
  * - Main roles: ROLE_USER and ROLE_ADMIN
  * - The first user with the role ROLE_ADMIN
- * - 3Car's types: Gasoline, Electric 20Kw, Electric 50Kw
+ * - 3 Car's types: Gasoline, Electric 20Kw, Electric 50Kw
  */
 @Component
 public class DataSeeder implements ApplicationListener<ContextRefreshedEvent> {

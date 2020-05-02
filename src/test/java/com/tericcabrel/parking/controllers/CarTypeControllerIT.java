@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.TestUtility;
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dtos.CreateCarTypeDto;
 import com.tericcabrel.parking.models.dtos.LoginUserDto;
@@ -32,6 +33,9 @@ class CarTypeControllerIT {
     @Autowired
     private CarTypeRepository carTypeRepository;
 
+    @Autowired
+    private TestUtility testUtility;
+
     private HttpHeaders headers;
 
     private CarType carTypeTest;
@@ -41,7 +45,12 @@ class CarTypeControllerIT {
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        LoginUserDto loginUserDto = new LoginUserDto("admin@admin.com", "qwerty");
+        testUtility.createTestUser();
+
+        LoginUserDto loginUserDto = LoginUserDto.builder()
+            .email(testUtility.getCreateUserDto().getEmail())
+            .password(testUtility.getCreateUserDto().getPassword())
+            .build();
 
         HttpEntity<LoginUserDto> request = new HttpEntity<>(loginUserDto, headers);
 
@@ -50,11 +59,6 @@ class CarTypeControllerIT {
         AuthToken response = resultLogin.getBody().getData();
 
         headers.setBearerAuth(response.getAccessToken());
-    }
-
-    @AfterAll
-    void afterAll() {
-        carTypeRepository.deleteAll();
     }
 
     @DisplayName("CreateCarType - Fail: Invalid data")
