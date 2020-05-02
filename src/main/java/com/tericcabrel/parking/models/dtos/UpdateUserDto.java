@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.models.dtos;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,6 +15,7 @@ public class UpdateUserDto extends BaseUserDto {
         this.enabled = -1;
     }
 
+    @Builder
     public UpdateUserDto(String name, int enabled, String gender) {
         this.name = name;
         this.enabled = enabled;

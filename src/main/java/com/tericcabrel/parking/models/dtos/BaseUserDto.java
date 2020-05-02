@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tericcabrel.parking.models.enums.GenderEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public abstract class BaseUserDto {
     /**
      * @return Gender of user in enum type
      */
+    @JsonIgnore
     public GenderEnum getGenderEnum() {
         if (gender.equals("MALE")) {
             return GenderEnum.MALE;

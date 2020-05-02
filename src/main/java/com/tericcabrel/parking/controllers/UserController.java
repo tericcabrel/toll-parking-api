@@ -12,7 +12,6 @@ import com.tericcabrel.parking.models.responses.*;
 import com.tericcabrel.parking.services.interfaces.RoleService;
 import com.tericcabrel.parking.services.interfaces.UserService;
 import com.tericcabrel.parking.utils.JwtTokenUtil;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
