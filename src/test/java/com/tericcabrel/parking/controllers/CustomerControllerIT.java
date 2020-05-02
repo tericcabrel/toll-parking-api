@@ -1,6 +1,7 @@
 package com.tericcabrel.parking.controllers;
 
 import com.tericcabrel.parking.TestUtility;
+import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dbs.Customer;
 import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.dtos.CreateCustomerDto;
@@ -224,9 +225,12 @@ class CustomerControllerIT {
     @Test
     @Order(9)
     void updateSuccess() {
+        CarType carType = testUtility.getCarType(CAR_TYPE_50KW);
+
         UpdateCustomerDto updateCustomerDto = UpdateCustomerDto.builder()
             .name("Name Update")
             .gender(GenderEnum.FEMALE.toString())
+            .carTypeId(carType.getId())
             .build();
 
         HttpEntity<UpdateCustomerDto> request = new HttpEntity<>(updateCustomerDto, headers);
