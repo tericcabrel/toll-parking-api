@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
 import lombok.Builder;
@@ -38,6 +39,7 @@ public class UpdateParkingSlotDto {
     /**
      * @return State of the parking slot in enum type
      */
+    @JsonIgnore
     public ParkingSlotStateEnum getParkingSlotStateEnum() {
         return state.equals("FREE") ? ParkingSlotStateEnum.FREE : ParkingSlotStateEnum.BUSY;
     }

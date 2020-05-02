@@ -1,10 +1,12 @@
 package com.tericcabrel.parking.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.enums.ParkingSlotStateEnum;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +15,7 @@ import javax.validation.constraints.Pattern;
 
 @NoArgsConstructor
 @Data
+@Accessors(chain = true)
 public class CreateParkingSlotDto {
     @NotBlank(message = "The name is required")
     private String label;
@@ -42,6 +45,7 @@ public class CreateParkingSlotDto {
     /**
      * @return State of the parking slot in enum type
      */
+    @JsonIgnore
     public ParkingSlotStateEnum getParkingSlotStateEnum() {
         return state.equals("FREE") ? ParkingSlotStateEnum.FREE : ParkingSlotStateEnum.BUSY;
     }

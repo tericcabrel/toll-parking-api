@@ -47,6 +47,7 @@ public class ParkingSlotController {
     @ApiOperation(value = "Create parking's slot", response = GenericResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Parking's slot created successfully!", response = ParkingSlotResponse.class),
+        @ApiResponse(code = 400, message = "Parking slot already exists", response = GenericResponse.class),
         @ApiResponse(code = 401, message = UNAUTHORIZED_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 403, message = FORBIDDEN_MESSAGE, response = GenericResponse.class),
         @ApiResponse(code = 404, message = NOT_FOUND_MESSAGE, response = GenericResponse.class),

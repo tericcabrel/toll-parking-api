@@ -12,5 +12,7 @@ import java.util.List;
 
 @Repository
 public interface ParkingSlotRepository extends MongoRepository<ParkingSlot, ObjectId> {
+    ParkingSlot findByLabel(String label);
+
     List<ParkingSlot> findAllByCarTypeAndStateOrderByLastUsedTimeAsc(CarType carType, ParkingSlotStateEnum state);
 }

@@ -2,16 +2,12 @@ package com.tericcabrel.parking;
 
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dbs.Customer;
+import com.tericcabrel.parking.models.dbs.ParkingSlot;
 import com.tericcabrel.parking.models.dbs.User;
-import com.tericcabrel.parking.models.dtos.CreateCustomerDto;
-import com.tericcabrel.parking.models.dtos.CreateUserDto;
-import com.tericcabrel.parking.models.dtos.LoginUserDto;
+import com.tericcabrel.parking.models.dtos.*;
 import com.tericcabrel.parking.models.enums.GenderEnum;
 import com.tericcabrel.parking.models.responses.AuthTokenResponse;
-import com.tericcabrel.parking.services.interfaces.CarTypeService;
-import com.tericcabrel.parking.services.interfaces.CustomerService;
-import com.tericcabrel.parking.services.interfaces.RoleService;
-import com.tericcabrel.parking.services.interfaces.UserService;
+import com.tericcabrel.parking.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -19,6 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 
@@ -35,6 +33,9 @@ public class TestUtility {
 
     @Autowired
     private CarTypeService carTypeService;
+
+    @Autowired
+    private ParkingSlotService parkingSlotService;
 
     /**
      * @return instance of CreateUserDto
@@ -124,7 +125,7 @@ public class TestUtility {
     }
 
     /**
-     * @return
+     * @return instance of Customer
      */
     public Customer createCustomer() {
         CreateCustomerDto createCustomerDto = getCreateCustomerDto();
@@ -136,5 +137,59 @@ public class TestUtility {
         }
 
         return customer;
+    }
+
+    /**
+     * @return instance of CreateParkingSlotDto
+     */
+    public PricingPolicyDto getPricingPolicyDto(HashMap<String, Double> parameters, String evaluation) {
+        return PricingPolicyDto.builder()
+            .parameters(parameters)
+            .evaluation(evaluation)
+            .build();
+    }
+
+    /**
+     * @return instance of CreateParkingSlotDto
+     */
+    public CreateParkingSlotDto getCreateParkingSlotDto() {
+        HashMap<String, Double> parameters = new HashMap<>();
+
+        parameters.put("numberOfHour", -1d);
+        parameters.put("priceOfHour", 100d);
+
+        PricingPolicyDto pricingPolicyDto = getPricingPolicyDto(parameters, "numberOfHour * priceOfHour");
+
+        return CreateParkingSlotDto.builder()
+            .label("Slot 20KW")
+            .state("FREE")
+            .pricingPolicyDto(pricingPolicyDto)
+            .carTypeId(getCarType(CAR_TYPE_20KW).getId())
+            .build();
+    }
+
+    /**
+     * @return instance of ParkingSlot
+     */
+    public ParkingSlot createParkingSlot() {
+        CreateParkingSlotDto createParkingSlotDto = getCreateParkingSlotDto();
+
+        ParkingSlot parkingSlot = parkingSlotService.findByLabel(createParkingSlotDto.getLabel());
+
+        if (parkingSlot == null) {
+            parkingSlot = parkingSlotService.save(createParkingSlotDto);
+        }
+
+        return parkingSlot;
+    }
+
+    /**
+     * @param id String
+     * @param updateParkingSlotDto UpdateParkingSlotDto
+     *
+     * @return ParkingSlot
+     */
+    public ParkingSlot updateParkingSlotDto(String id, UpdateParkingSlotDto updateParkingSlotDto) {
+        return parkingSlotService.update(id, updateParkingSlotDto);
     }
 }

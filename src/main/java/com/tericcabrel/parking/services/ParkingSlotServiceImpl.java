@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.services;
 
+import com.tericcabrel.parking.exceptions.ResourceAlreadyExistsException;
 import com.tericcabrel.parking.exceptions.ResourceNotFoundException;
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dbs.ParkingSlot;
@@ -26,17 +27,23 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
     @Override
     public ParkingSlot save(CreateParkingSlotDto createParkingSlotDto) {
 
-        PricingPolicy pricingPolicy = PricingPolicy.builder()
-                                                .parameters(createParkingSlotDto.getPricingPolicy().getParameters())
-                                                .evaluation(createParkingSlotDto.getPricingPolicy().getEvaluation())
-                                                .build();
+        ParkingSlot parkingSlot = parkingSlotRepository.findByLabel(createParkingSlotDto.getLabel());
 
-        ParkingSlot parkingSlot = ParkingSlot.builder()
-                                        .label(createParkingSlotDto.getLabel())
-                                        .state(createParkingSlotDto.getParkingSlotStateEnum())
-                                        .pricingPolicy(pricingPolicy)
-                                        .carType(createParkingSlotDto.getCarType())
-                                        .build();
+        if (parkingSlot != null) {
+            throw new ResourceAlreadyExistsException("A parking slot with this label already exists!");
+        }
+
+        PricingPolicy pricingPolicy = PricingPolicy.builder()
+            .parameters(createParkingSlotDto.getPricingPolicy().getParameters())
+            .evaluation(createParkingSlotDto.getPricingPolicy().getEvaluation())
+            .build();
+
+        parkingSlot = ParkingSlot.builder()
+            .label(createParkingSlotDto.getLabel())
+            .state(createParkingSlotDto.getParkingSlotStateEnum())
+            .pricingPolicy(pricingPolicy)
+            .carType(createParkingSlotDto.getCarType())
+            .build();
 
         return parkingSlotRepository.save(parkingSlot);
     }
@@ -53,7 +60,7 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
 
     @Override
     public ParkingSlot findByLabel(String label) {
-        return null;
+        return parkingSlotRepository.findByLabel(label);
     }
 
     @Override
