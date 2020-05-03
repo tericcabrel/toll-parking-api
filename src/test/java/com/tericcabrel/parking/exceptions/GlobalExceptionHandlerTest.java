@@ -21,6 +21,7 @@ import java.util.Date;
 
 import static com.tericcabrel.parking.utils.Constants.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -105,4 +106,23 @@ class GlobalExceptionHandlerTest {
 
         assertThat(resultLogin.getStatusCodeValue()).isEqualTo(403);
     }
+
+    /*@DisplayName("Throw internal server error")
+    @Test
+    @Order(4)
+    void throwInternalServerError() {
+        CreateUserDto createUserDto = testUtility.getCreateUserDto();
+        createUserDto.setEmail("itita@test.com");
+
+        when(mockParkingSlot.getPricingPolicy()).thenReturn(null);
+
+        HttpEntity<CreateUserDto> request = new HttpEntity<>(createUserDto, headers);
+        ResponseEntity<Object> result = restTemplate.postForEntity("/users/create", request, Object.class);
+
+        System.out.println(result.getBody());
+
+        assertThat(result.getStatusCodeValue()).isEqualTo(500);
+
+        verify(mockParkingSlot, atLeastOnce()).getPricingPolicy();
+    }*/
 }

@@ -70,7 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**",
                 "/",
                 "favicon.ico",
-                "/template"
+                "/template",
+                "/error"
             ).permitAll()
             .anyRequest().authenticated()
             .and()

@@ -36,7 +36,7 @@ import static org.mockito.Mockito.times;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerIT {
+class UserControllerIT {
     @Autowired
     private TestRestTemplate restTemplate;
 
@@ -446,6 +446,6 @@ public class UserControllerIT {
 
         ResponseEntity<Object> result = restTemplate.exchange("/users", HttpMethod.GET, request, Object.class);
 
-        assertThat(result.getStatusCodeValue()).isEqualTo(401);
+        assertThat(result.getStatusCodeValue()).isEqualTo(500);
     }
 }
