@@ -87,7 +87,7 @@ public class DataSeeder implements ApplicationListener<ContextRefreshedEvent> {
         users.add(admin);
 
         // Assign the role ROLE_ADMIN to all users created
-        users.forEach((userDto) -> {
+        users.forEach(userDto -> {
             User obj = userService.findByEmail(userDto.getEmail());
             Role role;
 

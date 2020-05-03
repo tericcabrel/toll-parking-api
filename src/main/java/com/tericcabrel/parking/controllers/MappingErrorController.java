@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import springfox.documentation.annotations.ApiIgnore;
@@ -27,7 +28,7 @@ public class MappingErrorController implements ErrorController {
         this.errorAttributes = errorAttributes;
     }
 
-    @RequestMapping(value = PATH)
+    @RequestMapping(value = PATH, method = { RequestMethod.POST, RequestMethod.GET })
     public Map<String, Object> error(WebRequest request) {
         Map<String, Object> body = getErrorAttributes(request, getTraceParameter(request));
 

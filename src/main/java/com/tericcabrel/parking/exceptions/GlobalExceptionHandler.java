@@ -3,6 +3,7 @@ package com.tericcabrel.parking.exceptions;
 import com.tericcabrel.parking.models.responses.GenericResponse;
 import com.tericcabrel.parking.models.responses.InvalidDataResponse;
 import com.tericcabrel.parking.utils.Helpers;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -21,6 +22,7 @@ import java.util.List;
  * This class intercepts exceptions thrown in the whole application and customize
  * either the response status code or the content to be set in the body
  */
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
     /**
@@ -215,7 +217,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
         GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
-        ex.printStackTrace();
+        log.error(ex.getMessage());
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -1,7 +1,7 @@
 package com.tericcabrel.parking.utils;
 
 public class Constants {
-    static final long TOKEN_LIFETIME_SECONDS = 24 * 60 * 60;
+    static final long TOKEN_LIFETIME_SECONDS = 24L * 60 * 60;
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
     static final String AUTHORITIES_KEY = "scopes";

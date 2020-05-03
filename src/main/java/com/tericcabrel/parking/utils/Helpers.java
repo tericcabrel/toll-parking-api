@@ -1,5 +1,7 @@
 package com.tericcabrel.parking.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -10,6 +12,7 @@ import java.util.*;
 /**
  * Contains useful methods used in the project
  */
+@Slf4j
 public class Helpers {
     /**
      * Add or update a HashMap item
@@ -105,7 +108,7 @@ public class Helpers {
         try {
             return dateFormat.parse(dateISOString);
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return null;
