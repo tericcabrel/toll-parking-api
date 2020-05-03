@@ -14,7 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                    docker run --name db-test -p 27680:27017 --env-file ${ENV_FOLDER}/mongo-test.env mongo
+                    docker run -d --name db-test -p 27680:27017 --env-file ${ENV_FOLDER}/mongo-test.env mongo
                     sleep 30
                     mvn clean verify -Ptest
                     docker rm -f db-test
@@ -35,8 +35,8 @@ pipeline {
             steps {
                 sh '''
                     docker build --no-cache -t tericcabrel/parking:latest .
-                    docker rmi -f $(docker images -q --filter dangling=true)
                 '''
+                // docker rmi -f $(docker images -q --filter dangling=true) fails if there is no dangling image
             }
         }
         stage('Deploy') {
