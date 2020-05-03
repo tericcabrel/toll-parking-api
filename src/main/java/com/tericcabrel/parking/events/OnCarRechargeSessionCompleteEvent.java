@@ -3,7 +3,6 @@ package com.tericcabrel.parking.events;
 import com.tericcabrel.parking.models.dbs.CarRechargeSession;
 import com.tericcabrel.parking.models.dbs.Customer;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.context.ApplicationEvent;
 

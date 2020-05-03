@@ -113,18 +113,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
         HashMap<String, List<String>> errors = new HashMap<>();
 
-        /*ex.getBindingResult().getAllErrors().forEach(objectError -> {
-            String field = "";
-
-            if (objectError.getArguments() != null && objectError.getArguments().length >= 2) {
-                field = objectError.getArguments()[1].toString();
-            }
-
-            if (field.length() > 0) {
-                Helpers.updateErrorHashMap(errors, field, objectError.getDefaultMessage());
-            }
-        });*/
-
         ex.getBindingResult().getFieldErrors().forEach(fieldError -> {
             Helpers.updateErrorHashMap(errors, fieldError.getField(), fieldError.getDefaultMessage());
         });
