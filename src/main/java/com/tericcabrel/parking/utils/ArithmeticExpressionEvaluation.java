@@ -18,28 +18,32 @@ import java.util.Stack;
  */
 public class ArithmeticExpressionEvaluation
 {
+    // Hide the implicit public constructor
+    private ArithmeticExpressionEvaluation() {
+        throw new IllegalStateException("ArithmeticExpressionEvaluation class");
+    }
+
     public static double evaluate(String expression)
     {
         char[] tokens = expression.toCharArray();
 
         // Stack for numbers: 'values'
-        Stack<Double> values = new Stack<Double>();
+        Stack<Double> values = new Stack<>();
 
         // Stack for Operators: 'ops'
-        Stack<Character> ops = new Stack<Character>();
+        Stack<Character> ops = new Stack<>();
 
         for (int i = 0; i < tokens.length; i++)
         {
             // Current token is a number, push it to stack for numbers
             if ((tokens[i] >= '0' && tokens[i] <= '9') || tokens[i] == '.')
             {
-                StringBuffer sbuf = new StringBuffer();
+                StringBuilder sbuf = new StringBuilder();
                 // There may be more than one digits in number
                 while (i < tokens.length && ((tokens[i] >= '0' && tokens[i] <= '9') || tokens[i] == '.')) {
                     sbuf.append(tokens[i++]);
                 }
 
-                // System.out.println(sbuf.toString()+ " -- " + sbuf.toString().length());
                 values.push(Double.parseDouble(sbuf.toString()));
 
                 // Just remove this if you want to handle whitespace between numbers and operators
@@ -89,10 +93,7 @@ public class ArithmeticExpressionEvaluation
     {
         if (op2 == '(' || op2 == ')')
             return false;
-        if ((op1 == '*' || op1 == '/') && (op2 == '+' || op2 == '-'))
-            return false;
-        else
-            return true;
+        return (op1 != '*' && op1 != '/') || (op2 != '+' && op2 != '-');
     }
 
     // A utility method to apply an operator 'op' on operands 'a'
@@ -111,8 +112,9 @@ public class ArithmeticExpressionEvaluation
                 if (b == 0)
                     throw new UnsupportedOperationException("Cannot divide by zero");
                 return a / b;
+            default:
+                return 0;
         }
-        return 0;
     }
 }
 

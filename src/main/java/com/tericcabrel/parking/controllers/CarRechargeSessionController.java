@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.configs.SwaggerConfiguration;
 import com.tericcabrel.parking.events.OnCarRechargeSessionCompleteEvent;
 import com.tericcabrel.parking.exceptions.NoParkingSlotAvailableException;
 import com.tericcabrel.parking.models.dbs.CarRechargeSession;
@@ -33,7 +34,7 @@ import java.util.List;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 
-@Api(tags = "Car's recharge management", description = "Operations pertaining to car's recharge creation, update, fetch and delete")
+@Api(tags = { SwaggerConfiguration.TAG_CAR_RECHARGE })
 @RestController
 @RequestMapping(value = "/cars-recharges")
 public class CarRechargeSessionController {
@@ -74,7 +75,7 @@ public class CarRechargeSessionController {
 
         List<ParkingSlot> parkingSlotListAvailable = parkingSlotService.findAvailableByCarType(customer.getCarType());
 
-        if (parkingSlotListAvailable.size() == 0) {
+        if (parkingSlotListAvailable.isEmpty()) {
             throw new NoParkingSlotAvailableException(
                 "No parking's slot available for the car's type " + customer.getCarType().getName() + " at the moment"
             );

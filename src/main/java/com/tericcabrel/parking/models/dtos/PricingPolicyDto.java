@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashMap;
+import java.util.Map;
 
 @NoArgsConstructor
 @Getter
@@ -16,13 +16,13 @@ import java.util.HashMap;
 public class PricingPolicyDto {
     @Size(min = 1, message = "At least one role's parameter is required")
     @NotNull(message = "This field is required")
-    private HashMap<String, Double> parameters;
+    private Map<String, Double> parameters;
 
     @NotBlank(message = "This field is required")
     private String evaluation;
 
     @Builder
-    public PricingPolicyDto(HashMap<String, Double> parameters, String evaluation) {
+    public PricingPolicyDto(Map<String, Double> parameters, String evaluation) {
         this.parameters = parameters;
         this.evaluation = evaluation;
     }

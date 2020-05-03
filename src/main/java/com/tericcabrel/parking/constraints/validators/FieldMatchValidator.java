@@ -1,6 +1,7 @@
 package com.tericcabrel.parking.constraints.validators;
 
 import com.tericcabrel.parking.constraints.FieldMatch;
+import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.validation.ConstraintValidator;
@@ -21,15 +22,12 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
         secondFieldName = constraintAnnotation.second();
     }
 
+    @SneakyThrows
     @Override
     public boolean isValid(final Object value, final ConstraintValidatorContext context) {
-        try {
-            final Object firstObj = BeanUtils.getProperty(value, firstFieldName);
-            final Object secondObj = BeanUtils.getProperty(value, secondFieldName);
+        final Object firstObj = BeanUtils.getProperty(value, firstFieldName);
+        final Object secondObj = BeanUtils.getProperty(value, secondFieldName);
 
-            return firstObj == null && secondObj == null || firstObj != null && firstObj.equals(secondObj);
-        } catch (final Exception ignore) {}
-
-        return true;
+        return firstObj == null && secondObj == null || firstObj != null && firstObj.equals(secondObj);
     }
 }

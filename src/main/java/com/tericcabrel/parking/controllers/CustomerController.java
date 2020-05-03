@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.configs.SwaggerConfiguration;
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dbs.Customer;
 import com.tericcabrel.parking.models.dtos.CreateCustomerDto;
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 import static com.tericcabrel.parking.utils.Constants.*;
 
 
-@Api(tags = "Customer management", description = "Operations pertaining to customer creation, update, fetch and delete")
+@Api(tags = { SwaggerConfiguration.TAG_CUSTOMER })
 @RestController
 @RequestMapping(value = "/customers")
 public class CustomerController {

@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.configs.SwaggerConfiguration;
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dbs.ParkingSlot;
 import com.tericcabrel.parking.models.dtos.CalculatePricingDto;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 
-@Api(tags = "Parking's slot management", description = "Operations pertaining to parking's slot creation, update, fetch and delete")
+@Api(tags = { SwaggerConfiguration.TAG_PARKING_SLOT })
 @RestController
 @RequestMapping(value = "/parking-slots")
 public class ParkingSlotController {

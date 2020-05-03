@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationEvent;
 @Getter
 @Accessors(chain = true)
 public class OnCreateUserCompleteEvent extends ApplicationEvent {
-    private User user;
+    private transient User user;
 
     private String rawPassword;
 

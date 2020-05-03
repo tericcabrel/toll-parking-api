@@ -83,10 +83,6 @@ public class UserServiceImpl implements UserService {
     public User update(String id, UpdateUserDto updateUserDto) {
         User item = findById(id);
 
-        // All properties must exists in the DTO even if you don't intend to update it
-        // Otherwise, it will set to null
-        // BeanUtils.copyProperties(userDto, user, "password");
-
         if(updateUserDto.getName() != null) {
             item.setName(updateUserDto.getName());
         }
@@ -124,7 +120,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByEmail(username);
 
         if(user == null){

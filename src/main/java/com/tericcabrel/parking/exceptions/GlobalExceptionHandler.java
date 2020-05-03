@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -42,8 +43,8 @@ public class GlobalExceptionHandler {
      *
      * @return instance of InvalidDataResponse
      */
-    private InvalidDataResponse createInvalidDataResponse(HashMap<String, List<String>> errors) {
-        HashMap<String, HashMap<String, List<String>>> result = new HashMap<>();
+    private InvalidDataResponse createInvalidDataResponse(Map<String, List<String>> errors) {
+        Map<String, Map<String, List<String>>> result = new HashMap<>();
         result.put("errors", errors);
 
         return new InvalidDataResponse(result);
@@ -58,7 +59,7 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with status code 400
      */
     @ExceptionHandler(ResourceAlreadyExistsException.class)
-    public ResponseEntity<?> resourceAlreadyExistsException(ResourceAlreadyExistsException ex, WebRequest request) {
+    public ResponseEntity<GenericResponse> resourceAlreadyExistsException(ResourceAlreadyExistsException ex, WebRequest request) {
         GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -73,7 +74,7 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with status code 404
      */
     @ExceptionHandler({ ResourceNotFoundException.class, UsernameNotFoundException.class })
-    public ResponseEntity<?> resourceNotFoundException(RuntimeException ex, WebRequest request) {
+    public ResponseEntity<GenericResponse> resourceNotFoundException(RuntimeException ex, WebRequest request) {
         GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
@@ -88,7 +89,7 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with status code 400
      */
     @ExceptionHandler(PasswordNotMatchException.class)
-    public ResponseEntity<?> passwordNotMatchException(PasswordNotMatchException ex, WebRequest request) {
+    public ResponseEntity<GenericResponse> passwordNotMatchException(PasswordNotMatchException ex, WebRequest request) {
         GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -112,12 +113,14 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with status code 422
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
+    public ResponseEntity<InvalidDataResponse> methodArgumentNotValidException(
+        MethodArgumentNotValidException ex, WebRequest request
+    ) {
         HashMap<String, List<String>> errors = new HashMap<>();
 
-        ex.getBindingResult().getFieldErrors().forEach(fieldError -> {
-            Helpers.updateErrorHashMap(errors, fieldError.getField(), fieldError.getDefaultMessage());
-        });
+        ex.getBindingResult().getFieldErrors().forEach(fieldError ->
+            Helpers.updateErrorHashMap(errors, fieldError.getField(), fieldError.getDefaultMessage())
+        );
 
         return new ResponseEntity<>(createInvalidDataResponse(errors), HttpStatus.UNPROCESSABLE_ENTITY);
     }
@@ -131,7 +134,7 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with status code 403
      */
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> accessDeniedException(AccessDeniedException ex, WebRequest request) {
+    public ResponseEntity<GenericResponse> accessDeniedException(AccessDeniedException ex, WebRequest request) {
         GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
@@ -146,9 +149,9 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with status code 401 instead 500
      */
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<?> badCredentialsException(BadCredentialsException ex, WebRequest request) {
+    public ResponseEntity<GenericResponse> badCredentialsException(BadCredentialsException ex, WebRequest request) {
         GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
-        System.out.println("Raaa");
+
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
@@ -214,7 +217,7 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with status code 500
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
+    public ResponseEntity<GenericResponse> globalExceptionHandler(Exception ex, WebRequest request) {
         GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
 
         log.error(ex.getMessage());

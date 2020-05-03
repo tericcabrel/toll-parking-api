@@ -59,8 +59,6 @@ public class CarRechargeSessionServiceImpl implements CarRechargeSessionService 
 
 
         if (updateCarRechargeSessionDto.getEndTime() != null) {
-            // TODO Make sure startTime < endTime
-
             item.setEndTime(updateCarRechargeSessionDto.getEndTime());
         }
 

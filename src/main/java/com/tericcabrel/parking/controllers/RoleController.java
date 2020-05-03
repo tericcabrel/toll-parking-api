@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.configs.SwaggerConfiguration;
 import com.tericcabrel.parking.models.dtos.RoleDto;
 import com.tericcabrel.parking.models.dtos.RoleUpdateDto;
 import com.tericcabrel.parking.models.dbs.Role;
@@ -21,7 +22,7 @@ import java.util.Arrays;
 import static com.tericcabrel.parking.utils.Constants.*;
 
 
-@Api(tags = "Role management", description = "Operations pertaining to role creation, update, assign, revoke, fetch and delete")
+@Api(tags = { SwaggerConfiguration.TAG_ROLE })
 @RestController
 @RequestMapping(value = "/roles")
 public class RoleController {

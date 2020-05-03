@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import springfox.documentation.annotations.ApiIgnore;
@@ -18,41 +17,35 @@ import java.util.Map;
 @ApiIgnore // We don't want swagger to index this controller
 @RestController
 public class MappingErrorController implements ErrorController {
-    private static final String PATH = "/error";
+    private static final String TRACE_KEY = "trace";
 
     private final ErrorAttributes errorAttributes;
 
     @Autowired
     public MappingErrorController(ErrorAttributes errorAttributes) {
-        // Assert.notNull(errorAttributes, "ErrorAttributes must not be null");
         this.errorAttributes = errorAttributes;
     }
 
-    @RequestMapping(value = PATH, method = { RequestMethod.POST, RequestMethod.GET })
+    @RequestMapping(value = "/error")
     public Map<String, Object> error(WebRequest request) {
         Map<String, Object> body = getErrorAttributes(request, getTraceParameter(request));
 
-        String trace = (String) body.get("trace");
-
-        if(trace != null) {
-            String[] lines = trace.split("\n\t");
-            body.put("trace", lines);
-        }
+        body.computeIfPresent(TRACE_KEY, (key, val) -> val.toString().split("\n\t"));
 
         return body;
     }
 
     @Override
     public String getErrorPath() {
-        return PATH;
+        return "/error";
     }
 
     private boolean getTraceParameter(WebRequest request) {
-        String parameter = request.getParameter("trace");
+        String parameter = request.getParameter(TRACE_KEY);
         if (parameter == null) {
             return false;
         }
-        return !"false".equals(parameter.toLowerCase());
+        return !"false".equalsIgnoreCase(parameter);
     }
 
     private Map<String, Object> getErrorAttributes(WebRequest request, boolean includeStackTrace) {

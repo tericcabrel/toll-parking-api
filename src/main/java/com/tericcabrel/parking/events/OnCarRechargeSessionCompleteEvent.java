@@ -12,9 +12,9 @@ import org.springframework.context.ApplicationEvent;
 @Getter
 @Accessors(chain = true)
 public class OnCarRechargeSessionCompleteEvent extends ApplicationEvent {
-    private Customer customer;
+    private transient Customer customer;
 
-    private CarRechargeSession carRechargeSession;
+    private transient CarRechargeSession carRechargeSession;
 
     public OnCarRechargeSessionCompleteEvent(Customer customer, CarRechargeSession carRechargeSession) {
         super(customer);

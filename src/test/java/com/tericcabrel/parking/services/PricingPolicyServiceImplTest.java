@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 
+import static com.tericcabrel.parking.utils.Constants.PRICING_POLICY_VALIDATION_FORMAT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -74,8 +75,24 @@ class PricingPolicyServiceImplTest {
         assertThat(result.replaceAll(" ", "")).hasSize(15);
     }
 
-
+    @Test
     @Order(4)
+    void getArithmeticExpressionThrowException() {
+        HashMap<String, Double> userParameters = new HashMap<>();
+        userParameters.put("pricePerHour", 100d);
+        userParameters.put("numberOfHour", -1d);
+        userParameters.put("tax", 200d);
+
+        PricingPolicyValidationErrorException r = assertThrows(PricingPolicyValidationErrorException.class, () ->
+            pricingPolicyService.getArithmeticExpression(pricingPolicy, userParameters)
+        );
+
+        assertThat(r.getValidationType()).isEqualTo(PRICING_POLICY_VALIDATION_FORMAT);
+        assertThat(r.getMessage()).contains("numberOfHour");
+    }
+
+
+    @Order(5)
     @ParameterizedTest
     @ValueSource(strings = { "100*2+6", "100*2*12", "100*(2+12)+(3-2)", "100*(2+12)/14", "3.78+4.78*(1.55)", "15-23*46" })
     void validateArithmeticExpressionSuccess(String expression) {
@@ -85,7 +102,7 @@ class PricingPolicyServiceImplTest {
     }
 
 
-    @Order(5)
+    @Order(6)
     @ParameterizedTest
     @ValueSource(strings = { "(2+)", "10+2*+6", "(4+5", "6+5-5)", "+4-5", "33*45/", "*6-", "+*9", "4.75)+5.25-*55" })
     void failToValidateArithmeticExpression(String expression) {
@@ -156,6 +173,4 @@ class PricingPolicyServiceImplTest {
             });
         }
     }
-
-
 }

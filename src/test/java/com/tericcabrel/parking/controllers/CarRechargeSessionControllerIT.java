@@ -30,10 +30,7 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,7 +71,7 @@ class CarRechargeSessionControllerIT {
 
     private ParkingSlot parkingSlot;
 
-    private HashMap<String, Object> carRechargeDuration;
+    private Map<String, Object> carRechargeDuration;
 
     @BeforeAll
     void beforeAll() {
@@ -118,11 +115,11 @@ class CarRechargeSessionControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(422);
 
-        HashMap<String, HashMap<String, List<String>>> data = Objects.requireNonNull(result.getBody()).getData();
+        Map<String, Map<String, List<String>>> data = Objects.requireNonNull(result.getBody()).getData();
 
-        assertThat(data.containsKey("errors"));
+        assertThat(data.containsKey("errors")).isTrue();
 
-        HashMap<String, List<String>> errors = data.get("errors");
+        Map<String, List<String>> errors = data.get("errors");
 
         assertThat(errors.containsKey("customerId")).isTrue();
     }
@@ -139,7 +136,7 @@ class CarRechargeSessionControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(400);
 
-        HashMap<String, Object> response = result.getBody().getData();
+        Map<String, Object> response = result.getBody().getData();
 
         assertThat(response).containsKey("message");
 
@@ -235,7 +232,7 @@ class CarRechargeSessionControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(404);
 
-        HashMap<String, Object> response = result.getBody().getData();
+        Map<String, Object> response = result.getBody().getData();
 
         assertThat(response).containsKey("message");
     }
@@ -272,11 +269,11 @@ class CarRechargeSessionControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(422);
 
-        HashMap<String, HashMap<String, List<String>>> data = Objects.requireNonNull(result.getBody()).getData();
+        Map<String, Map<String, List<String>>> data = Objects.requireNonNull(result.getBody()).getData();
 
-        assertThat(data.containsKey("errors"));
+        assertThat(data.containsKey("errors")).isTrue();
 
-        HashMap<String, List<String>> errors = data.get("errors");
+        Map<String, List<String>> errors = data.get("errors");
 
         assertThat(errors.containsKey("endTime")).isTrue();
     }
@@ -312,7 +309,7 @@ class CarRechargeSessionControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(400);
 
-        HashMap<String, Object> response = result.getBody().getData();
+        Map<String, Object> response = result.getBody().getData();
 
         assertThat(response).containsKey("message");
     }

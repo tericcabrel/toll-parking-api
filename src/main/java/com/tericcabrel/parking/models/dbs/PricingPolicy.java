@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -20,7 +21,7 @@ public class PricingPolicy {
      * }
      * Keys with value -1 indicates the value will be provided at moment of calculation
      */
-    private HashMap<String, Double> parameters;
+    private Map<String, Double> parameters;
 
     /**
      * Describe formula to calculate the price. It's an arithmetical expression who will be parsed and evaluated
@@ -36,7 +37,7 @@ public class PricingPolicy {
     }
 
     @Builder
-    public PricingPolicy(HashMap<String, Double> parameters, String evaluation) {
+    public PricingPolicy(Map<String, Double> parameters, String evaluation) {
         this.parameters = parameters;
         this.evaluation = evaluation;
     }

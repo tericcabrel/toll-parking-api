@@ -21,8 +21,8 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      * @return evaluation property with the parameters replaced by numeric value
      */
     @Override
-    public String getArithmeticExpression(PricingPolicy pricingPolicy, HashMap<String, Double> parameters) {
-        HashMap<String, Double> defaultParameters = pricingPolicy.getParameters();
+    public String getArithmeticExpression(PricingPolicy pricingPolicy, Map<String, Double> parameters) {
+        Map<String, Double> defaultParameters = pricingPolicy.getParameters();
         String evaluation = pricingPolicy.getEvaluation();
 
         Set<String> keys = pricingPolicy.getParameters().keySet();
@@ -36,7 +36,9 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
             }
 
             if (value < 0) {
-                // TODO Throw an exception
+                throw new PricingPolicyValidationErrorException(
+                    "You must give a value greather than 0 to the key ["+key+"]", PRICING_POLICY_VALIDATION_FORMAT
+                );
             }
 
             evaluation = evaluation.replaceAll(key, String.valueOf(value));
@@ -71,7 +73,7 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
     @Override
     public boolean validateArithmeticExpression(String expression) {
         String pattern = "(([\\(])?(\\d+|\\d+\\.\\d+)([\\+\\*\\-\\/])?(\\d+|\\d+\\.\\d+)?([\\)])?([\\*\\+\\-\\/])?)+";
-        String expressionWithNoSpace = expression.replaceAll(" ", "");
+        String expressionWithNoSpace = expression.replace(" ", "");
 
         boolean result = Pattern.matches(pattern, expressionWithNoSpace);
 
@@ -102,7 +104,7 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
      * @return The price
      */
     @Override
-    public double calculate(PricingPolicy pricingPolicy, HashMap<String, Double> parameters) {
+    public double calculate(PricingPolicy pricingPolicy, Map<String, Double> parameters) {
         // Validate format
         boolean isValidFormat = validateFormat(pricingPolicy);
 
@@ -199,7 +201,7 @@ public class PricingPolicyServiceImpl implements PricingPolicyService {
             }
         }
 
-        return stack.size() == 0;
+        return stack.isEmpty();
     }
 
     /**

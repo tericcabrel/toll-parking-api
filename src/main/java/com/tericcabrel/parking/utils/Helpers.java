@@ -14,6 +14,11 @@ import java.util.*;
  */
 @Slf4j
 public class Helpers {
+    // Hide the implicit public constructor
+    private Helpers() {
+        throw new IllegalStateException("Helpers class");
+    }
+
     /**
      * Add or update a HashMap item
      *
@@ -23,8 +28,8 @@ public class Helpers {
      *
      * @return updated instance of HashMap<String, List<String>>
      */
-    public static HashMap<String, List<String>> updateErrorHashMap(
-        HashMap<String, List<String>> errors, String field, String message
+    public static Map<String, List<String>> updateErrorHashMap(
+        Map<String, List<String>> errors, String field, String message
     ) {
         if (errors.containsKey(field)) {
             List<String> strings = errors.get(field);

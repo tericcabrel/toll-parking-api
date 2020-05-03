@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public CustomAuthenticationFilter authenticationTokenFilterBean() throws Exception {
+    public CustomAuthenticationFilter authenticationTokenFilterBean() {
         return new CustomAuthenticationFilter(userService, jwtTokenUtil);
     }
 

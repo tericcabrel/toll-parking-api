@@ -4,7 +4,6 @@ import com.tericcabrel.parking.models.dbs.BaseModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
-import org.springframework.data.mongodb.core.mapping.event.BeforeSaveEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -17,12 +16,6 @@ import java.util.Date;
 @Component
 @Slf4j
 public class ModelPersistListener extends AbstractMongoEventListener<BaseModel> {
-    @Override
-    public void onBeforeSave(BeforeSaveEvent<BaseModel> event) {
-        super.onBeforeSave(event);
-
-    }
-
     @Override
     public void onBeforeConvert(BeforeConvertEvent<BaseModel> event) {
         super.onBeforeConvert(event);

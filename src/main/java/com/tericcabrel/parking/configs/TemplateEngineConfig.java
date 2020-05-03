@@ -18,7 +18,7 @@ import java.util.Collections;
 
 @Configuration
 public class TemplateEngineConfig implements WebMvcConfigurer {
-    private static final String EMAIL_TEMPLATE_ENCODING = "UTF-8";
+    private static final String TEMPLATE_ENCODING = "UTF-8";
 
     @Bean
     @Primary
@@ -37,7 +37,7 @@ public class TemplateEngineConfig implements WebMvcConfigurer {
         templateResolver.setPrefix("/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setCharacterEncoding(EMAIL_TEMPLATE_ENCODING);
+        templateResolver.setCharacterEncoding(TEMPLATE_ENCODING);
         templateResolver.setCacheable(false);
 
         return templateResolver;
@@ -52,7 +52,7 @@ public class TemplateEngineConfig implements WebMvcConfigurer {
         templateResolver.setPrefix("templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setCharacterEncoding(TEMPLATE_ENCODING);
 
         // Template cache is true by default.
         // Set to false if you want templates to be automatically updated when modified.
@@ -78,7 +78,7 @@ public class TemplateEngineConfig implements WebMvcConfigurer {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 
         viewResolver.setTemplateEngine(webTemplateEngine());
-        viewResolver.setCharacterEncoding("UTF-8");
+        viewResolver.setCharacterEncoding(TEMPLATE_ENCODING);
 
         return viewResolver;
     }

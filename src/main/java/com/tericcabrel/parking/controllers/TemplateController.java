@@ -25,8 +25,8 @@ public class TemplateController {
 
     @GetMapping("/template")
     public String template(Model model) {
-        Date startTime = new Date(2020, Calendar.MAY, 1, 11, 3, 4);
-        Date endTime = new Date(2020, Calendar.MAY, 1, 14, 36, 4);
+        Date startTime = Helpers.createDateFromValue(2020, Calendar.MAY, 1, 11, 3, 4);
+        Date endTime = Helpers.createDateFromValue(2020, Calendar.MAY, 1, 14, 36, 4);
 
         double hour = Helpers.calculateDuration(startTime, endTime); // 3.55
 

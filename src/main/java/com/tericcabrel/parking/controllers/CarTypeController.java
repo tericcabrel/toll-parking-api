@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.configs.SwaggerConfiguration;
 import com.tericcabrel.parking.models.dbs.CarType;
 import com.tericcabrel.parking.models.dtos.CreateCarTypeDto;
 import com.tericcabrel.parking.models.responses.GenericResponse;
@@ -19,7 +20,7 @@ import javax.validation.Valid;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 
-@Api(tags = "Car's type management", description = "Operations pertaining to car's type creation, update, fetch and delete")
+@Api(tags = { SwaggerConfiguration.TAG_CAR_TYPE })
 @RestController
 @RequestMapping(value = "/cars-types")
 public class CarTypeController {

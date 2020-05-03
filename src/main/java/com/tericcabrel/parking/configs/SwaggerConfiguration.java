@@ -7,6 +7,7 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.UiConfiguration;
@@ -20,6 +21,13 @@ import java.util.Set;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
+    public static final String TAG_CAR_RECHARGE = "Car Recharge";
+    public static final String TAG_CAR_TYPE = "Car's Type";
+    public static final String TAG_CUSTOMER = "Customer";
+    public static final String TAG_PARKING_SLOT = "Parking Slot";
+    public static final String TAG_ROLE = "Role";
+    public static final String TAG_USER = "User";
+
     @Bean
     public Docket api(SwaggerProperties swaggerProperties) {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -32,7 +40,13 @@ public class SwaggerConfiguration {
                 .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
                 .pathMapping("/")
                 .protocols(Collections.singleton("HTTP"))
-                .useDefaultResponseMessages(Boolean.valueOf(swaggerProperties.getUseDefaultResponseMessages()));
+                .useDefaultResponseMessages(Boolean.valueOf(swaggerProperties.getUseDefaultResponseMessages()))
+                .tags(new Tag(TAG_CAR_RECHARGE, "Operations pertaining to car's recharge creation, update, fetch and delete"))
+                .tags(new Tag(TAG_CAR_TYPE, "Operations pertaining to car's type creation, update, fetch and delete"))
+                .tags(new Tag(TAG_CUSTOMER, "Operations pertaining to customer creation, update, fetch and delete"))
+                .tags(new Tag(TAG_PARKING_SLOT, "Operations pertaining to parking's slot creation, update, fetch and delete"))
+                .tags(new Tag(TAG_ROLE, "Operations pertaining to role creation, update, assign, revoke, fetch and delete"))
+                .tags(new Tag(TAG_USER, "Operations pertaining to registration, authentication"));
     }
 
     private ApiInfo apiEndPointsInfo(SwaggerProperties swaggerProperties) {

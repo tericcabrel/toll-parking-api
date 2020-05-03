@@ -70,11 +70,11 @@ class CarTypeControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(422);
 
-        HashMap<String, HashMap<String, List<String>>> data = Objects.requireNonNull(result.getBody()).getData();
+        Map<String, Map<String, List<String>>> data = Objects.requireNonNull(result.getBody()).getData();
 
-        assertThat(data.containsKey("errors"));
+        assertThat(data.containsKey("errors")).isTrue();
 
-        HashMap<String, List<String>> errors = data.get("errors");
+        Map<String, List<String>> errors = data.get("errors");
 
         assertThat(errors.containsKey("name")).isTrue();
     }
@@ -91,7 +91,7 @@ class CarTypeControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(400);
 
-        HashMap<String, Object> response = result.getBody().getData();
+        Map<String, Object> response = result.getBody().getData();
 
         assertThat(response).containsKey("message");
     }
@@ -173,11 +173,11 @@ class CarTypeControllerIT {
 
         assertThat(result.getStatusCodeValue()).isEqualTo(422);
 
-        HashMap<String, HashMap<String, List<String>>> data = Objects.requireNonNull(result.getBody()).getData();
+        Map<String, Map<String, List<String>>> data = Objects.requireNonNull(result.getBody()).getData();
 
-        assertThat(data.containsKey("errors"));
+        assertThat(data.containsKey("errors")).isTrue();
 
-        HashMap<String, List<String>> errors = data.get("errors");
+        Map<String, List<String>> errors = data.get("errors");
 
         assertThat(errors.containsKey("name")).isTrue();
     }

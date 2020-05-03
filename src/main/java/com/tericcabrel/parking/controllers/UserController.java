@@ -1,5 +1,6 @@
 package com.tericcabrel.parking.controllers;
 
+import com.tericcabrel.parking.configs.SwaggerConfiguration;
 import com.tericcabrel.parking.events.OnCreateUserCompleteEvent;
 import com.tericcabrel.parking.exceptions.UserNotActiveException;
 import com.tericcabrel.parking.models.dbs.Role;
@@ -31,7 +32,7 @@ import java.util.*;
 
 import static com.tericcabrel.parking.utils.Constants.*;
 
-@Api(tags = "User management", description = "Operations pertaining to registration, authentication")
+@Api(tags = { SwaggerConfiguration.TAG_USER })
 @RestController
 @RequestMapping(value = "/users")
 @Validated
@@ -71,9 +72,7 @@ public class UserController {
     public ResponseEntity<UserResponse> create(@Valid @RequestBody CreateUserDto createUserDto) {
         List<Role> roles = new ArrayList<>();
 
-        Arrays.stream(createUserDto.getRoleNames()).forEach(roleName -> {
-            roles.add(roleService.findByName(roleName));
-        });
+        Arrays.stream(createUserDto.getRoleNames()).forEach(roleName -> roles.add(roleService.findByName(roleName)));
 
         createUserDto.setRoles(roles);
 

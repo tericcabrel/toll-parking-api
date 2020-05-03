@@ -11,7 +11,7 @@ public class PricingPolicyValidationErrorException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private String validationType;
+    private final String validationType;
 
     public PricingPolicyValidationErrorException(String message, String validationType){
         super(message);

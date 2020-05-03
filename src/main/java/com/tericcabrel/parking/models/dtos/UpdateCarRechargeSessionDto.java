@@ -13,7 +13,6 @@ public class UpdateCarRechargeSessionDto {
     @NotNull(message = "This field is required")
     private Date endTime;
 
-    // TODO Greather than Zero
     private double price;
 
     @Builder
