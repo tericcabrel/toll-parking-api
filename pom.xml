@@ -96,22 +96,6 @@
 				<configuration>
 					<jvmArguments>${argLine}</jvmArguments><!-- argLine is provided by Jaccoco argent -->
 				</configuration>
-				<executions>
-					<execution>
-						<id>start-spring-boot</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>start</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>stop-spring-boot</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
