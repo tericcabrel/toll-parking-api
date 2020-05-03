@@ -46,6 +46,7 @@
     <!-- Log in file only for prod environment-->
     <springProfile name="prod">
         <root level="info">
+            <appender-ref ref="STDOUT"/>
             <appender-ref ref="SAVE-TO-FILE"/>
         </root>
     </springProfile>

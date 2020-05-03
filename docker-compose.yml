@@ -1,0 +1,28 @@
+version: "3"
+services:
+  app:
+    container_name: parking
+    restart: always
+    image: tericcabrel/parking:latest
+    volumes:
+      - ${ENV_FOLDER}/logs:/var/app/logs
+    ports:
+      - "8680:8680"
+    links:
+      - mongodb
+    networks:
+      - parkingnetwork
+  mongodb:
+    container_name: parking-mongo
+    image: mongo
+    volumes:
+      - ${ENV_FOLDER}/db:/data/db
+    ports:
+      - "27680:27017"
+    env_file:
+      - ${ENV_FOLDER}/mongo.env
+    networks:
+      - parkingnetwork
+networks:
+  parkingnetwork:
+    driver: bridge
