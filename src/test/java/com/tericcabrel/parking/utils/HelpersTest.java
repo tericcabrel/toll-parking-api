@@ -15,7 +15,7 @@ class HelpersTest {
         Date date = Helpers.createDateFromValue(2020, Calendar.MAY, 1, 22, 40, 15);
 
         assertThat(date).isInstanceOf(Date.class);
-        assertThat(date.toString()).isEqualTo("Fri May 01 22:40:15 WAT 2020");
+        assertThat(date.toString()).isIn("Fri May 01 22:40:15 WAT 2020", "Fri May 01 22:40:15 CEST 2020");
     }
 
     @Test
