@@ -7,6 +7,9 @@ import com.tericcabrel.parking.models.dbs.Customer;
 import com.tericcabrel.parking.models.enums.GenderEnum;
 import com.tericcabrel.parking.utils.Helpers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,10 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 
-@ActiveProfiles("test")
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class CarRechargeSessionListenerTest {
-    @MockBean
+    @Mock
     private CarRechargeSessionListener carRechargeSessionListener;
 
     @Test

@@ -51,7 +51,7 @@ public class DataSeeder implements ApplicationListener<ContextRefreshedEvent> {
     /**
      * Load default roles of the application
      */
-    private void loadRoles() {
+    public void loadRoles() {
         HashMap<String, String> roles = new HashMap<>();
         roles.put(ROLE_USER, "User role");
         roles.put(ROLE_ADMIN, "Admin role");
@@ -73,7 +73,7 @@ public class DataSeeder implements ApplicationListener<ContextRefreshedEvent> {
     /**
      * Load the default user
      */
-    private void loadUsers() {
+    public void loadUsers() {
         List<CreateUserDto> users = new ArrayList<CreateUserDto>() {};
 
         CreateUserDto admin = CreateUserDto.builder()
@@ -107,7 +107,7 @@ public class DataSeeder implements ApplicationListener<ContextRefreshedEvent> {
     /**
      * Load default car's types of the application
      */
-    private void loadCarTypes() {
+    public void loadCarTypes() {
         List<String> carTypesList = Arrays.asList(CAR_TYPE_GASOLINE, CAR_TYPE_20KW, CAR_TYPE_50KW);
 
         carTypesList.forEach(name -> {

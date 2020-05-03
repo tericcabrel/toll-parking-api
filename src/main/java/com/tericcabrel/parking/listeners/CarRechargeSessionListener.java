@@ -82,7 +82,7 @@ public class CarRechargeSessionListener implements ApplicationListener<OnCarRech
             email.addInline("springLogo", clr, PNG_MIME);
 
             mailSender.send(mimeMessage);
-        } catch (MessagingException | UnsupportedEncodingException e) {
+        } catch (MessagingException | UnsupportedEncodingException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }

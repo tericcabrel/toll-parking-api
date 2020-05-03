@@ -49,7 +49,7 @@ public class CreateUserListener implements ApplicationListener<OnCreateUserCompl
     public void sendEmail(OnCreateUserCompleteEvent event) {
         User user = event.getUser();
 
-        String mailFrom = environment.getProperty("spring.mail.properties.mail.smtp.from");
+        String mailFrom = environment.getProperty("spring.mail.properties.mail.smtp.from", "");
         String mailFromName = environment.getProperty("mail.from.name", "Identity");
 
         final MimeMessage mimeMessage = this.mailSender.createMimeMessage();

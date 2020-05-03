@@ -4,33 +4,45 @@ import com.tericcabrel.parking.events.OnCreateUserCompleteEvent;
 import com.tericcabrel.parking.models.dbs.User;
 import com.tericcabrel.parking.models.enums.GenderEnum;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.env.Environment;
+import org.springframework.mail.javamail.JavaMailSender;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 
-@ActiveProfiles("test")
-@SpringBootTest
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 class CreateUserListenerTest {
-    @MockBean
+    @InjectMocks
     private CreateUserListener createUserListener;
+
+    @Mock
+    private Environment environment;
+
+    @Mock
+    private JavaMailSender mailSender;
 
     @Test
     void publishEvent() {
         User user = User.builder()
-            .email("test@test.com")
+            // .email("test@test.com") Missing this property throw IllegalArgumentException which is what we want to tests
             .name("Test User")
             .password("password")
             .gender(GenderEnum.MALE)
             .enabled(true)
             .build();
 
-        doThrow(new IllegalArgumentException("Boom")).when(createUserListener).sendEmail(any());
+        when(environment.getProperty(anyString(), anyString())).thenReturn("Property");
+        when(mailSender.createMimeMessage()).thenReturn(new MimeMessage((Session) null));
 
-        assertThrows(IllegalArgumentException.class, () -> createUserListener.sendEmail(new OnCreateUserCompleteEvent(user, "rawPassword")));
+        createUserListener.sendEmail(new OnCreateUserCompleteEvent(user, "rawPassword"));
+
+        verify(environment, times(2)).getProperty(anyString(), anyString());
     }
-
 }

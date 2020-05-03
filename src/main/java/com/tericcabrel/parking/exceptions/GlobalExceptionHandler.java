@@ -158,7 +158,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<?> badCredentialsException(BadCredentialsException ex, WebRequest request) {
         GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
-
+        System.out.println("Raaa");
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
