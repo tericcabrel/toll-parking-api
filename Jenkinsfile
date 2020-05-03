@@ -43,7 +43,7 @@ pipeline {
             steps {
                 sh '''
                     docker-compose stop
-                    docker-compose up
+                    docker-compose up -d
                 '''
             }
         }
