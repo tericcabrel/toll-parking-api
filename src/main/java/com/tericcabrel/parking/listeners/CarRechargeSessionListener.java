@@ -4,6 +4,7 @@ import com.tericcabrel.parking.events.OnCarRechargeSessionCompleteEvent;
 import com.tericcabrel.parking.models.dbs.CarRechargeSession;
 import com.tericcabrel.parking.models.dbs.Customer;
 import com.tericcabrel.parking.utils.Helpers;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
@@ -22,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Send email to the customer with the details of his recharge
  */
+@Slf4j
 @Component
 public class CarRechargeSessionListener implements ApplicationListener<OnCarRechargeSessionCompleteEvent> {
     private static final String TEMPLATE_NAME = "html/recharge";
@@ -51,7 +53,7 @@ public class CarRechargeSessionListener implements ApplicationListener<OnCarRech
         CarRechargeSession carRechargeSession = event.getCarRechargeSession();
         double duration = Helpers.calculateDuration(carRechargeSession.getStartTime(), carRechargeSession.getEndTime());
 
-        String mailFrom = environment.getProperty("spring.mail.properties.mail.smtp.from");
+        String mailFrom = environment.getProperty("spring.mail.properties.mail.smtp.from", "");
         String mailFromName = environment.getProperty("mail.from.name", "Identity");
 
         final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
@@ -83,7 +85,7 @@ public class CarRechargeSessionListener implements ApplicationListener<OnCarRech
 
             mailSender.send(mimeMessage);
         } catch (MessagingException | UnsupportedEncodingException | IllegalArgumentException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 }

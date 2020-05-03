@@ -29,7 +29,7 @@ class CreateUserListenerTest {
     private JavaMailSender mailSender;
 
     @Test
-    void publishEvent() {
+    void doThrowIllegalArgumentException() {
         User user = User.builder()
             // .email("test@test.com") Missing this property throw IllegalArgumentException which is what we want to tests
             .name("Test User")

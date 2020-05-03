@@ -21,8 +21,8 @@ import java.io.UnsupportedEncodingException;
 /**
  * Send email to the user we just created the account
  */
-@Component
 @Slf4j
+@Component
 public class CreateUserListener implements ApplicationListener<OnCreateUserCompleteEvent> {
     private static final String TEMPLATE_NAME = "html/registration";
     private static final String SPRING_LOGO_IMAGE = "templates/html/images/spring.png";
@@ -77,7 +77,7 @@ public class CreateUserListener implements ApplicationListener<OnCreateUserCompl
 
             mailSender.send(mimeMessage);
         } catch (MessagingException | UnsupportedEncodingException | IllegalArgumentException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 }
