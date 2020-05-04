@@ -1,0 +1,1865 @@
+{
+	"info": {
+		"_postman_id": "91148982-76d1-4e00-8013-3d02492f3ee4",
+		"name": "Toll Parking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Eric Cabrel\",\n\t\"email\": \"tericcabrel@yahoo.com\",\n\t\"gender\": \"MALE\",\n\t\"password\": \"qwerty\",\n\t\"confirmPassword\": \"qwerty\",\n\t\"roleNames\": [\"ROLE_USER\", \"ROLE_ADMIN\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"tericcabrel@yahoo.com\",\n\t\"password\": \"qwerty\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/5eac62b6aa67b177be2e4d9c",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"5eac62b6aa67b177be2e4d9c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update one user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Jon Snow\",\n\t\"gender\": \"FEMALE\",\n\t\"enabled\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/5eac57e7c51f3278f3fb1e58",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"5eac57e7c51f3278f3fb1e58"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"currentPassword\": \"qwerty\",\n\t\"newPassword\": \"123456\",\n\t\"confirmNewPassword\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/5eac57e7c51f3278f3fb1e58/password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"5eac57e7c51f3278f3fb1e58",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete one user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/5eac62b6aa67b177be2e4d9c",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"5eac62b6aa67b177be2e4d9c"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "Create role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"ROLE_TEST\",\n\t\"description\": \"Just a test role\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/roles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all roles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/roles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one role",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/roles/5eac65c3f43c2106329e7e27",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"5eac65c3f43c2106329e7e27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"ROLE_TEST\",\n\t\"description\": \"Test role\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/roles/5eac65c3f43c2106329e7e27",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"5eac65c3f43c2106329e7e27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign roles to an user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": \"5eaadbb3778d00493fc47a37\",\n\t\"roles\": [\"ROLE_ADMIN\", \"ROLE_TEST\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/roles/assign",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"assign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke roles to an user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": \"5eaadbb3778d00493fc47a37\",\n\t\"roles\": [\"ROLE_TEST\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/roles/revoke",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"revoke"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/roles/5eac65c3f43c2106329e7e27",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"5eac65c3f43c2106329e7e27"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Car Type",
+			"item": [
+				{
+					"name": "Create car type",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"BMW\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars-types",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all car types",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars-types",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one car type",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars-types/5eac67ddf43c2106329e7e29",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-types",
+								"5eac67ddf43c2106329e7e29"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update car type",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Hyndai GS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars-types/5eac67ddf43c2106329e7e29",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-types",
+								"5eac67ddf43c2106329e7e29"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete car type",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/cars-types/5eac67e2f43c2106329e7e2a",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-types",
+								"5eac67e2f43c2106329e7e2a"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Create customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Cersei Lannister\",\n\t\"email\": \"cersei@lannister.com\",\n\t\"phone\": \"+33 6 00 22 67 34\",\n\t\"carTypeId\": \"5eaadb4d47df8665ecb1118a\",\n\t\"gender\": \"FEMALE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all customers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all customers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/customers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 May 2020 18:35:11 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"5eac6b4eac98a8688b4bd310\",\n            \"createdAt\": \"2020-05-01T18:32:46.667+0000\",\n            \"updatedAt\": \"2020-05-01T18:32:46.667+0000\",\n            \"name\": \"Tyrion Lannister\",\n            \"email\": \"tyrion@lannister.com\",\n            \"gender\": \"MALE\",\n            \"phone\": \"+33 6 76 94 33 34\",\n            \"carType\": {\n                \"id\": \"5eaadb4d47df8665ecb1118b\",\n                \"createdAt\": \"2020-04-30T14:06:05.600+0000\",\n                \"updatedAt\": \"2020-04-30T14:06:05.600+0000\",\n                \"name\": \"Electric 20Kw\"\n            }\n        },\n        {\n            \"id\": \"5eac6bd4ac98a8688b4bd311\",\n            \"createdAt\": \"2020-05-01T18:35:00.995+0000\",\n            \"updatedAt\": \"2020-05-01T18:35:00.995+0000\",\n            \"name\": \"Cersei Lannister\",\n            \"email\": \"cersei@lannister.com\",\n            \"gender\": \"FEMALE\",\n            \"phone\": \"+33 6 00 22 67 34\",\n            \"carType\": {\n                \"id\": \"5eaadb4d47df8665ecb1118a\",\n                \"createdAt\": \"2020-04-30T14:06:05.595+0000\",\n                \"updatedAt\": \"2020-04-30T14:06:05.595+0000\",\n                \"name\": \"Gasoline\"\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get one customer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/5eac6b4eac98a8688b4bd310",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"5eac6b4eac98a8688b4bd310"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Syrio Lannister\",\n\t\"email\": \"syrio@lannister.com\",\n\t\"phone\": \"+33 6 44 22 67 34\",\n\t\"carTypeId\": \"5eaadb4d47df8665ecb1118c\",\n\t\"gender\": \"MALE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/5eac6b4eac98a8688b4bd310",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"5eac6b4eac98a8688b4bd310"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customers/5eac6b4eac98a8688b4bd310",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"5eac6b4eac98a8688b4bd310"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Parking Slot",
+			"item": [
+				{
+					"name": "Create parking slot",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"label\": \"Slot MCH91\",\n\t\"state\": \"FREE\",\n\t\"carTypeId\": \"5eaadb4d47df8665ecb1118b\",\n\t\"pricingPolicy\": {\n\t\t\"parameters\": {\n\t\t\t\"pricePerHour\": 150,\n\t\t\t\"numberOfHour\": -1,\n\t\t\t\"tax\": 75\n\t\t},\n\t\t\"evaluation\": \"pricePerHour * numberOfHour + tax\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/parking-slots",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-slots"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all parking slots",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/parking-slots",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-slots"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all customers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/customers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 May 2020 18:35:11 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"5eac6b4eac98a8688b4bd310\",\n            \"createdAt\": \"2020-05-01T18:32:46.667+0000\",\n            \"updatedAt\": \"2020-05-01T18:32:46.667+0000\",\n            \"name\": \"Tyrion Lannister\",\n            \"email\": \"tyrion@lannister.com\",\n            \"gender\": \"MALE\",\n            \"phone\": \"+33 6 76 94 33 34\",\n            \"carType\": {\n                \"id\": \"5eaadb4d47df8665ecb1118b\",\n                \"createdAt\": \"2020-04-30T14:06:05.600+0000\",\n                \"updatedAt\": \"2020-04-30T14:06:05.600+0000\",\n                \"name\": \"Electric 20Kw\"\n            }\n        },\n        {\n            \"id\": \"5eac6bd4ac98a8688b4bd311\",\n            \"createdAt\": \"2020-05-01T18:35:00.995+0000\",\n            \"updatedAt\": \"2020-05-01T18:35:00.995+0000\",\n            \"name\": \"Cersei Lannister\",\n            \"email\": \"cersei@lannister.com\",\n            \"gender\": \"FEMALE\",\n            \"phone\": \"+33 6 00 22 67 34\",\n            \"carType\": {\n                \"id\": \"5eaadb4d47df8665ecb1118a\",\n                \"createdAt\": \"2020-04-30T14:06:05.595+0000\",\n                \"updatedAt\": \"2020-04-30T14:06:05.595+0000\",\n                \"name\": \"Gasoline\"\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get one parking slot",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/parking-slots/5eac6fcc36125371de3ae616",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-slots",
+								"5eac6fcc36125371de3ae616"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update parking slot",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"label\": \"Slot KW501\",\n\t\"state\": \"FREE\",\n\t\"carTypeId\": \"5eaadb4d47df8665ecb1118c\",\n\t\"pricingPolicy\": {\n\t\t\"parameters\": {\n\t\t\t\"pricePerHour\": 100,\n\t\t\t\"numberOfHour\": -1,\n\t\t\t\"tax\": 200\n\t\t},\n\t\t\"evaluation\": \"pricePerHour * numberOfHour + tax\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/parking-slots/5eac702136125371de3ae617",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-slots",
+								"5eac702136125371de3ae617"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get price of parking slot rent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"parameters\": {\n\t\t\"pricePerHour\": 150,\n\t\t\"numberOfHour\": 3,\n\t\t\"tax\": 200\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/parking-slots/5eac702136125371de3ae617/price",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-slots",
+								"5eac702136125371de3ae617",
+								"price"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete parking slot",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/parking-slots/5eac702136125371de3ae617",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-slots",
+								"5eac702136125371de3ae617"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Car Recharge",
+			"item": [
+				{
+					"name": "Create car recharge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"customerId\": \"5eac6bd4ac98a8688b4bd311\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars-recharges",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-recharges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all car recharges",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars-recharges",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-recharges"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all customers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/customers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 May 2020 18:35:11 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"5eac6b4eac98a8688b4bd310\",\n            \"createdAt\": \"2020-05-01T18:32:46.667+0000\",\n            \"updatedAt\": \"2020-05-01T18:32:46.667+0000\",\n            \"name\": \"Tyrion Lannister\",\n            \"email\": \"tyrion@lannister.com\",\n            \"gender\": \"MALE\",\n            \"phone\": \"+33 6 76 94 33 34\",\n            \"carType\": {\n                \"id\": \"5eaadb4d47df8665ecb1118b\",\n                \"createdAt\": \"2020-04-30T14:06:05.600+0000\",\n                \"updatedAt\": \"2020-04-30T14:06:05.600+0000\",\n                \"name\": \"Electric 20Kw\"\n            }\n        },\n        {\n            \"id\": \"5eac6bd4ac98a8688b4bd311\",\n            \"createdAt\": \"2020-05-01T18:35:00.995+0000\",\n            \"updatedAt\": \"2020-05-01T18:35:00.995+0000\",\n            \"name\": \"Cersei Lannister\",\n            \"email\": \"cersei@lannister.com\",\n            \"gender\": \"FEMALE\",\n            \"phone\": \"+33 6 00 22 67 34\",\n            \"carType\": {\n                \"id\": \"5eaadb4d47df8665ecb1118a\",\n                \"createdAt\": \"2020-04-30T14:06:05.595+0000\",\n                \"updatedAt\": \"2020-04-30T14:06:05.595+0000\",\n                \"name\": \"Gasoline\"\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get one car recharge",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars-recharges/5eac76052541ab330b93e1c6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-recharges",
+								"5eac76052541ab330b93e1c6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get car recharge duration",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"parameters\": {\n\t\t\"pricePerHour\": 150,\n\t\t\"numberOfHour\": 3,\n\t\t\"tax\": 200\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars-recharges/5eac76052541ab330b93e1c6/duration",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-recharges",
+								"5eac76052541ab330b93e1c6",
+								"duration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete car recharge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"endTime\": \"2020-05-01T19:28:57\",\n\t\"price\": 120\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cars-recharges/5eac76052541ab330b93e1c6/complete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-recharges",
+								"5eac76052541ab330b93e1c6",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete car recharge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXJpY2NhYnJlbEB5YWhvby5jb20iLCJzY29wZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTU4ODM1NTU1NCwiZXhwIjoxNTg4NDQxOTU0fQ.G2PGA0yBET029HdIRiBzk5HwYCMY_s9Pjvj4zZY2Gj0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/cars-recharges/5eac76052541ab330b93e1c6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cars-recharges",
+								"5eac76052541ab330b93e1c6"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
