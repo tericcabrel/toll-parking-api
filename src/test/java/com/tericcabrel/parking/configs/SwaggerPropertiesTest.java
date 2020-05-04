@@ -19,7 +19,7 @@ class SwaggerPropertiesTest {
         assertThat(swaggerProperties.getEnabled()).isNotNull().isEqualTo("true");
         assertThat(swaggerProperties.getTitle()).isNotNull().isEqualTo("Toll Parking Library");
 
-        assertThat(swaggerProperties.getDescription()).isNotNull().isEqualTo("REST API to manage parking slot");
+        assertThat(swaggerProperties.getDescription()).isNotNull().isEqualTo("REST API for cars toll parking management");
         assertThat(swaggerProperties.getUseDefaultResponseMessages()).isNotNull().isEqualTo("false");
         assertThat(swaggerProperties.getEnableUrlTemplating()).isNotNull().isEqualTo("false");
         assertThat(swaggerProperties.getDeepLinking()).isNotNull().isEqualTo("true");
