@@ -70,13 +70,13 @@ Inside the package **com.tericcabrel.parking.bootstrap**, the file named _DataSe
 is responsible for loading data on application startup. 2 Roles, 1 Admin user and 3 car's type are inserted
 
 ## Tests
-The has 142 tests divided in two section:
+The has 142 tests divided in two sections:
 - 57 unit tests
 - 85 integration tests
-- Percentage coverage: **96.8%**
+- Coverage Percentage: **96.8%**
 
 
-The coverage is generated with JaCoCo and the results is parsed by SonarQube.<br> 
+The coverage is generated with JaCoCo and the result is parsed by SonarQube.<br> 
 
 Steps to reproduce: We assume SonarQube is installed and run on port 9000:<br>
 **Login then create a Java project with the key "toll-parking-library" and generate the token**
@@ -88,10 +88,10 @@ When completed, you will see the coverage report in SonarQube
 
 ## Deployment
 Jenkins and docker are combined to deploy the app on server following the CI process. It can be hard to
-setup in local because the environment variable in docker-compose file come from Jenkins pipeline
+setup in local because the environment variable named _ENV_FOLDER_ in docker-compose.yml come from Jenkins pipeline
 but i will give the instructions to run the project with Docker.
 
-Before run these commands, **make sure the parameters in application-prod.properties are the same with mongo.env**.
+Before run these commands, **make sure the DB parameters in application-prod.properties are the same with mongo.env**.
 The value of spring.data.mongodb.host must be mongodb not localhost and the port remain 27017
 
 ```bash
